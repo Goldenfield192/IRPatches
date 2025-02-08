@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.goldenfield192.irpatches.mixins",
+  "refmap": "mixins.examplemod.refmap.json",
+  "minVersion": "0.7.3",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinControl",
+    "MixinEntityRollingStockDefinition",
+    "MixinMain"
+  ]
+}
