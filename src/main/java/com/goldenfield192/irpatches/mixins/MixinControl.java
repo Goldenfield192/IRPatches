@@ -25,7 +25,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Mixin(value = Control.class, remap = false)
+@Mixin(value = Control.class)
 public abstract class MixinControl<T extends EntityMoveableRollingStock> extends Interactable<T>/*For generics compatibility*/ {
     @Final
     @Mutable
@@ -40,7 +40,7 @@ public abstract class MixinControl<T extends EntityMoveableRollingStock> extends
     public String tex_variant;
 
     //Complex implement
-    @ModifyVariable(method = "<init>", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/lang/String;replace(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Ljava/lang/String;"))
+    @ModifyVariable(method = "<init>", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/lang/String;replace(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Ljava/lang/String;"), remap = false)
     public ModelState modState(ModelState state) {
         return state.push(builder ->
                 builder.add((ModelState.GroupVisibility) (stock, group) -> {
@@ -54,7 +54,7 @@ public abstract class MixinControl<T extends EntityMoveableRollingStock> extends
                 }));
     }
 
-    @Inject(method = "<init>", at = @At("TAIL"))
+    @Inject(method = "<init>", at = @At("TAIL"), remap = false)
     private void onControlLoad(ModelComponent part, ModelState state, double internal_model_scale, Map<String, DataBlock> widgetConfig, CallbackInfo ci) {
         tex_variant = part.modelIDs.stream().map(group -> {
             Matcher matcher = Pattern.compile("_TV_([^_]+)").matcher(group);

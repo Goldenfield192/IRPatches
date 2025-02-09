@@ -8,18 +8,16 @@ buildscript {
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
         classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
-        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
-    }
+}
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'com.github.johnrengelman.shadow'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
 version = '1.0'
-group = 'com.example.examplemod' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'examplemod'
+group = 'com.goldenfield192.irpatches' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'irpatches'
 
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 compileJava {
@@ -29,7 +27,6 @@ compileJava {
 minecraft {
     version = '1.12.2-14.23.5.2847'
     runDir = 'run'
-    coreMod = 'com.goldenfield192.irpatches.IRPLoadingPlugin'
     // the mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   snapshot are built nightly.
     // stable_#            stables are built at the discretion of the MCP team.
@@ -49,6 +46,9 @@ jar.manifest.attributes(
 repositories {
     mavenCentral()
     maven { url = 'https://repo.spongepowered.org/maven'}
+    maven {
+        url 'https://maven.cleanroommc.com'
+    }
     maven { url = "https://teamopenindustry.cc/maven" }
 }
 
@@ -74,8 +74,19 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
-    compile 'org.spongepowered:mixin:0.8.2'
-    compile files('D:\\cache\\.gradle\\caches\\modules-2\\files-2.1\\cam72cam.immersiverailroading\\ImmersiveRailroading\\1.12.2-forge-1.10.0\\68736f0436fb0c23f07c0d5b7954d524e371a0a1\\ImmersiveRailroading-1.12.2-forge-1.10.0.jar')
+    annotationProcessor 'org.ow2.asm:asm-debug-all:5.2'
+    annotationProcessor 'com.google.guava:guava:32.1.2-jre'
+    annotationProcessor 'com.google.code.gson:gson:2.8.9'
+
+    // ForgeGradle:
+    compile ('zone.rong:mixinbooter:9.1') {
+        transitive = false
+    }
+    annotationProcessor ('zone.rong:mixinbooter:9.1') {
+        transitive = false
+    }
+
+    compile files('D:\\cache\\.gradle\\caches\\modules-2\\files-2.1\\cam72cam.immersiverailroading\\ImmersiveRailroading\\1.12.2-forge-1.10.0\\68736f0436fb0c23f07c0d5b7954d524e371a0a1\\IRTest.jar')
     compile 'cam72cam.universalmodcore:UniversalModCore:1.12.2-forge-1.2.1-43860b4'
     compile 'trackapi:TrackAPI:1.12.2-forge-1.2'
 }
@@ -84,19 +95,7 @@ mixin {
     add sourceSets.main, 'mixins.irpatches.refmap.json'
 }
 
-shadowJar {
-    exclude 'dummyThing'
-    exclude 'LICENSE.txt'
-
-    classifier = ''
-}
-build.dependsOn(shadowJar)
-
 reobf {
-    shadowJar {
-        mappingType = 'SEARGE'
-        classpath = sourceSets.main.compileClasspath
-    }
 }
 
 processResources {

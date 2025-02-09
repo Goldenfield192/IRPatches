@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.io.IOException;
 
-@Mixin(value = ImmersiveRailroading.class, remap = false)
+@Mixin(value = ImmersiveRailroading.class)
 public class MixinMain {
     @Inject(method = "commonEvent", at = @At("TAIL"), remap = false)
     public void mixinInit(ModEvent event, CallbackInfo ci){

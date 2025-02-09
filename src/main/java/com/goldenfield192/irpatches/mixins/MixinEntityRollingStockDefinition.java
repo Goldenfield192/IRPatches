@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mixin(value = EntityRollingStockDefinition.class, remap = false)
+@Mixin(value = EntityRollingStockDefinition.class)
 public class MixinEntityRollingStockDefinition {
 
     @Shadow(remap = false)
