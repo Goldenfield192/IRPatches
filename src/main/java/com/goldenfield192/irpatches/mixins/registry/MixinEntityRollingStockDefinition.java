@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.mixins;
+package com.goldenfield192.irpatches.mixins.registry;
 
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import cam72cam.immersiverailroading.util.DataBlock;
@@ -12,6 +12,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Prevent widgets with TV modifier being rendered in inventory
+ * @see com.goldenfield192.irpatches.mixins.model.part.MixinControl
+ */
 @Mixin(value = EntityRollingStockDefinition.class)
 public class MixinEntityRollingStockDefinition {
 

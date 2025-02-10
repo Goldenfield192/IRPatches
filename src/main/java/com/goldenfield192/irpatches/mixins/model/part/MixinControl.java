@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.mixins;
+package com.goldenfield192.irpatches.mixins.model.part;
 
 import cam72cam.immersiverailroading.ImmersiveRailroading;
 import cam72cam.immersiverailroading.entity.EntityMoveableRollingStock;
@@ -25,6 +25,11 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 1.Add TV modifier for widgets to allow more complex functions
+ * 2.Let LABEL be translatable
+ * @see com.goldenfield192.irpatches.mixins.registry.MixinEntityRollingStockDefinition
+ */
 @Mixin(value = Control.class)
 public abstract class MixinControl<T extends EntityMoveableRollingStock> extends Interactable<T>/*For generics compatibility*/ {
     @Final
