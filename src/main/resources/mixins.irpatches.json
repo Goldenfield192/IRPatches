@@ -7,7 +7,6 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "MixinMain",
-    "entity.MixinEntityMoveableRollingStock",
     "gui.MixinPaintBrushPicker",
     "items.MixinItemTrackBlueprint",
     "model.MixinLocomotiveModel",
