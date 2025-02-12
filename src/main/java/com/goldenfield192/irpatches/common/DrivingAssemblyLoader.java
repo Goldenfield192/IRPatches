@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.utils;
+package com.goldenfield192.irpatches.common;
 
 import cam72cam.immersiverailroading.library.ModelComponentType;
 import cam72cam.immersiverailroading.library.ValveGearConfig;

@@ -1,18 +1,7 @@
 package com.goldenfield192.irpatches.mixins.entity;
 
-import cam72cam.immersiverailroading.entity.EntityMoveableRollingStock;
-import cam72cam.mod.entity.Entity;
-import cam72cam.mod.math.Vec3d;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
-
-import java.util.function.Predicate;
-
 @Deprecated
-@Mixin(EntityMoveableRollingStock.class)
+//@Mixin(EntityMoveableRollingStock.class)
 public class MixinEntityMoveableRollingStock {
 //    @ModifyArgs(method = "onTick",
 //                at = @At(value = "INVOKE", target = "Lcam72cam/mod/world/World;getEntities(Ljava/util/function/Predicate;Ljava/lang/Class;)Ljava/util/List;", ordinal = 0),
