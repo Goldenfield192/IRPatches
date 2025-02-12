@@ -64,17 +64,18 @@ public abstract class MixinControl{
                 }));
     }
 
-    @Inject(method = "<init>", at = @At("TAIL"), remap = false, locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void onControlLoad(ModelComponent part, ModelState state, double internal_model_scale, Map<String, DataBlock> widgetConfig, CallbackInfo ci, String rotpat, String name, DataBlock config, Predicate<String> hasKey, DataBlock rotBlock, DataBlock tl, DataBlock scale, DataBlock var13, Iterator var14, String var15, Matcher var16) {
-        tex_variant = config.getValue("TV").asString(part.modelIDs.stream().map(group -> {
+    @Inject(method = "<init>", at = @At("TAIL"), remap = false)
+    private void onControlLoad(ModelComponent part, ModelState state, double internal_model_scale, Map<String, DataBlock> widgetConfig, CallbackInfo ci) {
+        tex_variant = part.modelIDs.stream().map(group -> {
             Matcher matcher = Pattern.compile("_TV_([^_]+)").matcher(group);
             return matcher.find() ? matcher.group(1).replaceAll("\\^", " ") : null;
-        }).filter(Objects::nonNull).findFirst().orElse(null));
+        }).filter(Objects::nonNull).findFirst().orElse(null);
 
 //        if (tex_variant != null) {
 //            System.out.println("TV: " + tex_variant);
 //        }
 
+        Predicate<String> hasKey = s -> part.modelIDs.stream().anyMatch(g -> g.contains("_" + s + "_") || g.startsWith(s + "_") || g.endsWith("_" + s));
         if(toggle){
             this.toggleType =
                     hasKey.test("TOGGLE_SMOOTH") ? StateChangeManager.ToggleType.SMOOTH :

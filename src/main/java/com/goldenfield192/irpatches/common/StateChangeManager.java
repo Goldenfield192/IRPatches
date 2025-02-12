@@ -12,15 +12,11 @@ import java.util.HashSet;
 
 //Handles smooth toggle
 public class StateChangeManager {
-    static {
-        CommonEvents.World.TICK.subscribe(StateChangeManager::onTick);
-    }
-
-    private static HashMap<EntityRollingStock, HashSet<MutableTriple<String, Integer, Integer>>> controls = new HashMap<>();
+    private static final HashMap<EntityRollingStock, HashSet<MutableTriple<String, Integer, Integer>>> controls = new HashMap<>();
 
 //    private static HashMap<EntityRollingStock, HashMap<String>>
 
-    private static void onTick(World world){
+    public static void onTick(World world){
         if(world.isRemote)
             return;
         HashMap<EntityRollingStock, HashSet<MutableTriple<String, Integer, Integer>>> removal = new HashMap<>();
@@ -39,8 +35,11 @@ public class StateChangeManager {
     }
 
     public static void addChange(EntityRollingStock stock, String cg){
-        controls.putIfAbsent(stock, new HashSet<>());
-        controls.get(stock).add(MutableTriple.of(cg, (int)(stock.getControlPosition(cg) * (-2) + 1), 1));
+        if(stock.getWorld().isServer){
+            System.out.println("change");
+            controls.putIfAbsent(stock, new HashSet<>());
+            controls.get(stock).add(MutableTriple.of(cg, (int) (stock.getControlPosition(cg) * (-2) + 1), 1));
+        }
     }
 
     public enum ToggleType{

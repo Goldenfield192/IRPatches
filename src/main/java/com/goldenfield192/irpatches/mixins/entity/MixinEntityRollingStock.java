@@ -8,7 +8,6 @@ import cam72cam.mod.entity.custom.IKillable;
 import cam72cam.mod.entity.custom.ITickable;
 import com.goldenfield192.irpatches.common.StateChangeManager;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,11 +19,14 @@ public abstract class MixinEntityRollingStock extends CustomEntity implements IT
 
     @Shadow(remap = false) public abstract void setControlPosition(Control<?> control, float val);
 
+    @Shadow(remap = false) public abstract void setControlPressed(Control<?> control, boolean pressed);
+
     @Inject(method = "onDragRelease",
-            at = @At(value = "INVOKE_ASSIGN", target = "Lcam72cam/immersiverailroading/entity/EntityRollingStock;setControlPressed(Lcam72cam/immersiverailroading/model/part/Control;Z)V"),
+            at = @At("HEAD"),
             remap = false,
             cancellable = true)
-    public void mixinDrag(Control<?> control, CallbackInfo ci){
+    public void mixinDragRelease(Control<?> control, CallbackInfo ci){
+        this.setControlPressed(control, false);
         if (control.toggle) {
             StateChangeManager.addChange((EntityRollingStock) (CustomEntity) this, control.controlGroup);
         }
