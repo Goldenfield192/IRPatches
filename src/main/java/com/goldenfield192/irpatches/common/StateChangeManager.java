@@ -19,6 +19,7 @@ public class StateChangeManager {
     public static void onTick(World world){
         if(world.isRemote)
             return;
+        System.out.println(controls);
         HashMap<EntityRollingStock, HashSet<MutableTriple<String, Integer, Integer>>> removal = new HashMap<>();
         controls.forEach((stock, set) -> {
             removal.put(stock, new HashSet<>());
@@ -27,16 +28,16 @@ public class StateChangeManager {
                    stock.setControlPosition(data.getLeft(), (float) (stock.getControlPosition(data.getLeft()) + data.getMiddle() * 0.05));
                    data.setRight(data.getRight()+1);
                } else {
+                   //TODO Causing memory leak
                    removal.get(stock).add(data);
                }
             });
         });
-        removal.forEach((stock, triples) -> controls.get(stock).remove(triples));
+        removal.forEach((stock, triples) -> controls.get(stock).removeAll(triples));
     }
 
     public static void addChange(EntityRollingStock stock, String cg){
         if(stock.getWorld().isServer){
-            System.out.println("change");
             controls.putIfAbsent(stock, new HashSet<>());
             controls.get(stock).add(MutableTriple.of(cg, (int) (stock.getControlPosition(cg) * (-2) + 1), 1));
         }
