@@ -8,9 +8,9 @@ import java.util.List;
 /**
  * Mixin loader
  */
-public class IRPLateMixinLoader implements ILateMixinLoader{
-    @Override
-    public List<String> getMixinConfigs() {
-        return Collections.singletonList("mixins.irpatches.json");
-    }
-}
+//public class IRPLateMixinLoader implements ILateMixinLoader{
+//    @Override
+//    public List<String> getMixinConfigs() {
+////        return Collections.singletonList("mixins.irpatches.json");
+//    }
+//}

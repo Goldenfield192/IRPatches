@@ -2,10 +2,11 @@
   "required": true,
   "package": "com.goldenfield192.irpatches.mixins",
   "refmap": "mixins.irpatches.refmap.json",
-  "target": "@env(DEFAULT)",
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinMain"
+    "gui.MixinTrackGui",
+    "render.MixinOBJModel",
+    "render.MixinEntityRenderer"
   ]
 }
