@@ -14,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Mixin(LocomotiveDiesel.class)
 public abstract class MixinLocomotiveDiesel {
@@ -24,12 +23,15 @@ public abstract class MixinLocomotiveDiesel {
     public void getFluidFilter(CallbackInfoReturnable<List<Fluid>> cir){
         Config.ConfigBalance.dieselFuels.put("lava",1000);
         List<String> str = (List<String>) ExtraDefinitionManager.stockDef.get(this.getDefinition().defID).get("fuel");
-        Stream<String> stream = Config.ConfigBalance.dieselFuels.keySet().stream();
-        if(str != null){
-            stream = stream.filter(str::contains);
-        }
-        cir.setReturnValue(stream.map(Fluid::getFluid)
-                                       .filter(Objects::nonNull)
-                                       .collect(Collectors.toList()));
+        cir.setReturnValue(Config.ConfigBalance.dieselFuels.keySet().stream()
+                                                           .filter(string -> {
+                                                               if(str != null){
+                                                                   return str.contains(string);
+                                                               }
+                                                               return true;
+                                                           })
+                                                           .map(Fluid::getFluid)
+                                                           .filter(Objects::nonNull)
+                                                           .collect(Collectors.toList()));
     }
 }
