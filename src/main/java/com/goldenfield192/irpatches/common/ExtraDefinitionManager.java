@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 public class ExtraDefinitionManager {
     public static final HashMap<String, HashMap<String, Object>> stockDef = new HashMap<>();
+    public static final HashMap<String, Integer> burnTime = new HashMap<>();
 
     public static void loadExtraStockProperties(String defID, DataBlock data){
         DataBlock properties = data.getBlock("properties");
@@ -17,7 +18,12 @@ public class ExtraDefinitionManager {
         if(list != null){
             stockDef.get(defID).put("fuel", list.stream()
                                                 .map(DataBlock.Value::asString)
+                                                .map(string -> string.split(":")[0])
                                                 .collect(Collectors.toList()));
+            list.stream()
+                .map(DataBlock.Value::asString)
+                .filter(string -> string.contains(":"))
+                .forEach(string -> burnTime.put(string.split(":")[0], Integer.valueOf(string.split(":")[1])));
         } else {
             stockDef.get(defID).put("fuel", null);
         }

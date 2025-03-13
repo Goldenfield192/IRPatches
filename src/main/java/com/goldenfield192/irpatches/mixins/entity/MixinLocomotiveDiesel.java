@@ -3,6 +3,7 @@ package com.goldenfield192.irpatches.mixins.entity;
 import cam72cam.immersiverailroading.Config;
 import cam72cam.immersiverailroading.entity.LocomotiveDiesel;
 import cam72cam.immersiverailroading.registry.LocomotiveDieselDefinition;
+import cam72cam.immersiverailroading.util.BurnUtil;
 import cam72cam.mod.fluid.Fluid;
 import org.spongepowered.asm.mixin.Mixin;
 import com.goldenfield192.irpatches.common.*;
@@ -23,15 +24,15 @@ public abstract class MixinLocomotiveDiesel {
     public void getFluidFilter(CallbackInfoReturnable<List<Fluid>> cir){
         Config.ConfigBalance.dieselFuels.put("lava",1000);
         List<String> str = (List<String>) ExtraDefinitionManager.stockDef.get(this.getDefinition().defID).get("fuel");
-        cir.setReturnValue(Config.ConfigBalance.dieselFuels.keySet().stream()
-                                                           .filter(string -> {
-                                                               if(str != null){
-                                                                   return str.contains(string);
-                                                               }
-                                                               return true;
-                                                           })
-                                                           .map(Fluid::getFluid)
-                                                           .filter(Objects::nonNull)
-                                                           .collect(Collectors.toList()));
+        if(str == null){
+            cir.setReturnValue(BurnUtil.burnableFluids());
+            return;
+        }
+        cir.setReturnValue(str.stream()
+                              .filter(string -> Config.ConfigBalance.dieselFuels.containsKey(string)
+                                      || ExtraDefinitionManager.burnTime.containsKey(string))
+                              .map(Fluid::getFluid)
+                              .filter(Objects::nonNull)
+                              .collect(Collectors.toList()));
     }
 }

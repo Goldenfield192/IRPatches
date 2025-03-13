@@ -15,6 +15,7 @@
     "model.part.MixinControl",
     "registry.MixinEntityRollingStockDefinition",
     "render.item.MixinTrackBluePrintItemModel",
-    "render.multiblock.MixinBoilerRollerRenderer"
+    "render.multiblock.MixinBoilerRollerRenderer",
+    "util.MixinBurnUtil"
   ]
 }
