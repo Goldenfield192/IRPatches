@@ -6,7 +6,6 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinMain",
     "entity.MixinLocomotiveDiesel",
     "gui.MixinPaintBrushPicker",
     "items.MixinItemTrackBlueprint",
@@ -15,7 +14,6 @@
     "model.part.MixinControl",
     "registry.MixinEntityRollingStockDefinition",
     "render.item.MixinTrackBluePrintItemModel",
-    "render.multiblock.MixinBoilerRollerRenderer",
-    "util.MixinBurnUtil"
+    "render.multiblock.MixinBoilerRollerRenderer"
   ]
 }

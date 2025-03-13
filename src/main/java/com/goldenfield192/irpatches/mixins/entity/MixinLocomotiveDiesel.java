@@ -1,15 +1,16 @@
 package com.goldenfield192.irpatches.mixins.entity;
 
-import cam72cam.immersiverailroading.Config;
 import cam72cam.immersiverailroading.entity.LocomotiveDiesel;
 import cam72cam.immersiverailroading.registry.LocomotiveDieselDefinition;
 import cam72cam.immersiverailroading.util.BurnUtil;
 import cam72cam.mod.fluid.Fluid;
+import org.apache.commons.lang3.tuple.Pair;
 import org.spongepowered.asm.mixin.Mixin;
 import com.goldenfield192.irpatches.common.*;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
@@ -22,17 +23,25 @@ public abstract class MixinLocomotiveDiesel {
 
     @Inject(method = "getFluidFilter", at = @At("HEAD"), remap = false, cancellable = true)
     public void getFluidFilter(CallbackInfoReturnable<List<Fluid>> cir){
-        Config.ConfigBalance.dieselFuels.put("lava",1000);
-        List<String> str = (List<String>) ExtraDefinitionManager.stockDef.get(this.getDefinition().defID).get("fuel");
+        List<Pair<String, Integer>> str =
+                (List<Pair<String, Integer>>) ExtraDefinitionManager.stockDef.get(this.getDefinition().defID).get("fuel");
         if(str == null){
             cir.setReturnValue(BurnUtil.burnableFluids());
             return;
         }
         cir.setReturnValue(str.stream()
-                              .filter(string -> Config.ConfigBalance.dieselFuels.containsKey(string)
-                                      || ExtraDefinitionManager.burnTime.containsKey(string))
-                              .map(Fluid::getFluid)
+                              .map(pair -> Fluid.getFluid(pair.getKey()))
                               .filter(Objects::nonNull)
                               .collect(Collectors.toList()));
+    }
+
+    @Redirect(method = "onTick", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/util/BurnUtil;getBurnTime(Lcam72cam/mod/fluid/Fluid;)I"), remap = false)
+    public int mixinGetBurnTime(Fluid fluid){
+        List<Pair<String, Integer>> str =
+                (List<Pair<String, Integer>>) ExtraDefinitionManager.stockDef.get(this.getDefinition().defID).get("fuel");
+        if(str != null && str.stream().anyMatch(pair -> pair.getLeft().equals(fluid.ident))){
+            return str.stream().filter(pair -> pair.getLeft().equals(fluid.ident)).findFirst().get().getRight();
+        }
+        return 0;
     }
 }
