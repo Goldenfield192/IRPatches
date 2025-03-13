@@ -1,0 +1,19 @@
+package com.goldenfield192.irpatches.document.manual;
+
+import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
+import com.goldenfield192.irpatches.document.markdown.element.MarkdownUrl;
+import cam72cam.immersiverailroading.registry.DefinitionManager;
+import cam72cam.mod.resource.Identifier;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class TrackProvider {
+    public static final String SYNTAX = "[track_provider]";
+
+    public static List<MarkdownDocument.MarkdownLine> parse(String input, MarkdownDocument context){
+        return DefinitionManager.getTracks().stream()
+                .map(def -> MarkdownDocument.MarkdownLine.create(new MarkdownUrl(def.name, new Identifier("irtrack", def.trackID.split("/")[1]))))
+                .collect(Collectors.toList());
+    }
+}

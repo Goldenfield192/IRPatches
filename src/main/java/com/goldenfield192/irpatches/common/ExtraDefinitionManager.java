@@ -33,6 +33,19 @@ public class ExtraDefinitionManager {
         } else {
             extra.put("fuel", null);
         }
+
+        extra.put("name", data.getValue("name").asString());
+        extra.put("modeler", data.getValue("modeler").asString());
+        extra.put("pack", data.getValue("pack").asString());
+        if(data.getValue("description") != null){
+            extra.put("description", data.getValue("description").asIdentifier());
+        } else {
+            extra.put("description", null);
+        }
         stockDef.put(defID, extra);
+    }
+
+    public static HashMap<String, Object> getExtra(String defId){
+        return stockDef.get(defId);
     }
 }

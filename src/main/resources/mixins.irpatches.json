@@ -6,9 +6,12 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "MixinImmersiveRailroading",
     "entity.MixinLocomotiveDiesel",
     "gui.MixinPaintBrushPicker",
+    "items.MixinItemManual",
     "items.MixinItemTrackBlueprint",
+    "library.MixinGuiTypes",
     "model.MixinLocomotiveModel",
     "model.MixinStockModel",
     "model.part.MixinControl",

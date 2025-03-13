@@ -34,7 +34,7 @@ public class MixinEntityRollingStockDefinition {
     }
 
     @Inject(method = "loadData",
-            at = @At(value = "INVOKE_ASSIGN", target = "Lcam72cam/immersiverailroading/library/ValveGearConfig;get(Lcam72cam/immersiverailroading/util/DataBlock;Ljava/lang/String;)Lcam72cam/immersiverailroading/library/ValveGearConfig;"),
+            at = @At(value = "TAIL"),
             remap = false)
     public void mixinLoadData(DataBlock data, CallbackInfo ci){
         ExtraDefinitionManager.loadExtraStockProperties(this.defID, data);

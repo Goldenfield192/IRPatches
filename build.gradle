@@ -38,7 +38,7 @@ minecraft {
 
 jar.manifest.attributes(
         'FMLCorePluginContainsFMLMod': true,
-        'FMLCorePlugin': 'com.goldenfield192.irpatches.IRPLateMixinLoader'
+        'FMLCorePlugin': 'com.goldenfield192.irpatches.IRPEarlyMixinLoader'
 )
 
 repositories {
