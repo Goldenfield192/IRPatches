@@ -1,0 +1,7 @@
+modLoader="javafml"
+loaderVersion="[28,)"
+
+[[mods]]
+modId="irpatches"
+version="${file.jarVersion}"
+displayName="Immersive Railroading P"

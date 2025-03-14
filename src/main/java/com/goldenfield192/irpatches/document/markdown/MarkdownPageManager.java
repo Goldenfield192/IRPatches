@@ -1,5 +1,6 @@
 package com.goldenfield192.irpatches.document.markdown;
 
+import com.goldenfield192.irpatches.document.ManualGui;
 import com.goldenfield192.irpatches.document.manual.page.ItemComponentPageBuilder;
 import com.goldenfield192.irpatches.document.manual.page.StockDescriptionPageBuilder;
 import com.goldenfield192.irpatches.document.manual.page.TrackPageBuilder;
@@ -42,6 +43,21 @@ public class MarkdownPageManager {
     }
 
     /**
+     * Try to get a cached page
+     * @param id The page's content location
+     * @return The cached page or null if not present
+     */
+    public static synchronized MarkdownDocument getPageByID(Identifier id){
+        MarkdownDocument document;
+        if(BUILDERS.containsKey(id.getDomain())){
+            document = CUSTOM_PAGES.get(id.getDomain()).get(id);
+        } else {
+            throw new IllegalArgumentException();
+        }
+        return document;
+    }
+
+    /**
      * API method for dynamic generated content
      * @param id The cached page need to be cleared
      */
@@ -49,6 +65,7 @@ public class MarkdownPageManager {
         if(BUILDERS.containsKey(id.getDomain())){
             IPageBuilder builder = BUILDERS.get(id.getDomain());
             CUSTOM_PAGES.get(id.getDomain()).computeIfPresent(id, (ident, document) -> builder.build(ident));
+            ManualGui.refresh();
         }
     }
 

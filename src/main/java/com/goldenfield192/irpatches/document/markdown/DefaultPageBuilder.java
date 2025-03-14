@@ -38,6 +38,9 @@ public class DefaultPageBuilder implements IPageBuilder{
         BufferReaderAdapter reader = new BufferReaderAdapter(id);
 
         MarkdownDocument document = new MarkdownDocument(id);
+        if(MarkdownPageManager.getPageByID(id) != null){
+            document.copyProperties(MarkdownPageManager.getPageByID(id));
+        }
         String currentLine;
         //Interline state storage
         boolean isInTips = false;

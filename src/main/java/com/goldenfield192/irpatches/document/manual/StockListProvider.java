@@ -6,7 +6,6 @@ import com.goldenfield192.irpatches.document.markdown.element.MarkdownTitle;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownUrl;
 import cam72cam.immersiverailroading.registry.DefinitionManager;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
-import cam72cam.mod.ModCore;
 import cam72cam.mod.resource.Identifier;
 import org.apache.commons.lang3.tuple.MutablePair;
 
@@ -43,7 +42,6 @@ public class StockListProvider {
         for (MutablePair<String, EntityRollingStockDefinition> definition : definitions) {
             if(lastStartingChar == null || lastStartingChar != definition.getLeft().charAt(0)){
                 lastStartingChar = definition.getLeft().charAt(0);
-                ModCore.info(definition.getLeft());
                 lines.add(MarkdownDocument.MarkdownLine.create(new MarkdownTitle(lastStartingChar.toString(), 1)));
             }
             if(context.getProperty("stock") != 0 && (lastFullName == null || !lastFullName.equals(definition.getLeft()))){

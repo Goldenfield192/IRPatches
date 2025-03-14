@@ -63,6 +63,14 @@ public class MarkdownDocument {
     }
 
     /**
+     * Copy existing page properties from given MarkdownDocument
+     * @param source Given MarkdownDocument
+     */
+    public void copyProperties(MarkdownDocument source){
+        this.pageProperties.putAll(source.pageProperties);
+    }
+
+    /**
      * Render this page and return the height
      * @param state Gui RenderState
      * @return Height of the page

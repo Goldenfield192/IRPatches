@@ -72,7 +72,8 @@ public class MarkdownListSelector extends MarkdownClickableElement{
         state.translate(0, 2, 0);
         Vec3d offset = state.model_view().apply(Vec3d.ZERO);
         GUIHelpers.drawRect((int) offset.x - 2, (int) offset.y - 1,
-                maxLength + 2, 12, 0xFFDDDDFF);
+                            (int) ((maxLength + 2) * IRPConfig.ManualFontSize),
+                            (int) (12 * IRPConfig.ManualFontSize), 0xFFDDDDFF);
         ManualGUIHelper.drawString(choices.get(currentState), 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
         state.translate(0, 12, 0);
         return 16;

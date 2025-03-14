@@ -21,12 +21,13 @@ import java.util.Stack;
 import static com.goldenfield192.irpatches.document.markdown.Colors.BUTTON_DISABLED_COLOR;
 
 public class ManualGui implements IScreen {
-    private static ManualGui currentOpeningManual;
+    private static ManualGui instance;
     //                                        page     page's mainOffset
     private static final Stack<MutablePair<Identifier, Double>> historyPageStack = new Stack<>();
     private static final Stack<MutablePair<Identifier, Double>> futurePageStack = new Stack<>();
     private static Rectangle2D prevPageButton;
     private static Rectangle2D nextPageButton;
+    private static boolean refresh = false;
 
     private int width;
     private int height;
@@ -42,7 +43,7 @@ public class ManualGui implements IScreen {
     //So there's no need to update line break manually
     @Override
     public void init(IScreenBuilder screen) {
-        currentOpeningManual = this;
+        instance = this;
         prevPageButton = new Rectangle(60, 15, 20, 20);
         nextPageButton = new Rectangle(120, 15, 20, 20);
         sidebar = MarkdownPageManager.getOrComputePageByID(new Identifier(ImmersiveRailroading.MODID, "wiki/en_us/_sidebar.md"), 100);
@@ -58,7 +59,7 @@ public class ManualGui implements IScreen {
 
     @Override
     public void onClose() {
-        currentOpeningManual = null;
+        instance = null;
     }
 
     @Override
@@ -67,12 +68,13 @@ public class ManualGui implements IScreen {
         width = builder.getWidth();
         height = builder.getHeight();
 
-        if(lastPage != historyPageStack.peek().getLeft()){
+        if(lastPage != historyPageStack.peek().getLeft() || refresh){
             //Meaning that we should refresh it
             content = MarkdownPageManager.getOrComputePageByID(historyPageStack.peek().getLeft(), width - 240);
             content.setScrollRegion(new Rectangle(170,20,width-220,height-30));
             content.setVerticalOffset(historyPageStack.peek().getValue());
             lastPage = historyPageStack.peek().getLeft();
+            refresh = false;
         }
 
         //Background
@@ -123,7 +125,7 @@ public class ManualGui implements IScreen {
     }
 
     public static void pushContent(Identifier identifier, double offset){
-        if(currentOpeningManual == null){
+        if(instance == null){
             return;
         }
 
@@ -140,15 +142,19 @@ public class ManualGui implements IScreen {
         }
     }
 
+    public static void refresh() {
+        refresh = true;
+    }
+
     //Return true if the event is handled
     public static boolean onClick(ClientEvents.MouseGuiEvent event){
-        if(currentOpeningManual == null){
+        if(instance == null){
             return false;
         }
 
         if(event.scroll != 0) {
-            currentOpeningManual.sidebar.onScroll(event);
-            currentOpeningManual.content.onScroll(event);
+            instance.sidebar.onScroll(event);
+            instance.content.onScroll(event);
         }
 
         if(event.action == ClientEvents.MouseAction.RELEASE){
@@ -164,20 +170,20 @@ public class ManualGui implements IScreen {
                 }
                 return true;
             }
-            currentOpeningManual.sidebar.onMouseRelease(event);
-            currentOpeningManual.content.onMouseRelease(event);
+            instance.sidebar.onMouseRelease(event);
+            instance.content.onMouseRelease(event);
         }
         return true;
     }
 
     //For scroll
     public static void onClientTick(){
-        if(currentOpeningManual == null){
+        if(instance == null){
             return;
         }
 
-        currentOpeningManual.sidebar.handleScrollOnTicks();
-        currentOpeningManual.content.handleScrollOnTicks();
-        historyPageStack.peek().setValue(currentOpeningManual.content.getVerticalOffset());
+        instance.sidebar.handleScrollOnTicks();
+        instance.content.handleScrollOnTicks();
+        historyPageStack.peek().setValue(instance.content.getVerticalOffset());
     }
 }
