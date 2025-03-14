@@ -25,8 +25,8 @@ public class ManualGui implements IScreen {
     //                                        page     page's mainOffset
     private static final Stack<MutablePair<Identifier, Double>> historyPageStack = new Stack<>();
     private static final Stack<MutablePair<Identifier, Double>> futurePageStack = new Stack<>();
-    private static Rectangle2D prevPageButton;
-    private static Rectangle2D nextPageButton;
+    private static final Rectangle2D prevPageButton;
+    private static final Rectangle2D nextPageButton;
     private static boolean refresh = false;
 
     private int width;
@@ -37,6 +37,8 @@ public class ManualGui implements IScreen {
 
     static {
         historyPageStack.push(MutablePair.of(new Identifier("immersiverailroading:wiki/en_us/home.md"), 0d));
+        prevPageButton = new Rectangle(60, 15, 20, 20);
+        nextPageButton = new Rectangle(140, 15, 20, 20);
     }
 
     //Will be called every time the screen scale changes
@@ -44,8 +46,6 @@ public class ManualGui implements IScreen {
     @Override
     public void init(IScreenBuilder screen) {
         instance = this;
-        prevPageButton = new Rectangle(60, 15, 20, 20);
-        nextPageButton = new Rectangle(120, 15, 20, 20);
         sidebar = MarkdownPageManager.getOrComputePageByID(new Identifier(ImmersiveRailroading.MODID, "wiki/en_us/_sidebar.md"), 100);
         sidebar.setScrollRegion(new Rectangle(50, 35, 120, screen.getHeight() - 50));
         content = MarkdownPageManager.getOrComputePageByID(historyPageStack.peek().getLeft(), screen.getWidth() - 240);
@@ -88,16 +88,16 @@ public class ManualGui implements IScreen {
         GUIHelpers.texturedRect(new Identifier("immersiverailroading:gui/wiki/bottom_edge.png"), 60, height - 20,width - 120,10);
         GUIHelpers.texturedRect(new Identifier("immersiverailroading:gui/wiki/right_bottom_corner.png"), width - 60, height - 20,10,10);
 
-        //Markdown
         ClippedRenderer.renderInRegion(54, 35, 120, height - 50, () -> {
             sidebar.render(state.clone().translate(57, 40, 0).scale(IRPConfig.ManualFontSize, IRPConfig.ManualFontSize, IRPConfig.ManualFontSize));
-        });
-        ClippedRenderer.renderInRegion(175, 15, GUIHelpers.getScreenWidth() - 220, height - 30, () -> {
-            content.render(state.clone().translate(180, 20, 0).scale(IRPConfig.ManualFontSize, IRPConfig.ManualFontSize, IRPConfig.ManualFontSize));
         });
 
         //Middle split line
         GUIHelpers.drawRect(170,15,2,height - 30, BUTTON_DISABLED_COLOR);
+
+        ClippedRenderer.renderInRegion(175, 15, GUIHelpers.getScreenWidth() - 220, height - 30, () -> {
+            content.render(state.clone().translate(180, 20, 0).scale(IRPConfig.ManualFontSize, IRPConfig.ManualFontSize, IRPConfig.ManualFontSize));
+        });
 
         //Header
         if(historyPageStack.size() != 1){
@@ -106,7 +106,7 @@ public class ManualGui implements IScreen {
         }
         if(!futurePageStack.isEmpty()){
             GUIHelpers.texturedRect(new Identifier("immersiverailroading:gui/wiki/right.png"),
-                    120, 15, 20, 20);
+                    140, 15, 20, 20);
         }
 
         //Tooltip
