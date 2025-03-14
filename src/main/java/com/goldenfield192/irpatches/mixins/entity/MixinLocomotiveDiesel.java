@@ -23,13 +23,12 @@ public abstract class MixinLocomotiveDiesel {
 
     @Inject(method = "getFluidFilter", at = @At("HEAD"), remap = false, cancellable = true)
     public void getFluidFilter(CallbackInfoReturnable<List<Fluid>> cir){
-        List<Pair<String, Integer>> str =
-                (List<Pair<String, Integer>>) ExtraDefinitionManager.stockDef.get(this.getDefinition().defID).get("fuel");
-        if(str == null){
+        List<Pair<String, Integer>> overrides = ExtraDefinition.getExtra(this.getDefinition()).burnables;
+        if(overrides == null){
             cir.setReturnValue(BurnUtil.burnableFluids());
             return;
         }
-        cir.setReturnValue(str.stream()
+        cir.setReturnValue(overrides.stream()
                               .map(pair -> Fluid.getFluid(pair.getKey()))
                               .filter(Objects::nonNull)
                               .collect(Collectors.toList()));
@@ -37,10 +36,9 @@ public abstract class MixinLocomotiveDiesel {
 
     @Redirect(method = "onTick", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/util/BurnUtil;getBurnTime(Lcam72cam/mod/fluid/Fluid;)I"), remap = false)
     public int mixinGetBurnTime(Fluid fluid){
-        List<Pair<String, Integer>> str =
-                (List<Pair<String, Integer>>) ExtraDefinitionManager.stockDef.get(this.getDefinition().defID).get("fuel");
-        if(str != null && str.stream().anyMatch(pair -> pair.getLeft().equals(fluid.ident))){
-            return str.stream().filter(pair -> pair.getLeft().equals(fluid.ident)).findFirst().get().getRight();
+        List<Pair<String, Integer>> overrides = ExtraDefinition.getExtra(this.getDefinition()).burnables;
+        if(overrides != null && overrides.stream().anyMatch(pair -> pair.getLeft().equals(fluid.ident))){
+            return overrides.stream().filter(pair -> pair.getLeft().equals(fluid.ident)).findFirst().get().getRight();
         }
         return 0;
     }

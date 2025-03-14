@@ -9,6 +9,7 @@
     "MixinImmersiveRailroading",
     "entity.MixinLocomotiveDiesel",
     "gui.MixinPaintBrushPicker",
+    "gui.MixinTrackGui",
     "items.MixinItemManual",
     "items.MixinItemTrackBlueprint",
     "library.MixinGuiTypes",

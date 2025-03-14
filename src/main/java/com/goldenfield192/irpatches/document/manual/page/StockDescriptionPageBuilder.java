@@ -1,6 +1,6 @@
 package com.goldenfield192.irpatches.document.manual.page;
 
-import com.goldenfield192.irpatches.common.ExtraDefinitionManager;
+import com.goldenfield192.irpatches.common.ExtraDefinition;
 import com.goldenfield192.irpatches.document.manual.element.MDStockModelRenderer;
 import com.goldenfield192.irpatches.document.markdown.DefaultPageBuilder;
 import com.goldenfield192.irpatches.document.markdown.IPageBuilder;
@@ -25,18 +25,15 @@ public class StockDescriptionPageBuilder implements IPageBuilder {
     public MarkdownDocument build(Identifier id){
         MarkdownDocument document = new MarkdownDocument(id);
         EntityRollingStockDefinition def = DefinitionManager.getDefinition(id.getPath());
-        Identifier description = (Identifier) ExtraDefinitionManager.getExtra(def.defID).get("description");
-        String name = (String) ExtraDefinitionManager.getExtra(def.defID).get("name");
-        String modelerName = (String) ExtraDefinitionManager.getExtra(def.defID).get("modeler");
-        String packName = (String) ExtraDefinitionManager.getExtra(def.defID).get("pack");
+        ExtraDefinition extra = ExtraDefinition.getExtra(def);
 
-        if(description != null && description.canLoad()){
-            return DefaultPageBuilder.INSTANCE.build(description);
+        if(extra.description != null && extra.description.canLoad()){
+            return DefaultPageBuilder.INSTANCE.build(extra.description);
         }
 
         document.addLine(new MDStockModelRenderer(def))
-                .addLine(new MarkdownStyledText("Modeler: "), new MarkdownStyledText(modelerName))
-                .addLine(new MarkdownStyledText("Pack: "), new MarkdownStyledText(packName))
+                .addLine(new MarkdownStyledText("Modeler: "), new MarkdownStyledText(extra.modelerName))
+                .addLine(new MarkdownStyledText("Pack: "), new MarkdownStyledText(extra.packName))
                 .addLine(new MarkdownStyledText(""))
                 .addLine(new MarkdownStyledText("Required components:"));
         Map<String, Integer> componentMap = new HashMap<>();

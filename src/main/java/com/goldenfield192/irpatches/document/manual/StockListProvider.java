@@ -1,6 +1,6 @@
 package com.goldenfield192.irpatches.document.manual;
 
-import com.goldenfield192.irpatches.common.ExtraDefinitionManager;
+import com.goldenfield192.irpatches.common.ExtraDefinition;
 import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownTitle;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownUrl;
@@ -21,17 +21,15 @@ public class StockListProvider {
         List<MutablePair<String, EntityRollingStockDefinition>> definitions =
                 DefinitionManager.getDefinitions().stream()
                 .map(def -> {
-                    String name = (String) ExtraDefinitionManager.getExtra(def.defID).get("name");
-                    String modelerName = (String) ExtraDefinitionManager.getExtra(def.defID).get("modeler");
-                    String packName = (String) ExtraDefinitionManager.getExtra(def.defID).get("pack");
+                    ExtraDefinition extra = ExtraDefinition.getExtra(def);
                     switch (context.getProperty("stock")){
                         case 0:
-                            return MutablePair.of("N/A".equals(name) ? "Unknown" : name, def);
+                            return MutablePair.of("N/A".equals(extra.name) ? "Unknown" : extra.name, def);
                         case 1:
-                            return MutablePair.of("N/A".equals(modelerName) ? "Unknown" : modelerName, def);
+                            return MutablePair.of("N/A".equals(extra.modelerName) ? "Unknown" : extra.modelerName, def);
                         case 2:
                         default:
-                            return MutablePair.of("N/A".equals(packName) ? "Unknown" : packName, def);
+                            return MutablePair.of("N/A".equals(extra.packName) ? "Unknown" : extra.packName, def);
                     }
                 })
                 .sorted(Comparator.comparing(MutablePair::getLeft))
@@ -48,7 +46,7 @@ public class StockListProvider {
                 lastFullName = definition.getLeft();
                 lines.add(MarkdownDocument.MarkdownLine.create(new MarkdownTitle(lastFullName, 2)));
             }
-            lines.add(MarkdownDocument.MarkdownLine.create(new MarkdownUrl((String) ExtraDefinitionManager.getExtra(definition.getRight().defID).get("name"), new Identifier("irstock", definition.getRight().defID))));
+            lines.add(MarkdownDocument.MarkdownLine.create(new MarkdownUrl(ExtraDefinition.getExtra(definition.getRight()).name, new Identifier("irstock", definition.getRight().defID))));
         }
         return lines;
     }

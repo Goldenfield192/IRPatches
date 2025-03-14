@@ -37,6 +37,6 @@ public class MixinEntityRollingStockDefinition {
             at = @At(value = "TAIL"),
             remap = false)
     public void mixinLoadData(DataBlock data, CallbackInfo ci){
-        ExtraDefinitionManager.loadExtraStockProperties(this.defID, data);
+        ExtraDefinition.loadExtraStockProperties(this.defID, data);
     }
 }
