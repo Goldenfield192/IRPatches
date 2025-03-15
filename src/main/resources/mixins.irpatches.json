@@ -10,7 +10,6 @@
     "entity.MixinLocomotiveDiesel",
     "gui.MixinPaintBrushPicker",
     "gui.MixinTrackGui",
-    "items.MixinItemGoldenSpike",
     "items.MixinItemManual",
     "items.MixinItemTrackBlueprint",
     "library.MixinGuiTypes",
@@ -20,6 +19,7 @@
     "registry.MixinEntityRollingStockDefinition",
     "render.item.MixinTrackBluePrintItemModel",
     "render.multiblock.MixinBoilerRollerRenderer",
-    "tile.MixinTileRailPreview"
+    "tile.MixinTileRailPreview",
+    "util.MixinPlacementInfo"
   ]
 }

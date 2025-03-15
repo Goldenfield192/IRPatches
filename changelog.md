@@ -1,3 +1,8 @@
+## 1.2.1
+* Fix Track Blueprint GUI component overlapping issue
+* Fix Golden Spike issue with smooth Custom Curve
+* Change Golden Spike behaviour with Straight/Slope/Turn
+
 ## 1.2.0
 * Split document part from IR
 
