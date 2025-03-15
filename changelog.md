@@ -1,3 +1,6 @@
+## 1.2.2
+* Add better third-person camera when onboard
+
 ## 1.2.1
 * Fix Track Blueprint GUI component overlapping issue
 * Fix Golden Spike issue with smooth Custom Curve

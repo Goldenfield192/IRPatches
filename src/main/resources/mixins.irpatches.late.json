@@ -20,6 +20,7 @@
     "immersiverailroading.render.item.MixinTrackBluePrintItemModel",
     "immersiverailroading.render.multiblock.MixinBoilerRollerRenderer",
     "immersiverailroading.tile.MixinTileRailPreview",
-    "immersiverailroading.util.MixinPlacementInfo"
+    "immersiverailroading.util.MixinPlacementInfo",
+    "umc.render.MixinParticle"
   ]
 }

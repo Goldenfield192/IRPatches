@@ -4,7 +4,7 @@ import cam72cam.immersiverailroading.ImmersiveRailroading;
 import cam72cam.mod.ModEvent;
 import cam72cam.mod.config.ConfigFile;
 import cam72cam.mod.event.ClientEvents;
-import com.goldenfield192.irpatches.common.CameraPatch;
+import com.goldenfield192.irpatches.common.OnboardCamera;
 import com.goldenfield192.irpatches.common.IRPConfig;
 import com.goldenfield192.irpatches.common.ManualGUIHelper;
 import com.goldenfield192.irpatches.document.ManualGui;
@@ -15,14 +15,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Objects;
+
 @Mixin(ImmersiveRailroading.class)
 public class MixinImmersiveRailroading {
     @Inject(method = "commonEvent", at = @At("TAIL"), remap = false)
     public void mixinCommonEvent(ModEvent event, CallbackInfo ci){
-        switch(event){
-            case INITIALIZE:
-                ConfigFile.sync(IRPConfig.class);
-                break;
+        if(Objects.requireNonNull(event) == ModEvent.INITIALIZE){
+            ConfigFile.sync(IRPConfig.class);
         }
     }
 
@@ -34,7 +34,8 @@ public class MixinImmersiveRailroading {
                 break;
             case SETUP:
                 ClientEvents.TICK.subscribe(ManualGui::onClientTick);
-                ClientEvents.TICK.subscribe(CameraPatch::camera);
+                ClientEvents.TICK.subscribe(OnboardCamera::camera);
+                ClientEvents.SCROLL.subscribe(OnboardCamera::handleScroll);
                 break;
         }
     }
