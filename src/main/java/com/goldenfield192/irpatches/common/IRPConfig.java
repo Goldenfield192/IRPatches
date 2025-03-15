@@ -13,4 +13,12 @@ public class IRPConfig {
     @ConfigFile.Comment("Max distance of on-stock third person view")
     @ConfigFile.Range(min = 10, max = 500)
     public static float ThirdPersonMaxDistance = 20;
+
+    @ConfigFile.Comment("Max track length, use at your own risk!")
+    @ConfigFile.Range(min = 1000, max = Integer.MAX_VALUE)
+    public static int MaxTrackLength = 1000;
+
+    @ConfigFile.Comment("Track render distance")
+    @ConfigFile.Range(min = 1000, max = 15000)
+    public static int TrackRenderDistance = 1000;
 }

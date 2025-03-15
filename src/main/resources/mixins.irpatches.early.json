@@ -1,7 +1,7 @@
 {
   "required": true,
   "package": "com.goldenfield192.irpatches.mixins.minecraft",
-  "refmap": "mixins.irpatches.refmap.early.json",
+  "refmap": "mixins.irpatches.refmap.json",
   "target": "@env(DEFAULT)",
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",

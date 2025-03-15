@@ -7,6 +7,7 @@ import cam72cam.mod.entity.Player;
 import cam72cam.mod.gui.screen.CheckBox;
 import cam72cam.mod.gui.screen.IScreenBuilder;
 import cam72cam.mod.gui.screen.Slider;
+import com.goldenfield192.irpatches.common.IRPConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
@@ -20,7 +21,7 @@ public class MixinTrackGui {
     @Shadow(remap = false) private RailSettings.Mutable settings;
 
     @ModifyConstant(method = "init", constant = @Constant(intValue = 6), remap = false)
-    private int injectClickBox1(int constant){
+    private int inject1(int constant){
         return constant - 1;
     }
 
@@ -31,5 +32,10 @@ public class MixinTrackGui {
                 settings.isGradeCrossing = isGradeCrossingCB.isChecked();
             }
         };
+    }
+
+    @ModifyConstant(method = "lambda$init$0", constant = @Constant(intValue = 1000), remap = false)
+    public int modConst(int constant){
+        return IRPConfig.MaxTrackLength;
     }
 }
