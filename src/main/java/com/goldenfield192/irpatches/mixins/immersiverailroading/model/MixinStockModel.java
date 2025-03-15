@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.mixins.model;
+package com.goldenfield192.irpatches.mixins.immersiverailroading.model;
 
 import cam72cam.immersiverailroading.library.ValveGearConfig;
 import cam72cam.immersiverailroading.model.ModelState;

@@ -1,0 +1,25 @@
+{
+  "required": true,
+  "package": "com.goldenfield192.irpatches.mixins",
+  "refmap": "mixins.irpatches.refmap.late.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "immersiverailroading.MixinImmersiveRailroading",
+    "immersiverailroading.entity.MixinLocomotiveDiesel",
+    "immersiverailroading.gui.MixinPaintBrushPicker",
+    "immersiverailroading.gui.MixinTrackGui",
+    "immersiverailroading.items.MixinItemManual",
+    "immersiverailroading.items.MixinItemTrackBlueprint",
+    "immersiverailroading.library.MixinGuiTypes",
+    "immersiverailroading.model.MixinLocomotiveModel",
+    "immersiverailroading.model.MixinStockModel",
+    "immersiverailroading.model.part.MixinControl",
+    "immersiverailroading.registry.MixinEntityRollingStockDefinition",
+    "immersiverailroading.render.item.MixinTrackBluePrintItemModel",
+    "immersiverailroading.render.multiblock.MixinBoilerRollerRenderer",
+    "immersiverailroading.tile.MixinTileRailPreview",
+    "immersiverailroading.util.MixinPlacementInfo"
+  ]
+}

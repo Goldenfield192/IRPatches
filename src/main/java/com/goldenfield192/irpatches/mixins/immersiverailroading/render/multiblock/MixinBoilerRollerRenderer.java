@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.mixins.render.multiblock;
+package com.goldenfield192.irpatches.mixins.immersiverailroading.render.multiblock;
 
 import cam72cam.immersiverailroading.render.multiblock.BoilerRollerRender;
 import org.spongepowered.asm.mixin.Mixin;

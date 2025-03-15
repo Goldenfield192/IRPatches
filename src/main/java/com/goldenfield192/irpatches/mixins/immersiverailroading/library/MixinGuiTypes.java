@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.mixins.library;
+package com.goldenfield192.irpatches.mixins.immersiverailroading.library;
 
 import cam72cam.immersiverailroading.*;
 import cam72cam.immersiverailroading.library.GuiTypes;

@@ -1,9 +1,10 @@
-package com.goldenfield192.irpatches.mixins;
+package com.goldenfield192.irpatches.mixins.immersiverailroading;
 
 import cam72cam.immersiverailroading.ImmersiveRailroading;
 import cam72cam.mod.ModEvent;
 import cam72cam.mod.config.ConfigFile;
 import cam72cam.mod.event.ClientEvents;
+import com.goldenfield192.irpatches.common.CameraPatch;
 import com.goldenfield192.irpatches.common.IRPConfig;
 import com.goldenfield192.irpatches.common.ManualGUIHelper;
 import com.goldenfield192.irpatches.document.ManualGui;
@@ -33,6 +34,7 @@ public class MixinImmersiveRailroading {
                 break;
             case SETUP:
                 ClientEvents.TICK.subscribe(ManualGui::onClientTick);
+                ClientEvents.TICK.subscribe(CameraPatch::camera);
                 break;
         }
     }

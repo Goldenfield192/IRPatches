@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.mixins.entity;
+package com.goldenfield192.irpatches.mixins.immersiverailroading.entity;
 
 @Deprecated
 //@Mixin(EntityMoveableRollingStock.class)

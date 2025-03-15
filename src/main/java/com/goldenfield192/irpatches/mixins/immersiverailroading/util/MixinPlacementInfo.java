@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.mixins.util;
+package com.goldenfield192.irpatches.mixins.immersiverailroading.util;
 
 import cam72cam.immersiverailroading.items.nbt.RailSettings;
 import cam72cam.immersiverailroading.library.TrackDirection;

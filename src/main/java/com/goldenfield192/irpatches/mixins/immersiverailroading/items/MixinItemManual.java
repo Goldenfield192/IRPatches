@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.mixins.items;
+package com.goldenfield192.irpatches.mixins.immersiverailroading.items;
 
 import cam72cam.immersiverailroading.items.ItemManual;
 import cam72cam.mod.entity.Player;

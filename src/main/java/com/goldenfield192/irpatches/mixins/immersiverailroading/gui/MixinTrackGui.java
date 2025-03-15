@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.mixins.gui;
+package com.goldenfield192.irpatches.mixins.immersiverailroading.gui;
 
 import cam72cam.immersiverailroading.gui.TrackGui;
 import cam72cam.immersiverailroading.items.nbt.RailSettings;

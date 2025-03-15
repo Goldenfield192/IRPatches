@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.mixins.entity;
+package com.goldenfield192.irpatches.mixins.immersiverailroading.entity;
 
 import cam72cam.immersiverailroading.entity.LocomotiveDiesel;
 import cam72cam.immersiverailroading.registry.LocomotiveDieselDefinition;

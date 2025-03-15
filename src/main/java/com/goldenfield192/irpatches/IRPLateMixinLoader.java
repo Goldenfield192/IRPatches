@@ -11,6 +11,6 @@ import java.util.List;
 public class IRPLateMixinLoader implements ILateMixinLoader {
     @Override
     public List<String> getMixinConfigs() {
-        return Collections.singletonList("mixins.irpatches.json");
+        return Collections.singletonList("mixins.irpatches.late.json");
     }
 }

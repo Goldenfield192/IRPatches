@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.mixins.items;
+package com.goldenfield192.irpatches.mixins.immersiverailroading.items;
 
 import cam72cam.immersiverailroading.items.ItemTrackBlueprint;
 import cam72cam.immersiverailroading.util.BlockUtil;
@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 /**
  * Prevent leaves being replaced by track blueprint.
- * @see com.goldenfield192.irpatches.mixins.render.item.MixinTrackBluePrintItemModel
+ * @see com.goldenfield192.irpatches.mixins.immersiverailroading.render.item.MixinTrackBluePrintItemModel
  */
 @Mixin(ItemTrackBlueprint.class)
 public class MixinItemTrackBlueprint {
