@@ -12,5 +12,5 @@ public class IRPConfig {
 
     @ConfigFile.Comment("Max distance of on-stock third person view")
     @ConfigFile.Range(min = 10, max = 500)
-    public static float ThirdPersonDistance = 20;
+    public static float ThirdPersonMaxDistance = 20;
 }

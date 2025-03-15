@@ -56,7 +56,7 @@ public class OnboardCamera {
                 && enabled
                 && Minecraft.getMinecraft().gameSettings.thirdPersonView == 1){
             if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)){
-                targetDistance = Math.max(10, Math.min(IRPConfig.ThirdPersonDistance, targetDistance - 1.5 * d));
+                targetDistance = Math.max(10, Math.min(IRPConfig.ThirdPersonMaxDistance, targetDistance - 1.5 * d));
                 return false;
             } else if(Keyboard.isKeyDown(Keyboard.KEY_LMENU)){
                 targetFov = Math.max(20, Math.min(80, targetFov - d));

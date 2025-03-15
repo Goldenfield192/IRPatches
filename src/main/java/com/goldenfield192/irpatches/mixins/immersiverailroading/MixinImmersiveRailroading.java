@@ -35,9 +35,13 @@ public class MixinImmersiveRailroading {
             case SETUP:
                 ClientEvents.TICK.subscribe(ManualGui::onClientTick);
                 ClientEvents.TICK.subscribe(OnboardCamera::camera);
-                ClientEvents.SCROLL.subscribe(OnboardCamera::handleScroll);
                 break;
         }
+    }
+
+    @Inject(method = "clientEvent", at = @At(value = "INVOKE", target = "Lcam72cam/mod/render/GlobalRender;registerOverlay(Lcam72cam/mod/render/RenderFunction;)V"), remap = false)
+    public void mixinClientEvent2(ModEvent event, CallbackInfo ci){
+        ClientEvents.SCROLL.subscribe(OnboardCamera::handleScroll);
     }
 
     @Inject(method = "lambda$clientEvent$4", at = @At(value = "INVOKE_ASSIGN", target = "Lcam72cam/mod/entity/Player;getRiding()Lcam72cam/mod/entity/Entity;"), remap = false, cancellable = true)
