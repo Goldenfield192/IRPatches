@@ -1,7 +1,7 @@
 package com.goldenfield192.irpatches.document.markdown;
 
-import com.goldenfield192.irpatches.common.ManualGUIHelper;
-import com.goldenfield192.irpatches.common.IRPConfig;
+import com.goldenfield192.irpatches.common.IRPGUIHelper;
+import com.goldenfield192.irpatches.common.umc.IRPConfig;
 import com.goldenfield192.irpatches.document.manual.ManualHoverRenderer;
 import com.goldenfield192.irpatches.document.markdown.element.*;
 import cam72cam.mod.event.ClientEvents;
@@ -122,7 +122,7 @@ public class MarkdownDocument {
                 //These two element could be used multiply times in a line so they can't auto start new line, need manual translate
                 if(element instanceof MarkdownStyledText || element instanceof MarkdownUrl){
                     shouldStartANewLine = true;
-                    currWidth += ManualGUIHelper.getTextWidth(str);
+                    currWidth += IRPGUIHelper.getTextWidth(str);
                     if(element instanceof MarkdownStyledText && ((MarkdownStyledText) element).hasCode()){
                         currWidth += 2;
                     }
@@ -270,7 +270,7 @@ public class MarkdownDocument {
      */
     public static class MarkdownLine{
         //For those need to indent by 2 * x spaces
-        public static final int LIST_PREFIX_WIDTH = ManualGUIHelper.getTextWidth("  ");
+        public static final int LIST_PREFIX_WIDTH = IRPGUIHelper.getTextWidth("  ");
         private final List<MarkdownElement> elements;
         //Store interline state to control rendering
         public boolean unorderedList = false;

@@ -1,7 +1,7 @@
 package com.goldenfield192.irpatches.document.markdown.element;
 
-import com.goldenfield192.irpatches.common.ManualGUIHelper;
-import com.goldenfield192.irpatches.common.IRPConfig;
+import com.goldenfield192.irpatches.common.IRPGUIHelper;
+import com.goldenfield192.irpatches.common.umc.IRPConfig;
 import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
 import com.goldenfield192.irpatches.document.markdown.MarkdownPageManager;
 import cam72cam.mod.gui.helpers.GUIHelpers;
@@ -37,7 +37,7 @@ public class MarkdownListSelector extends MarkdownClickableElement{
             String[] sel = matcher.group("content").split(",");
             Arrays.stream(sel).map(String::trim).forEach(str -> {
                 choices.add(str);
-                maxLength = Math.max(ManualGUIHelper.getTextWidth(str), maxLength);
+                maxLength = Math.max(IRPGUIHelper.getTextWidth(str), maxLength);
             });
             currentState = 0;
         } else {
@@ -74,7 +74,7 @@ public class MarkdownListSelector extends MarkdownClickableElement{
         GUIHelpers.drawRect((int) offset.x - 2, (int) offset.y - 1,
                             (int) ((maxLength + 2) * IRPConfig.ManualFontSize),
                             (int) (12 * IRPConfig.ManualFontSize), 0xFFDDDDFF);
-        ManualGUIHelper.drawString(choices.get(currentState), 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
+        IRPGUIHelper.drawString(choices.get(currentState), 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
         state.translate(0, 12, 0);
         return 16;
     }

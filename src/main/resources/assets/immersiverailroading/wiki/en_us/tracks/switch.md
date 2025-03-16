@@ -38,3 +38,4 @@ And it can be set to the turn direction by giving a redstone signal:
 
 # Relevant Pages
 * [Golden Spike](immersiverailroading:wiki/en_us/tracks/golden_spike.md)
+* [Switch Key](immersiverailroading:wiki/en_us/tracks/switch_key.md)

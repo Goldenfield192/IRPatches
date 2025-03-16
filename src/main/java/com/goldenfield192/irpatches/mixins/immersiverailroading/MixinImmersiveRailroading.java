@@ -4,9 +4,12 @@ import cam72cam.immersiverailroading.ImmersiveRailroading;
 import cam72cam.mod.ModEvent;
 import cam72cam.mod.config.ConfigFile;
 import cam72cam.mod.event.ClientEvents;
+import cam72cam.mod.net.Packet;
+import cam72cam.mod.net.PacketDirection;
 import com.goldenfield192.irpatches.common.OnboardCamera;
-import com.goldenfield192.irpatches.common.IRPConfig;
-import com.goldenfield192.irpatches.common.ManualGUIHelper;
+import com.goldenfield192.irpatches.common.umc.AugmentGui;
+import com.goldenfield192.irpatches.common.umc.IRPConfig;
+import com.goldenfield192.irpatches.common.IRPGUIHelper;
 import com.goldenfield192.irpatches.document.ManualGui;
 import com.goldenfield192.irpatches.document.manual.ManualHoverRenderer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,26 +18,29 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Objects;
-
 @Mixin(ImmersiveRailroading.class)
 public class MixinImmersiveRailroading {
     @Inject(method = "commonEvent", at = @At("TAIL"), remap = false)
     public void mixinCommonEvent(ModEvent event, CallbackInfo ci){
-        if(Objects.requireNonNull(event) == ModEvent.INITIALIZE){
-            ConfigFile.sync(IRPConfig.class);
+        switch(event){
+            case CONSTRUCT:
+                Packet.register(AugmentGui.AugmentFilterChangePacket::new, PacketDirection.ClientToServer);
+                break;
+            case INITIALIZE:
+                ConfigFile.sync(IRPConfig.class);
+                break;
         }
     }
 
     @Inject(method = "clientEvent", at = @At("TAIL"), remap = false)
-    public void mixinClientEvent(ModEvent event, CallbackInfo ci){
+    public void mixinClientEvent1(ModEvent event, CallbackInfo ci){
         switch(event){
             case CONSTRUCT:
-                ManualGUIHelper.register();
+                IRPGUIHelper.register();
                 break;
             case SETUP:
                 ClientEvents.TICK.subscribe(ManualGui::onClientTick);
-                ClientEvents.TICK.subscribe(OnboardCamera::camera);
+                ClientEvents.TICK.subscribe(OnboardCamera::onClientTick);
                 break;
         }
     }

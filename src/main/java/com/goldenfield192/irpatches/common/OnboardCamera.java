@@ -3,6 +3,7 @@ package com.goldenfield192.irpatches.common;
 import cam72cam.immersiverailroading.entity.EntityRollingStock;
 import cam72cam.mod.MinecraftClient;
 import cam72cam.mod.entity.Entity;
+import com.goldenfield192.irpatches.common.umc.IRPConfig;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 
@@ -17,7 +18,7 @@ public class OnboardCamera {
     private static double prevDistance = 0;
 //    private static double prevFov = 0;
 
-    public static void camera(){
+    public static void onClientTick(){
         if(!MinecraftClient.isReady()){
             return;
         }
@@ -42,7 +43,7 @@ public class OnboardCamera {
         if(Math.abs(targetDistance - distance) <= 0.001){
             distance = targetDistance;
         } else {
-            distance += Math.min((targetDistance - distance) * 0.1, 0.5);
+            distance += Math.min((targetDistance - distance) * 0.1, 0.75);
         }
         fov = targetFov;
     }

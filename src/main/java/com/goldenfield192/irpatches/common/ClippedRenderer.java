@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.document.manual;
+package com.goldenfield192.irpatches.common;
 
 import cam72cam.mod.gui.helpers.GUIHelpers;
 import net.minecraft.client.Minecraft;

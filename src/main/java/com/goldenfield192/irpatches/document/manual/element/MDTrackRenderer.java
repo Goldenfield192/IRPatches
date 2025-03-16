@@ -1,7 +1,6 @@
 package com.goldenfield192.irpatches.document.manual.element;
 
-import cam72cam.immersiverailroading.ConfigGraphics;
-import com.goldenfield192.irpatches.common.IRPConfig;
+import com.goldenfield192.irpatches.common.umc.IRPConfig;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownElement;
 import cam72cam.immersiverailroading.model.TrackModel;
 import cam72cam.immersiverailroading.registry.DefinitionManager;

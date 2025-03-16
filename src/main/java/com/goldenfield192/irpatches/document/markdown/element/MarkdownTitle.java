@@ -2,7 +2,7 @@ package com.goldenfield192.irpatches.document.markdown.element;
 
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.opengl.RenderState;
-import com.goldenfield192.irpatches.common.ManualGUIHelper;
+import com.goldenfield192.irpatches.common.IRPGUIHelper;
 
 import static com.goldenfield192.irpatches.document.markdown.Colors.DEFAULT_TEXT_COLOR;
 
@@ -84,7 +84,7 @@ public class MarkdownTitle extends MarkdownElement {
         if(this.level == 1){
             //Scale matrix
             state.scale(1.8, 1.8, 1.8);
-            ManualGUIHelper.drawString(str, 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
+            IRPGUIHelper.drawString(str, 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
 
             //Revert matrix
             state.scale(LEVEL1, LEVEL1, LEVEL1);
@@ -95,7 +95,7 @@ public class MarkdownTitle extends MarkdownElement {
         } else if(this.level == 2){
             //Scale matrix
             state.scale(1.5, 1.5, 1.5);
-            ManualGUIHelper.drawString(str, 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
+            IRPGUIHelper.drawString(str, 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
 
             //Revert matrix
             state.scale(LEVEL2, LEVEL2, LEVEL2);
@@ -105,7 +105,7 @@ public class MarkdownTitle extends MarkdownElement {
         } else if (this.level == 3) {
             //Scale matrix
             state.scale(1.2, 1.2, 1.2);
-            ManualGUIHelper.drawString(str, 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
+            IRPGUIHelper.drawString(str, 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
 
             //Revert matrix
             state.scale(LEVEL3, LEVEL3, LEVEL3);
@@ -113,7 +113,7 @@ public class MarkdownTitle extends MarkdownElement {
             state.translate(0, 12, 0);
             return 12;
         } else {
-            ManualGUIHelper.drawString(str, 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
+            IRPGUIHelper.drawString(str, 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
             state.translate(0, 10, 0);
             return 10;
         }

@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.common;
+package com.goldenfield192.irpatches.common.umc;
 
 import cam72cam.mod.math.Vec3d;
 

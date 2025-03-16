@@ -1,7 +1,7 @@
 package com.goldenfield192.irpatches.document.markdown;
 
-import com.goldenfield192.irpatches.common.ManualGUIHelper;
-import com.goldenfield192.irpatches.common.IRPConfig;
+import com.goldenfield192.irpatches.common.IRPGUIHelper;
+import com.goldenfield192.irpatches.common.umc.IRPConfig;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownElement;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownStyledText;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownTitle;
@@ -92,7 +92,7 @@ public class MarkdownLineBreaker {
                                 (element instanceof MarkdownTitle && ((MarkdownTitle) element).level == 2) ? 1.15 :
                                 1;
             multiplier *= IRPConfig.ManualFontSize;
-            int elementWidth = (int) (ManualGUIHelper.getTextWidth(element.text) * multiplier);
+            int elementWidth = (int) (IRPGUIHelper.getTextWidth(element.text) * multiplier);
 
             // If the element is oversize...
             if (elementWidth > screenWidth && currentLine.isEmpty()) {
@@ -213,7 +213,7 @@ public class MarkdownLineBreaker {
 
         while (low <= high) {
             int mid = (low + high) / 2;
-            int currentWidth = (int) (ManualGUIHelper.getTextWidth(text.substring(0, mid)) * widthMultiplier);
+            int currentWidth = (int) (IRPGUIHelper.getTextWidth(text.substring(0, mid)) * widthMultiplier);
 
             if (currentWidth <= maxWidth) {
                 bestPos = mid;

@@ -6,8 +6,8 @@ import cam72cam.immersiverailroading.model.StockModel;
 import cam72cam.immersiverailroading.model.components.ComponentProvider;
 import cam72cam.immersiverailroading.model.part.*;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
-import com.goldenfield192.irpatches.common.DrivingAssemblyLoader;
-import com.goldenfield192.irpatches.common.ExtraDefinition;
+import com.goldenfield192.irpatches.common.umc.DrivingAssemblyLoader;
+import com.goldenfield192.irpatches.common.umc.ExtraDefinition;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,7 +34,7 @@ public class MixinStockModel {
               at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/model/part/DrivingAssembly;get(Lcam72cam/immersiverailroading/library/ValveGearConfig;Lcam72cam/immersiverailroading/model/components/ComponentProvider;Lcam72cam/immersiverailroading/model/ModelState;F[Lcam72cam/immersiverailroading/model/part/WheelSet;)Lcam72cam/immersiverailroading/model/part/DrivingAssembly;"),
               remap = false)
     public DrivingAssembly mixinParseComponents(ValveGearConfig type, ComponentProvider localProvider, ModelState state, float angleOffset, WheelSet[] backups, ComponentProvider provider, EntityRollingStockDefinition def){
-        int multiplier = (int) ExtraDefinition.getExtra(def).leftFirstMultiplier;
+        int multiplier = (int) ExtraDefinition.get(def).leftFirstMultiplier;
         try {
 
             return DrivingAssemblyLoader.get(def.getValveGear(), localProvider, this.base, null, 0, multiplier, new WheelSet[]{this.frame != null ? this.frame.wheels : null, this.bogeyFront != null ? this.bogeyFront.wheels : null, this.bogeyRear != null ? this.bogeyRear.wheels : null});

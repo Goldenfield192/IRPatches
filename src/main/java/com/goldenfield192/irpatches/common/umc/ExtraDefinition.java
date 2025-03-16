@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.common;
+package com.goldenfield192.irpatches.common.umc;
 
 import cam72cam.immersiverailroading.Config;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
@@ -53,11 +53,11 @@ public class ExtraDefinition {
         extraDef.put(defID, def);
     }
 
-    public static ExtraDefinition getExtra(EntityRollingStockDefinition definition){
-        return getExtra(definition.defID);
+    public static ExtraDefinition get(EntityRollingStockDefinition definition){
+        return get(definition.defID);
     }
 
-    public static ExtraDefinition getExtra(String str) {
+    public static ExtraDefinition get(String str) {
         return extraDef.get(str);
     }
 }

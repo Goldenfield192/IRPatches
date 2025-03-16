@@ -1,6 +1,6 @@
 package com.goldenfield192.irpatches.document.manual.page;
 
-import com.goldenfield192.irpatches.common.ExtraDefinition;
+import com.goldenfield192.irpatches.common.umc.ExtraDefinition;
 import com.goldenfield192.irpatches.document.manual.element.MDStockModelRenderer;
 import com.goldenfield192.irpatches.document.markdown.DefaultPageBuilder;
 import com.goldenfield192.irpatches.document.markdown.IPageBuilder;
@@ -25,7 +25,7 @@ public class StockDescriptionPageBuilder implements IPageBuilder {
     public MarkdownDocument build(Identifier id){
         MarkdownDocument document = new MarkdownDocument(id);
         EntityRollingStockDefinition def = DefinitionManager.getDefinition(id.getPath());
-        ExtraDefinition extra = ExtraDefinition.getExtra(def);
+        ExtraDefinition extra = ExtraDefinition.get(def);
 
         if(extra.description != null && extra.description.canLoad()){
             return DefaultPageBuilder.INSTANCE.build(extra.description);

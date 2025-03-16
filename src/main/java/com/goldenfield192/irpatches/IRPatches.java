@@ -8,5 +8,4 @@ package com.goldenfield192.irpatches;
 public class IRPatches {
     //Used to load resource
     public static final String MODID = "irpatches";
-
 }

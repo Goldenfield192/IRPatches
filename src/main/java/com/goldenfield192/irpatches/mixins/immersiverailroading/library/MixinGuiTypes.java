@@ -5,7 +5,7 @@ import cam72cam.immersiverailroading.library.GuiTypes;
 import cam72cam.mod.config.ConfigGui;
 import cam72cam.mod.gui.GuiRegistry;
 import cam72cam.mod.resource.Identifier;
-import com.goldenfield192.irpatches.common.IRPConfig;
+import com.goldenfield192.irpatches.common.umc.IRPConfig;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;

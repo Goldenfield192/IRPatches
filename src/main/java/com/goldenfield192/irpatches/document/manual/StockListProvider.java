@@ -1,6 +1,6 @@
 package com.goldenfield192.irpatches.document.manual;
 
-import com.goldenfield192.irpatches.common.ExtraDefinition;
+import com.goldenfield192.irpatches.common.umc.ExtraDefinition;
 import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownTitle;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownUrl;
@@ -21,7 +21,7 @@ public class StockListProvider {
         List<MutablePair<String, EntityRollingStockDefinition>> definitions =
                 DefinitionManager.getDefinitions().stream()
                 .map(def -> {
-                    ExtraDefinition extra = ExtraDefinition.getExtra(def);
+                    ExtraDefinition extra = ExtraDefinition.get(def);
                     switch (context.getProperty("stock")){
                         case 0:
                             return MutablePair.of("N/A".equals(extra.name) ? "Unknown" : extra.name, def);
@@ -46,7 +46,7 @@ public class StockListProvider {
                 lastFullName = definition.getLeft();
                 lines.add(MarkdownDocument.MarkdownLine.create(new MarkdownTitle(lastFullName, 2)));
             }
-            lines.add(MarkdownDocument.MarkdownLine.create(new MarkdownUrl(ExtraDefinition.getExtra(definition.getRight()).name, new Identifier("irstock", definition.getRight().defID))));
+            lines.add(MarkdownDocument.MarkdownLine.create(new MarkdownUrl(ExtraDefinition.get(definition.getRight()).name, new Identifier("irstock", definition.getRight().defID))));
         }
         return lines;
     }

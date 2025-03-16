@@ -3,8 +3,8 @@ package com.goldenfield192.irpatches.document.markdown.element;
 import cam72cam.mod.gui.helpers.GUIHelpers;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.opengl.RenderState;
-import com.goldenfield192.irpatches.common.ManualGUIHelper;
-import com.goldenfield192.irpatches.common.IRPConfig;
+import com.goldenfield192.irpatches.common.IRPGUIHelper;
+import com.goldenfield192.irpatches.common.umc.IRPConfig;
 import com.goldenfield192.irpatches.document.markdown.BufferReaderAdapter;
 import com.goldenfield192.irpatches.document.markdown.DefaultPageBuilder;
 import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
@@ -63,10 +63,10 @@ public class MarkdownCodeBlock {
         //Code blocks have a gray background and start with a language specification mark
         GUIHelpers.drawRect((int) offset.x, (int) offset.y,
                 document.getPageWidth(), (int) (10 * IRPConfig.ManualFontSize), CODE_BACKGROUND_COLOR);
-        int delta = (int) ((document.getPageWidth() - ManualGUIHelper.getTextWidth(currentLine.getElements().get(0).apply())* IRPConfig.ManualFontSize)
+        int delta = (int) ((document.getPageWidth() - IRPGUIHelper.getTextWidth(currentLine.getElements().get(0).apply())* IRPConfig.ManualFontSize)
                 / IRPConfig.ManualFontSize);
         state.translate(delta, 0, 0);
-        ManualGUIHelper.drawString(currentLine.getElements().get(0).apply(), 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
+        IRPGUIHelper.drawString(currentLine.getElements().get(0).apply(), 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
         state.translate(-delta, 10, 0);
         height += 10;
 
@@ -84,7 +84,7 @@ public class MarkdownCodeBlock {
             //Otherwise draw content
             GUIHelpers.drawRect((int) offset.x , (int) offset.y ,
                     document.getPageWidth(), (int) (10 * IRPConfig.ManualFontSize), CODE_BACKGROUND_COLOR);
-            ManualGUIHelper.drawString(line.getElements().get(0).apply(), 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
+            IRPGUIHelper.drawString(line.getElements().get(0).apply(), 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
             state.translate(0, 10, 0);
             height += 10;
         }

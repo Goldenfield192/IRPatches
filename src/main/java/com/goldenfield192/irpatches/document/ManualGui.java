@@ -7,8 +7,8 @@ import cam72cam.mod.gui.screen.IScreen;
 import cam72cam.mod.gui.screen.IScreenBuilder;
 import cam72cam.mod.render.opengl.RenderState;
 import cam72cam.mod.resource.Identifier;
-import com.goldenfield192.irpatches.common.IRPConfig;
-import com.goldenfield192.irpatches.document.manual.ClippedRenderer;
+import com.goldenfield192.irpatches.common.umc.IRPConfig;
+import com.goldenfield192.irpatches.common.ClippedRenderer;
 import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
 import com.goldenfield192.irpatches.document.markdown.MarkdownPageManager;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownUrl;
@@ -25,8 +25,8 @@ public class ManualGui implements IScreen {
     //                                        page     page's mainOffset
     private static final Stack<MutablePair<Identifier, Double>> historyPageStack = new Stack<>();
     private static final Stack<MutablePair<Identifier, Double>> futurePageStack = new Stack<>();
-    private static final Rectangle2D prevPageButton;
-    private static final Rectangle2D nextPageButton;
+    private static final Rectangle2D prevPageButton = new Rectangle(60, 15, 20, 20);
+    private static final Rectangle2D nextPageButton = new Rectangle(140, 15, 20, 20);
     private static boolean refresh = false;
 
     private int width;
@@ -37,8 +37,6 @@ public class ManualGui implements IScreen {
 
     static {
         historyPageStack.push(MutablePair.of(new Identifier("immersiverailroading:wiki/en_us/home.md"), 0d));
-        prevPageButton = new Rectangle(60, 15, 20, 20);
-        nextPageButton = new Rectangle(140, 15, 20, 20);
     }
 
     //Will be called every time the screen scale changes

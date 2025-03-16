@@ -2,7 +2,7 @@ package com.goldenfield192.irpatches.document.manual;
 
 import cam72cam.mod.event.ClientEvents;
 import cam72cam.mod.gui.helpers.GUIHelpers;
-import com.goldenfield192.irpatches.common.ManualGUIHelper;
+import com.goldenfield192.irpatches.common.IRPGUIHelper;
 
 import static com.goldenfield192.irpatches.document.markdown.Colors.*;
 
@@ -22,7 +22,7 @@ public class ManualHoverRenderer {
      */
     public static void renderTooltip(String text, int bottomBound){
         if(text != null && !text.isEmpty()){
-            int textWidth = ManualGUIHelper.getTextWidth(text);
+            int textWidth = IRPGUIHelper.getTextWidth(text);
 
             int x = mouseX;
             int y = mouseY;
@@ -35,7 +35,7 @@ public class ManualHoverRenderer {
 
             GUIHelpers.drawRect(x - 2, y + 1, textWidth + 4, 14, HOVER_BOUNDARY_COLOR);
             GUIHelpers.drawRect(x - 1, y + 2, textWidth + 2, 12, HOVER_INTERNAL_COLOR);
-            ManualGUIHelper.drawString(text, x, y + 3, DEFAULT_TEXT_COLOR);
+            IRPGUIHelper.drawString(text, x, y + 3, DEFAULT_TEXT_COLOR);
         }
     }
 

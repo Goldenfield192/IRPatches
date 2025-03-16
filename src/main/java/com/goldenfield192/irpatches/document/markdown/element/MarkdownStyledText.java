@@ -4,8 +4,8 @@ import cam72cam.mod.gui.helpers.GUIHelpers;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.opengl.RenderState;
 import cam72cam.mod.text.TextColor;
-import com.goldenfield192.irpatches.common.ManualGUIHelper;
-import com.goldenfield192.irpatches.common.IRPConfig;
+import com.goldenfield192.irpatches.common.IRPGUIHelper;
+import com.goldenfield192.irpatches.common.umc.IRPConfig;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -86,13 +86,13 @@ public class MarkdownStyledText extends MarkdownElement {
         if(this.hasCode()){
             Vec3d offset = state.model_view().apply(Vec3d.ZERO);
             GUIHelpers.drawRect((int) offset.x - 2, (int) offset.y - 1,
-                                (int) (ManualGUIHelper.getTextWidth(str) * IRPConfig.ManualFontSize + 4),
+                                (int) (IRPGUIHelper.getTextWidth(str) * IRPConfig.ManualFontSize + 4),
                                 (int) (12 * IRPConfig.ManualFontSize), CODE_BACKGROUND_COLOR);
-            ManualGUIHelper.drawString(str, 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
-            state.translate(ManualGUIHelper.getTextWidth(str) + 2, 0, 0);
+            IRPGUIHelper.drawString(str, 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
+            state.translate(IRPGUIHelper.getTextWidth(str) + 2, 0, 0);
         } else {
-            ManualGUIHelper.drawString(str, 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
-            state.translate(ManualGUIHelper.getTextWidth(str), 0, 0);
+            IRPGUIHelper.drawString(str, 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
+            state.translate(IRPGUIHelper.getTextWidth(str), 0, 0);
         }
         return 0;
     }

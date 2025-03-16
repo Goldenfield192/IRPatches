@@ -1,7 +1,7 @@
 package com.goldenfield192.irpatches.document.markdown.element;
 
-import com.goldenfield192.irpatches.common.ManualGUIHelper;
-import com.goldenfield192.irpatches.common.IRPConfig;
+import com.goldenfield192.irpatches.common.IRPGUIHelper;
+import com.goldenfield192.irpatches.common.umc.IRPConfig;
 import com.goldenfield192.irpatches.document.ManualGui;
 import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
 import com.goldenfield192.irpatches.document.markdown.MarkdownPageManager;
@@ -103,8 +103,8 @@ public class MarkdownUrl extends MarkdownClickableElement {
     @Override
     public int render(RenderState state, int pageWidth) {
         String str = this.apply();
-        ManualGUIHelper.drawString(str, 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
-        state.translate(ManualGUIHelper.getTextWidth(str), 0, 0);
+        IRPGUIHelper.drawString(str, 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
+        state.translate(IRPGUIHelper.getTextWidth(str), 0, 0);
         return 0;
     }
 
@@ -122,7 +122,7 @@ public class MarkdownUrl extends MarkdownClickableElement {
     @Override
     public void updateSection(Vec3d offset) {
         this.section = new Rectangle((int) offset.x, (int) offset.y,
-                (int) (ManualGUIHelper.getTextWidth(this.apply()) * IRPConfig.ManualFontSize),
+                (int) (IRPGUIHelper.getTextWidth(this.apply()) * IRPConfig.ManualFontSize),
                 (int) (10 * IRPConfig.ManualFontSize));
     }
 
