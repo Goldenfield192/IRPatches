@@ -1,18 +1,21 @@
 package com.goldenfield192.irpatches.common;
 
-import cam72cam.immersiverailroading.ImmersiveRailroading;
+import cam72cam.immersiverailroading.tile.TileRailBase;
 import cam72cam.mod.gui.GuiRegistry;
 import cam72cam.mod.render.opengl.RenderContext;
 import cam72cam.mod.render.opengl.RenderState;
 import cam72cam.mod.resource.Identifier;
 import cam72cam.mod.util.With;
+import com.goldenfield192.irpatches.IRPatches;
+import com.goldenfield192.irpatches.common.umc.AugmentGui;
 import com.goldenfield192.irpatches.document.ManualGui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import util.Matrix4;
 
-public class ManualGUIHelper {
-    public static final GuiRegistry.GUI MANUAL = GuiRegistry.register(new Identifier(ImmersiveRailroading.MODID, "MANUAL"), ManualGui::new);
+public class IRPGUIHelper {
+    public static final GuiRegistry.GUI MANUAL = GuiRegistry.register(new Identifier(IRPatches.MODID, "MANUAL"), ManualGui::new);
+    public static final GuiRegistry.BlockGUI AUGMENT = GuiRegistry.registerBlock(TileRailBase.class, AugmentGui::new);
 
     public static int getTextWidth(String s){
         return Minecraft.getMinecraft().fontRenderer.getStringWidth(s);

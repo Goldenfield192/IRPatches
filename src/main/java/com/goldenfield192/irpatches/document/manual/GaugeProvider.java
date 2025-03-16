@@ -1,8 +1,8 @@
 package com.goldenfield192.irpatches.document.manual;
 
+import cam72cam.immersiverailroading.library.Gauge;
 import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownStyledText;
-import cam72cam.immersiverailroading.library.Gauge;
 
 import java.util.List;
 import java.util.stream.Collectors;

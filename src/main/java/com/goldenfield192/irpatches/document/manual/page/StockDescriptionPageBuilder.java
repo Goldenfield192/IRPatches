@@ -1,5 +1,9 @@
 package com.goldenfield192.irpatches.document.manual.page;
 
+import cam72cam.immersiverailroading.library.ItemComponentType;
+import cam72cam.immersiverailroading.registry.DefinitionManager;
+import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
+import cam72cam.mod.resource.Identifier;
 import com.goldenfield192.irpatches.common.umc.ExtraDefinition;
 import com.goldenfield192.irpatches.document.manual.element.MDStockModelRenderer;
 import com.goldenfield192.irpatches.document.markdown.DefaultPageBuilder;
@@ -8,10 +12,6 @@ import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownElement;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownStyledText;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownUrl;
-import cam72cam.immersiverailroading.library.ItemComponentType;
-import cam72cam.immersiverailroading.registry.DefinitionManager;
-import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
-import cam72cam.mod.resource.Identifier;
 
 import java.util.ArrayList;
 import java.util.HashMap;

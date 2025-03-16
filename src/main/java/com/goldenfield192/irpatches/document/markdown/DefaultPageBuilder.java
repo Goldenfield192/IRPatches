@@ -1,10 +1,10 @@
 package com.goldenfield192.irpatches.document.markdown;
 
+import cam72cam.mod.resource.Identifier;
 import com.goldenfield192.irpatches.document.manual.GaugeProvider;
 import com.goldenfield192.irpatches.document.manual.StockListProvider;
 import com.goldenfield192.irpatches.document.manual.TrackProvider;
 import com.goldenfield192.irpatches.document.markdown.element.*;
-import cam72cam.mod.resource.Identifier;
 
 import java.util.*;
 import java.util.function.BiFunction;

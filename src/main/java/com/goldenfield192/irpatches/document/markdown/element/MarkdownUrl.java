@@ -1,16 +1,16 @@
 package com.goldenfield192.irpatches.document.markdown.element;
 
-import com.goldenfield192.irpatches.common.IRPGUIHelper;
-import com.goldenfield192.irpatches.common.umc.IRPConfig;
-import com.goldenfield192.irpatches.document.ManualGui;
-import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
-import com.goldenfield192.irpatches.document.markdown.MarkdownPageManager;
 import cam72cam.mod.MinecraftClient;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.opengl.RenderState;
 import cam72cam.mod.resource.Identifier;
 import cam72cam.mod.text.PlayerMessage;
 import cam72cam.mod.text.TextColor;
+import com.goldenfield192.irpatches.common.IRPGUIHelper;
+import com.goldenfield192.irpatches.common.umc.IRPConfig;
+import com.goldenfield192.irpatches.document.ManualGui;
+import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
+import com.goldenfield192.irpatches.document.markdown.MarkdownPageManager;
 
 import java.awt.*;
 import java.util.ArrayList;

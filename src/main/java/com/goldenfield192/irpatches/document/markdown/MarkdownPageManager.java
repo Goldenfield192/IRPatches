@@ -1,10 +1,10 @@
 package com.goldenfield192.irpatches.document.markdown;
 
+import cam72cam.mod.resource.Identifier;
 import com.goldenfield192.irpatches.document.ManualGui;
 import com.goldenfield192.irpatches.document.manual.page.ItemComponentPageBuilder;
 import com.goldenfield192.irpatches.document.manual.page.StockDescriptionPageBuilder;
 import com.goldenfield192.irpatches.document.manual.page.TrackPageBuilder;
-import cam72cam.mod.resource.Identifier;
 
 import java.util.HashMap;
 import java.util.Map;

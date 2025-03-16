@@ -8,7 +8,7 @@
   "mixins": [
   ],
   "client": [
-    "MixinMinecraft",
-    "MixinEntityRenderer"
+    "MixinEntityRenderer",
+    "MixinMinecraft"
   ]
 }

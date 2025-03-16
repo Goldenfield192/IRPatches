@@ -1,12 +1,12 @@
 package com.goldenfield192.irpatches.document.manual.page;
 
+import cam72cam.immersiverailroading.registry.DefinitionManager;
+import cam72cam.immersiverailroading.registry.TrackDefinition;
+import cam72cam.mod.resource.Identifier;
 import com.goldenfield192.irpatches.document.manual.element.MDTrackRenderer;
 import com.goldenfield192.irpatches.document.markdown.IPageBuilder;
 import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownStyledText;
-import cam72cam.immersiverailroading.registry.DefinitionManager;
-import cam72cam.immersiverailroading.registry.TrackDefinition;
-import cam72cam.mod.resource.Identifier;
 
 public class TrackPageBuilder implements IPageBuilder {
     public static final IPageBuilder INSTANCE = new TrackPageBuilder();

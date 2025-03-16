@@ -3,7 +3,8 @@ package com.goldenfield192.irpatches.mixins.minecraft;
 import com.goldenfield192.irpatches.common.OnboardCamera;
 import net.minecraft.client.renderer.EntityRenderer;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin(EntityRenderer.class)
 public class MixinEntityRenderer {

@@ -1,12 +1,12 @@
 package com.goldenfield192.irpatches.document.manual.element;
 
-import com.goldenfield192.irpatches.common.umc.IRPConfig;
-import com.goldenfield192.irpatches.document.markdown.element.MarkdownElement;
 import cam72cam.immersiverailroading.model.StockModel;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.obj.OBJRender;
 import cam72cam.mod.render.opengl.RenderState;
+import com.goldenfield192.irpatches.common.umc.IRPConfig;
+import com.goldenfield192.irpatches.document.markdown.element.MarkdownElement;
 
 import java.util.ArrayList;
 import java.util.Arrays;

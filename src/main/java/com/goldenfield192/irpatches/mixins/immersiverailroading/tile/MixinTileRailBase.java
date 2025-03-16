@@ -1,19 +1,14 @@
 package com.goldenfield192.irpatches.mixins.immersiverailroading.tile;
 
 import cam72cam.immersiverailroading.IRItems;
-import cam72cam.immersiverailroading.entity.EntityCoupleableRollingStock;
 import cam72cam.immersiverailroading.entity.EntityRollingStock;
 import cam72cam.immersiverailroading.library.Augment;
 import cam72cam.immersiverailroading.thirdparty.trackapi.BlockEntityTrackTickable;
 import cam72cam.immersiverailroading.tile.TileRailBase;
-import cam72cam.mod.ModCore;
 import cam72cam.mod.block.IRedstoneProvider;
 import cam72cam.mod.entity.Player;
-import cam72cam.mod.item.ItemStack;
 import cam72cam.mod.math.Vec3d;
-import cam72cam.mod.serialization.SerializationException;
 import cam72cam.mod.serialization.TagCompound;
-import cam72cam.mod.serialization.TagField;
 import cam72cam.mod.util.Facing;
 import com.goldenfield192.irpatches.access.ITileRailBaseAccessor;
 import com.goldenfield192.irpatches.common.IRPGUIHelper;
@@ -24,9 +19,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
-import java.util.List;
 
 @Mixin(TileRailBase.class)
 public abstract class MixinTileRailBase extends BlockEntityTrackTickable

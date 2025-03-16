@@ -1,14 +1,14 @@
 package com.goldenfield192.irpatches.document.markdown;
 
-import com.goldenfield192.irpatches.common.IRPGUIHelper;
-import com.goldenfield192.irpatches.common.umc.IRPConfig;
-import com.goldenfield192.irpatches.document.manual.ManualHoverRenderer;
-import com.goldenfield192.irpatches.document.markdown.element.*;
 import cam72cam.mod.event.ClientEvents;
 import cam72cam.mod.gui.helpers.GUIHelpers;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.opengl.RenderState;
 import cam72cam.mod.resource.Identifier;
+import com.goldenfield192.irpatches.common.IRPGUIHelper;
+import com.goldenfield192.irpatches.common.umc.IRPConfig;
+import com.goldenfield192.irpatches.document.manual.ManualHoverRenderer;
+import com.goldenfield192.irpatches.document.markdown.element.*;
 
 import javax.annotation.Nonnull;
 import java.awt.geom.Rectangle2D;
