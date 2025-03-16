@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.access;
+package com.goldenfield192.irpatches.accessor;
 
 public interface ITileRailBaseAccessor {
     void setCGFilter(String s);

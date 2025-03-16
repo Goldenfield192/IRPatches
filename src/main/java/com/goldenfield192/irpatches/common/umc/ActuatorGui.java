@@ -10,7 +10,7 @@ import cam72cam.mod.math.Vec3i;
 import cam72cam.mod.net.Packet;
 import cam72cam.mod.render.opengl.RenderState;
 import cam72cam.mod.serialization.TagField;
-import com.goldenfield192.irpatches.access.ITileRailBaseAccessor;
+import com.goldenfield192.irpatches.accessor.ITileRailBaseAccessor;
 
 public class ActuatorGui implements IScreen {
     private TextField textField;

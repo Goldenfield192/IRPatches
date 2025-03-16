@@ -1,3 +1,7 @@
+## 1.2.3
+* Configurable maxTrackPlacementLength and maxTrackRenderDistance
+* Override Door Actuator to configurable control group changer
+
 ## 1.2.2
 * Add better third-person camera when onboard
 
