@@ -19,6 +19,6 @@ public class IRPConfig {
     public static int MaxTrackLength = 1000;
 
     @ConfigFile.Comment("Track render distance")
-    @ConfigFile.Range(min = 1000, max = 15000)
+    @ConfigFile.Range(min = 256, max = 8192)
     public static int TrackRenderDistance = 1000;
 }
