@@ -7,6 +7,7 @@ import cam72cam.mod.gui.screen.IScreen;
 import cam72cam.mod.gui.screen.IScreenBuilder;
 import cam72cam.mod.render.opengl.RenderState;
 import cam72cam.mod.resource.Identifier;
+import com.goldenfield192.irpatches.common.BufferedImageRenderer;
 import com.goldenfield192.irpatches.common.ClippedRenderer;
 import com.goldenfield192.irpatches.common.umc.IRPConfig;
 import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
@@ -16,6 +17,7 @@ import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.io.IOException;
 import java.util.Stack;
 
 import static com.goldenfield192.irpatches.document.markdown.Colors.BUTTON_DISABLED_COLOR;
@@ -85,6 +87,12 @@ public class ManualGui implements IScreen {
         GUIHelpers.texturedRect(new Identifier("immersiverailroading:gui/wiki/left_bottom_corner.png"), 50, height - 20,10,10);
         GUIHelpers.texturedRect(new Identifier("immersiverailroading:gui/wiki/bottom_edge.png"), 60, height - 20,width - 120,10);
         GUIHelpers.texturedRect(new Identifier("immersiverailroading:gui/wiki/right_bottom_corner.png"), width - 60, height - 20,10,10);
+
+        try {
+            BufferedImageRenderer.draw();
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
 
         ClippedRenderer.renderInRegion(54, 35, 120, height - 50, () -> {
             sidebar.render(state.clone().translate(57, 40, 0).scale(IRPConfig.ManualFontSize, IRPConfig.ManualFontSize, IRPConfig.ManualFontSize));

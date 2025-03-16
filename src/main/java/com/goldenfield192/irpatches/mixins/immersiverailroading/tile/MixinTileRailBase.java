@@ -63,9 +63,6 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
         float value = (float)this.getWorld().getRedstone(this.getPos()) / 15.0F;
         for(String s : cg) {
             stock.setControlPosition(s, value);
-            if(getTicksExisted() % 20 == 0){
-                System.out.println(s + stock.getControlPosition(s));
-            }
         }
         ci.cancel();
     }

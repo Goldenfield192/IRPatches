@@ -1,7 +1,6 @@
 package com.goldenfield192.irpatches.common.umc;
 
 import cam72cam.immersiverailroading.tile.TileRailBase;
-import cam72cam.mod.ModCore;
 import cam72cam.mod.gui.helpers.GUIHelpers;
 import cam72cam.mod.gui.screen.IScreen;
 import cam72cam.mod.gui.screen.IScreenBuilder;
@@ -22,7 +21,6 @@ public class ActuatorGui implements IScreen {
         this.filter = ((ITileRailBaseAccessor) tileRailBase).getCGFilter() == null
                         ? ""
                         : ((ITileRailBaseAccessor) tileRailBase).getCGFilter();
-        System.out.println();
     }
 
     @Override
@@ -44,7 +42,6 @@ public class ActuatorGui implements IScreen {
     @Override
     public void onClose() {
         String s = textField.getText();
-        ModCore.info(s);
         new AugmentFilterChangePacket(pos, s).sendToServer();
     }
 
