@@ -30,6 +30,10 @@ public class ActuatorGui implements IScreen {
         textField = new TextField(screen, -GUIHelpers.getScreenWidth() / 4, -(GUIHelpers.getScreenHeight() / 8), 200-1,20);
         textField.setText(filter);
         textField.setFocused(true);
+        textField.setValidator(s -> {
+            filter = s;
+            return true;
+        });
     }
 
     @Override
@@ -47,6 +51,7 @@ public class ActuatorGui implements IScreen {
     @Override
     public void draw(IScreenBuilder builder, RenderState state) {
         IScreen.super.draw(builder, state);
+        textField.setText(filter);
         GUIHelpers.drawRect(0,0,GUIHelpers.getScreenWidth(), GUIHelpers.getScreenHeight(), 0x88000000);
     }
 
