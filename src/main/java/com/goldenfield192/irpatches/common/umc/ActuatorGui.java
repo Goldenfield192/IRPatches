@@ -1,4 +1,5 @@
 package com.goldenfield192.irpatches.common.umc;
+
 import cam72cam.immersiverailroading.tile.TileRailBase;
 import cam72cam.mod.ModCore;
 import cam72cam.mod.gui.helpers.GUIHelpers;
@@ -11,12 +12,12 @@ import cam72cam.mod.render.opengl.RenderState;
 import cam72cam.mod.serialization.TagField;
 import com.goldenfield192.irpatches.access.ITileRailBaseAccessor;
 
-public class AugmentGui implements IScreen {
+public class ActuatorGui implements IScreen {
     private TextField textField;
     private String filter;
     private Vec3i pos;
 
-    public AugmentGui(TileRailBase tileRailBase) {
+    public ActuatorGui(TileRailBase tileRailBase) {
         this.pos = tileRailBase.getPos();
         this.filter = ((ITileRailBaseAccessor) tileRailBase).getCGFilter() == null
                         ? ""

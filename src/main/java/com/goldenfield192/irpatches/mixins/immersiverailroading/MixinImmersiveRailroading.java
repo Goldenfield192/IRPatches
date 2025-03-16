@@ -8,7 +8,7 @@ import cam72cam.mod.net.Packet;
 import cam72cam.mod.net.PacketDirection;
 import com.goldenfield192.irpatches.common.IRPGUIHelper;
 import com.goldenfield192.irpatches.common.OnboardCamera;
-import com.goldenfield192.irpatches.common.umc.AugmentGui;
+import com.goldenfield192.irpatches.common.umc.ActuatorGui;
 import com.goldenfield192.irpatches.common.umc.IRPConfig;
 import com.goldenfield192.irpatches.document.ManualGui;
 import com.goldenfield192.irpatches.document.manual.ManualHoverRenderer;
@@ -24,7 +24,7 @@ public class MixinImmersiveRailroading {
     public void mixinCommonEvent(ModEvent event, CallbackInfo ci){
         switch(event){
             case CONSTRUCT:
-                Packet.register(AugmentGui.AugmentFilterChangePacket::new, PacketDirection.ClientToServer);
+                Packet.register(ActuatorGui.AugmentFilterChangePacket::new, PacketDirection.ClientToServer);
                 break;
             case INITIALIZE:
                 ConfigFile.sync(IRPConfig.class);

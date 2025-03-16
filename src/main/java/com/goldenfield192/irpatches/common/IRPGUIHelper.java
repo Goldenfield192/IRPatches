@@ -7,7 +7,7 @@ import cam72cam.mod.render.opengl.RenderState;
 import cam72cam.mod.resource.Identifier;
 import cam72cam.mod.util.With;
 import com.goldenfield192.irpatches.IRPatches;
-import com.goldenfield192.irpatches.common.umc.AugmentGui;
+import com.goldenfield192.irpatches.common.umc.ActuatorGui;
 import com.goldenfield192.irpatches.document.ManualGui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -15,7 +15,7 @@ import util.Matrix4;
 
 public class IRPGUIHelper {
     public static final GuiRegistry.GUI MANUAL = GuiRegistry.register(new Identifier(IRPatches.MODID, "MANUAL"), ManualGui::new);
-    public static final GuiRegistry.BlockGUI AUGMENT = GuiRegistry.registerBlock(TileRailBase.class, AugmentGui::new);
+    public static final GuiRegistry.BlockGUI ACTUATOR = GuiRegistry.registerBlock(TileRailBase.class, ActuatorGui::new);
 
     public static int getTextWidth(String s){
         return Minecraft.getMinecraft().fontRenderer.getStringWidth(s);

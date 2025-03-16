@@ -1,6 +1,5 @@
 package com.goldenfield192.irpatches.mixins.immersiverailroading.tile;
 
-import cam72cam.immersiverailroading.IRItems;
 import cam72cam.immersiverailroading.entity.EntityRollingStock;
 import cam72cam.immersiverailroading.library.Augment;
 import cam72cam.immersiverailroading.thirdparty.trackapi.BlockEntityTrackTickable;
@@ -34,8 +33,8 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
 
     @Inject(method = "onClick", at = @At("HEAD"), remap = false, cancellable = true)
     public void inject(Player player, Player.Hand hand, Facing facing, Vec3d hit, CallbackInfoReturnable<Boolean> cir){
-        if(player.getHeldItem(Player.Hand.PRIMARY).is(IRItems.ITEM_MANUAL) && this.augment.equals(Augment.ACTUATOR)){
-            IRPGUIHelper.AUGMENT.open(player, this.getPos());
+        if(player.getHeldItem(Player.Hand.PRIMARY).isEmpty() && this.augment.equals(Augment.ACTUATOR)){
+            IRPGUIHelper.ACTUATOR.open(player, this.getPos());
             cir.setReturnValue(true);
         }
     }
@@ -55,7 +54,6 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
             remap = false,
             cancellable = true)
     public void update0(CallbackInfo ci){
-
         EntityRollingStock stock = getStockNearBy(EntityRollingStock.class);
         if(stock == null){
             ci.cancel();
