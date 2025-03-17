@@ -55,7 +55,7 @@ public class OnboardCamera {
 
         if(MinecraftClient.getPlayer().getRiding() instanceof EntityRollingStock
                 && enabled
-                && Minecraft.getMinecraft().gameSettings.thirdPersonView == 1){
+                && Minecraft.getMinecraft().gameSettings.thirdPersonView != 0){
             if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)){
                 targetDistance = Math.max(10, Math.min(IRPConfig.ThirdPersonMaxDistance, targetDistance - 1.5 * d));
                 return false;
