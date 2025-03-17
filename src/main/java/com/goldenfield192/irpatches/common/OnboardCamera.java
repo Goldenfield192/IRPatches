@@ -12,8 +12,8 @@ public class OnboardCamera {
     public static double distance;
     public static double fov;
 
-    private static double targetDistance;
-    private static double targetFov;
+    private static double targetDistance = 4;
+    private static double targetFov = 70;
 
     private static double prevDistance = 0;
 //    private static double prevFov = 0;
@@ -60,7 +60,7 @@ public class OnboardCamera {
                 targetDistance = Math.max(10, Math.min(IRPConfig.ThirdPersonMaxDistance, targetDistance - 1.5 * d));
                 return false;
             } else if(Keyboard.isKeyDown(Keyboard.KEY_LMENU)){
-                targetFov = Math.max(20, Math.min(80, targetFov - d));
+                targetFov = Math.max(20, Math.min(90, targetFov - d));
                 return false;
             }
         }
