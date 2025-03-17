@@ -19,10 +19,11 @@ public class ExtraDefinition {
     public int leftFirstMultiplier;
     public List<Pair<String, Integer>> burnables;
     public Identifier description;
+    public final HashMap<String, LightDefinition> extraLightDef = new HashMap<>();
 
     public static void loadExtraStockProperties(String defID, DataBlock data){
-        DataBlock properties = data.getBlock("properties");
         ExtraDefinition def = new ExtraDefinition();
+        DataBlock properties = data.getBlock("properties");
         def.leftFirstMultiplier = properties.getValue("left_first").asBoolean(true) ? 1 : -1;
 
         List<DataBlock.Value> list = properties.getValues("fuel");
@@ -50,6 +51,14 @@ public class ExtraDefinition {
         } else {
             def.description = null;
         }
+
+        DataBlock lights = data.getBlock("lights");
+        if (lights != null) {
+            lights.getBlockMap().forEach((key, block) -> {
+                def.extraLightDef.put(key, new LightDefinition(block));
+            });
+        }
+
         extraDef.put(defID, def);
     }
 
@@ -57,7 +66,15 @@ public class ExtraDefinition {
         return get(definition.defID);
     }
 
-    public static ExtraDefinition get(String str) {
-        return extraDef.get(str);
+    public static ExtraDefinition get(String defID) {
+        return extraDef.get(defID);
+    }
+
+    public static class LightDefinition {
+        public final boolean enableTex;
+
+        public LightDefinition(DataBlock block) {
+            this.enableTex = block.getValue("enableTexture").asBoolean(true);
+        }
     }
 }

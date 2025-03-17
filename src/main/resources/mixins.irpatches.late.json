@@ -16,6 +16,7 @@
     "immersiverailroading.model.MixinLocomotiveModel",
     "immersiverailroading.model.MixinStockModel",
     "immersiverailroading.model.part.MixinControl",
+    "immersiverailroading.model.part.MixinLightFlare",
     "immersiverailroading.registry.MixinEntityRollingStockDefinition",
     "immersiverailroading.render.item.MixinTrackBluePrintItemModel",
     "immersiverailroading.render.multiblock.MixinBoilerRollerRenderer",

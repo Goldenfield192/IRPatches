@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.opengl.GL11;
 
-//Version Specific!!!
 public class ClippedRenderer {
     public static int getScaleFactor(){
         return new ScaledResolution(Minecraft.getMinecraft()).getScaleFactor();
