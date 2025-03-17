@@ -72,9 +72,11 @@ public class ExtraDefinition {
 
     public static class LightDefinition {
         public final boolean enableTex;
+        public final String disableOn;
 
         public LightDefinition(DataBlock block) {
             this.enableTex = block.getValue("enableTexture").asBoolean(true);
+            this.disableOn = block.getValue("disableOn").asString(null);
         }
     }
 }
