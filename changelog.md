@@ -1,5 +1,9 @@
+## 1.2.4
+* Headlight can be disabled on forward/reverse in json
+* Headlight's texture render can be disabled
+
 ## 1.2.3
-* Configurable maxTrackPlacementLength and maxTrackRenderDistance
+* Configurable maxTrackPlacementLength(1000~10000) and maxTrackRenderDistance(256~8192)
 * Override Door Actuator to configurable control group changer
 
 ## 1.2.2
