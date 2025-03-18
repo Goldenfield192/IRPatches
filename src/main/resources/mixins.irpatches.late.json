@@ -12,6 +12,8 @@
     "immersiverailroading.gui.MixinTrackGui",
     "immersiverailroading.items.MixinItemManual",
     "immersiverailroading.items.MixinItemTrackBlueprint",
+    "immersiverailroading.items.nbt.MixinRailSettingMapper",
+    "immersiverailroading.items.nbt.MixinRailSettings",
     "immersiverailroading.library.MixinGuiTypes",
     "immersiverailroading.model.MixinLocomotiveModel",
     "immersiverailroading.model.MixinStockModel",
@@ -25,6 +27,7 @@
     "immersiverailroading.tile.MixinTileRailBase",
     "immersiverailroading.tile.MixinTileRailPreview",
     "immersiverailroading.util.MixinPlacementInfo",
+    "umc.math.MixinVec3d",
     "umc.render.MixinParticle"
   ]
 }
