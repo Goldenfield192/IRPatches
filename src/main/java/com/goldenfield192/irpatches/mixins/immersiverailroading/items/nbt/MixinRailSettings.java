@@ -8,27 +8,27 @@ import org.spongepowered.asm.mixin.Unique;
 @Mixin(RailSettings.class)
 public class MixinRailSettings implements IRailSettingsAccessor {
     @Unique
-    public float iRPatch$ctrl1Roll;
+    public float IRPatch$ctrl1Roll;
     @Unique
-    public float iRPatch$ctrl2Roll;
+    public float IRPatch$ctrl2Roll;
 
     @Override
-    public void setNearEnd(float degree) {
-        this.iRPatch$ctrl2Roll = degree;
+    public void IRPatch$setNearEnd(float degree) {
+        this.IRPatch$ctrl2Roll = degree;
     }
 
     @Override
-    public void setFarEnd(float degree) {
-        this.iRPatch$ctrl1Roll = degree;
+    public void IRPatch$setFarEnd(float degree) {
+        this.IRPatch$ctrl1Roll = degree;
     }
 
     @Override
-    public float getNearEndTilt() {
-        return iRPatch$ctrl2Roll;
+    public float IRPatch$getNearEndTilt() {
+        return IRPatch$ctrl2Roll;
     }
 
     @Override
-    public float getFarEndTilt() {
-        return iRPatch$ctrl1Roll;
+    public float IRPatch$getFarEndTilt() {
+        return IRPatch$ctrl1Roll;
     }
 }

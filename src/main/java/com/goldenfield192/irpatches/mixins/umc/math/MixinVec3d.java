@@ -9,15 +9,15 @@ import org.spongepowered.asm.mixin.Unique;
 public class MixinVec3d implements IVec3dAccessor {
     //I know this is ugly and should be avoided......but if so we have to change TrackAPI
     @Unique
-    public float iRPatch$roll;
+    public float IRPatch$roll;
 
     @Override
-    public void setRoll(float roll) {
-        this.iRPatch$roll = roll;
+    public void IRPatch$setRoll(float roll) {
+        this.IRPatch$roll = roll;
     }
 
     @Override
-    public float getRoll() {
-        return iRPatch$roll;
+    public float IRPatch$getRoll() {
+        return IRPatch$roll;
     }
 }

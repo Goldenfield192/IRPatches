@@ -2,9 +2,9 @@ package com.goldenfield192.irpatches.accessor;
 
 public interface IRailSettingsAccessor {
     //Ctrl2
-    void setNearEnd(float degree);
+    void IRPatch$setNearEnd(float degree);
     //Ctrl1
-    void setFarEnd(float degree);
-    float getNearEndTilt();
-    float getFarEndTilt();
+    void IRPatch$setFarEnd(float degree);
+    float IRPatch$getNearEndTilt();
+    float IRPatch$getFarEndTilt();
 }
