@@ -14,7 +14,7 @@ public class IRPConfig {
     @ConfigFile.Range(min = 10, max = 500)
     public static float ThirdPersonMaxDistance = 20;
 
-    @ConfigFile.Comment("Max track length, use at your own risk!")
+    @ConfigFile.Comment("Max track length")
     @ConfigFile.Range(min = 1000, max = 10000)
     public static int MaxTrackLength = 1000;
 
