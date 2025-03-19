@@ -7,6 +7,7 @@ import cam72cam.mod.entity.Player;
 import cam72cam.mod.gui.screen.CheckBox;
 import cam72cam.mod.gui.screen.IScreenBuilder;
 import cam72cam.mod.gui.screen.Slider;
+import com.goldenfield192.irpatches.accessor.IRailSettingsAccessor;
 import com.goldenfield192.irpatches.common.umc.IRPConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -35,6 +36,9 @@ public class MixinTrackGui {
                 settings.isGradeCrossing = isGradeCrossingCB.isChecked();
             }
         };
+        //TODO Add slider
+        ((IRailSettingsAccessor)settings).IRPatch$setFarEnd(-20);
+        ((IRailSettingsAccessor)settings).IRPatch$setNearEnd(20);
     }
 
     @ModifyConstant(method = "lambda$init$0", constant = @Constant(intValue = 1000), remap = false)

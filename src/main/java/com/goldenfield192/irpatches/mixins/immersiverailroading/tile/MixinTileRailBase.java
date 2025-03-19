@@ -4,6 +4,8 @@ import cam72cam.immersiverailroading.entity.EntityRollingStock;
 import cam72cam.immersiverailroading.library.Augment;
 import cam72cam.immersiverailroading.thirdparty.trackapi.BlockEntityTrackTickable;
 import cam72cam.immersiverailroading.tile.TileRailBase;
+import cam72cam.mod.MinecraftClient;
+import cam72cam.mod.ModCore;
 import cam72cam.mod.block.IRedstoneProvider;
 import cam72cam.mod.entity.Player;
 import cam72cam.mod.math.Vec3d;
@@ -33,7 +35,7 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
 
     @Inject(method = "onClick", at = @At("HEAD"), remap = false, cancellable = true)
     public void inject(Player player, Player.Hand hand, Facing facing, Vec3d hit, CallbackInfoReturnable<Boolean> cir){
-        if(player.getHeldItem(Player.Hand.PRIMARY).isEmpty() && this.augment.equals(Augment.ACTUATOR)){
+        if(player.getHeldItem(Player.Hand.PRIMARY).isEmpty() && Augment.ACTUATOR.equals(this.augment)){
             IRPGUIHelper.ACTUATOR.open(player, this.getPos());
             cir.setReturnValue(true);
         }

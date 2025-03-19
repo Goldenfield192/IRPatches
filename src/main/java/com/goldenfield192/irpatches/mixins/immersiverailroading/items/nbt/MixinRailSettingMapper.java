@@ -1,6 +1,7 @@
 package com.goldenfield192.irpatches.mixins.immersiverailroading.items.nbt;
 
 import cam72cam.immersiverailroading.items.nbt.RailSettings;
+import cam72cam.mod.ModCore;
 import cam72cam.mod.serialization.*;
 import com.goldenfield192.irpatches.accessor.IRailSettingsAccessor;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,10 +35,17 @@ public class MixinRailSettingMapper {
         } catch(NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException  e) {
             throw new RuntimeException(e);
         }
-        Optional<Float> ctrl1 = Optional.ofNullable(d.get(fieldName).getFloat("ctrl1"));
-        ((IRailSettingsAccessor) m).IRPatch$setFarEnd(ctrl1.orElse(0.0f));
-        Optional<Float> ctrl2 = Optional.ofNullable(d.get(fieldName).getFloat("ctrl2"));
-        ((IRailSettingsAccessor) m).IRPatch$setNearEnd(ctrl2.orElse(0.0f));
+
+        if(d.get("irp")!=null && d.get("irp").getFloat("ctrl1") != null){
+            ((IRailSettingsAccessor) m).IRPatch$setFarEnd(d.get("irp").getFloat("ctrl1"));
+        } else {
+            ((IRailSettingsAccessor) m).IRPatch$setFarEnd(0);
+        }
+        if(d.get("irp")!=null && d.get("irp").getFloat("ctrl2") != null){
+            ((IRailSettingsAccessor) m).IRPatch$setNearEnd(d.get("irp").getFloat("ctrl2"));
+        } else {
+            ((IRailSettingsAccessor) m).IRPatch$setNearEnd(0);
+        }
         cir.setReturnValue(m);
     }
 }
