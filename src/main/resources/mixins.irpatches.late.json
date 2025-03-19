@@ -23,9 +23,12 @@
     "immersiverailroading.registry.MixinEntityRollingStockDefinition",
     "immersiverailroading.render.item.MixinTrackBluePrintItemModel",
     "immersiverailroading.render.multiblock.MixinBoilerRollerRenderer",
+    "immersiverailroading.render.rail.MixinRailBuilderRender",
     "immersiverailroading.tile.MixinTileRail",
     "immersiverailroading.tile.MixinTileRailBase",
     "immersiverailroading.tile.MixinTileRailPreview",
+    "immersiverailroading.track.MixinBuilderCubicCurve",
+    "immersiverailroading.track.MixinBuilderIterator",
     "immersiverailroading.util.MixinPlacementInfo",
     "umc.math.MixinVec3d",
     "umc.render.MixinParticle"
