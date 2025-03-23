@@ -14,6 +14,7 @@
     "immersiverailroading.items.MixinItemTrackBlueprint",
     "immersiverailroading.items.nbt.MixinRailSettingMapper",
     "immersiverailroading.items.nbt.MixinRailSettings",
+    "immersiverailroading.items.nbt.MixinRailSettings$Mutable",
     "immersiverailroading.library.MixinGuiTypes",
     "immersiverailroading.model.MixinLocomotiveModel",
     "immersiverailroading.model.MixinStockModel",

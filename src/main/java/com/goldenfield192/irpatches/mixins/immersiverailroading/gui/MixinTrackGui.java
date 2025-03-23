@@ -9,6 +9,7 @@ import cam72cam.mod.gui.screen.CheckBox;
 import cam72cam.mod.gui.screen.IScreenBuilder;
 import cam72cam.mod.gui.screen.Slider;
 import com.goldenfield192.irpatches.accessor.IRailSettingsAccessor;
+import com.goldenfield192.irpatches.accessor.IRailSettingsMutableAccessor;
 import com.goldenfield192.irpatches.common.umc.IRPConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -45,7 +46,7 @@ public class MixinTrackGui {
         };
 
         ytop = -GUIHelpers.getScreenHeight() / 4;
-        IRailSettingsAccessor accessor = (IRailSettingsAccessor) settings;
+        IRailSettingsAccessor accessor = (IRailSettingsMutableAccessor) settings;
         this.ctrl1RollSlider = new Slider(screen, -150 + (GUIHelpers.getScreenWidth()/2), ytop, "", -20, 20, accessor.IRPatch$getFarEndTilt(), true) {
             @Override
             public void onSlider() {
