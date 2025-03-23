@@ -4,8 +4,6 @@ import cam72cam.immersiverailroading.entity.EntityRollingStock;
 import cam72cam.immersiverailroading.library.Augment;
 import cam72cam.immersiverailroading.thirdparty.trackapi.BlockEntityTrackTickable;
 import cam72cam.immersiverailroading.tile.TileRailBase;
-import cam72cam.mod.MinecraftClient;
-import cam72cam.mod.ModCore;
 import cam72cam.mod.block.IRedstoneProvider;
 import cam72cam.mod.entity.Player;
 import cam72cam.mod.math.Vec3d;

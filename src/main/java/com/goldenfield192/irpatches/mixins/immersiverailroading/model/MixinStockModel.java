@@ -4,10 +4,7 @@ import cam72cam.immersiverailroading.library.ValveGearConfig;
 import cam72cam.immersiverailroading.model.ModelState;
 import cam72cam.immersiverailroading.model.StockModel;
 import cam72cam.immersiverailroading.model.components.ComponentProvider;
-import cam72cam.immersiverailroading.model.part.Bogey;
-import cam72cam.immersiverailroading.model.part.DrivingAssembly;
-import cam72cam.immersiverailroading.model.part.Frame;
-import cam72cam.immersiverailroading.model.part.WheelSet;
+import cam72cam.immersiverailroading.model.part.*;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import com.goldenfield192.irpatches.common.umc.DrivingAssemblyLoader;
 import com.goldenfield192.irpatches.common.umc.ExtraDefinition;
@@ -39,7 +36,6 @@ public class MixinStockModel {
     public DrivingAssembly mixinParseComponents(ValveGearConfig type, ComponentProvider localProvider, ModelState state, float angleOffset, WheelSet[] backups, ComponentProvider provider, EntityRollingStockDefinition def){
         int multiplier = (int) ExtraDefinition.get(def).leftFirstMultiplier;
         try {
-
             return DrivingAssemblyLoader.get(def.getValveGear(), localProvider, this.base, null, 0, multiplier, new WheelSet[]{this.frame != null ? this.frame.wheels : null, this.bogeyFront != null ? this.bogeyFront.wheels : null, this.bogeyRear != null ? this.bogeyRear.wheels : null});
         } catch (InvocationTargetException | IllegalAccessException e) {
             throw new RuntimeException(e);

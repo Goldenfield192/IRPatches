@@ -14,13 +14,13 @@
     "immersiverailroading.items.MixinItemTrackBlueprint",
     "immersiverailroading.items.nbt.MixinRailSettingMapper",
     "immersiverailroading.items.nbt.MixinRailSettings",
-    "immersiverailroading.items.nbt.MixinRailSettings$MixinRailSettings$Mutable",
     "immersiverailroading.library.MixinGuiTypes",
     "immersiverailroading.model.MixinLocomotiveModel",
     "immersiverailroading.model.MixinStockModel",
     "immersiverailroading.model.part.MixinControl",
     "immersiverailroading.model.part.MixinLightFlare",
     "immersiverailroading.net.MixinItemRailUpdatePacket",
+    "immersiverailroading.physics.MixinMovementTrack",
     "immersiverailroading.registry.MixinEntityRollingStockDefinition",
     "immersiverailroading.render.item.MixinTrackBluePrintItemModel",
     "immersiverailroading.render.multiblock.MixinBoilerRollerRenderer",
@@ -32,6 +32,7 @@
     "immersiverailroading.track.MixinBuilderCubicCurve",
     "immersiverailroading.track.MixinBuilderIterator",
     "immersiverailroading.util.MixinPlacementInfo",
+    "immersiverailroading.util.MixinRailInfo",
     "umc.math.MixinVec3d",
     "umc.render.MixinParticle"
   ]
