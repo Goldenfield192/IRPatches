@@ -21,4 +21,7 @@ public class IRPConfig {
     @ConfigFile.Comment("Track render distance")
     @ConfigFile.Range(min = 256, max = 8192)
     public static int TrackRenderDistance = 1000;
+
+    @ConfigFile.Comment("Does onboard camera collide with blocks?")
+    public static boolean OnboardCameraCollideWithBlock = true;
 }
