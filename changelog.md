@@ -1,3 +1,8 @@
+## 1.2.5
+* Add real tilting rail(Stocks don't tilt for now)
+* Add server side check for track length
+* Fix NPE when clicking on rail introduced in 1.2.3
+
 ## 1.2.4
 * Headlight can be disabled on forward/reverse in json
 * Headlight's texture render can be disabled
