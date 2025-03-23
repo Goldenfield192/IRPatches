@@ -23,6 +23,11 @@ public class MixinRailBuilderRender {
     @Inject(method = "renderRailBuilder", at = @At(value = "INVOKE_ASSIGN", target = "Lutil/Matrix4;rotate(DDDD)Lutil/Matrix4;", ordinal = 1), remap = false, locals = LocalCapture.CAPTURE_FAILSOFT)
     private static void inject(RailInfo info, List renderData, RenderState state, CallbackInfo ci, TrackModel model,
                         VBO cached, OBJRender.Builder builder, Iterator var6, BuilderBase.VecYawPitch piece, Matrix4 m){
-        m.rotate(Math.toRadians(((IVec3dAccessor)piece).IRPatch$getRoll()), 0, 0, 1);
+        double radians = Math.toRadians(((IVec3dAccessor) piece).IRPatch$getRoll());
+        double sin = Math.sin(radians);
+        double cos = Math.cos(radians);
+        double target = info.settings.gauge.scale() * info.getTrackHeight() * sin;
+        m.rotate(radians, 0, 0, 1);
+        m.translate(target * cos, target * sin, 0);
     }
 }
