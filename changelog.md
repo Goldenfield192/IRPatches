@@ -2,13 +2,14 @@
 * Add real tilting rail(Stocks don't tilt for now)
 * Add server side check for track length
 * Fix NPE when clicking on rail introduced in 1.2.3
+* Add configuration for onboard camera to switch between collision mode(/→IRPConfig→OnboardCameraCollideWithBlock)
 
 ## 1.2.4
 * Headlight can be disabled on forward/reverse in json
 * Headlight's texture render can be disabled
 
 ## 1.2.3
-* Configurable maxTrackPlacementLength(1000~10000) and maxTrackRenderDistance(256~8192)
+* Configurable maxTrackPlacementLength(1000 to 10000) and maxTrackRenderDistance(256 to 8192)
 * Override Door Actuator to configurable control group changer
 
 ## 1.2.2
