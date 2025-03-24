@@ -10,6 +10,7 @@ import cam72cam.immersiverailroading.model.part.*;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import com.goldenfield192.irpatches.common.umc.DrivingAssemblyLoader;
 import com.goldenfield192.irpatches.common.umc.ExtraDefinition;
+import com.llamalad7.mixinextras.sugar.Local;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -17,12 +18,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import util.Matrix4;
 
 import java.lang.reflect.InvocationTargetException;
 
 @Mixin(StockModel.class)
-public class MixinStockModel {
+public abstract class MixinStockModel{
     @Shadow(remap = false)
     protected ModelState base;
 
@@ -43,6 +43,12 @@ public class MixinStockModel {
 
     @Shadow(remap = false) private ModelComponent shell;
 
+    @Shadow(remap = false) protected ModelState frontRocking;
+
+    @Shadow(remap = false) protected ModelState rearRocking;
+
+    @Shadow(remap = false) protected abstract boolean unifiedBogies();
+
     @Redirect(method = "postRender", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/model/part/SwaySimulator;getRollDegrees(Lcam72cam/immersiverailroading/entity/EntityMoveableRollingStock;F)D"), remap = false)
     public double redirect(SwaySimulator instance, EntityMoveableRollingStock stock, float partialTicks){
         return 0f;
@@ -50,15 +56,12 @@ public class MixinStockModel {
 
     @Inject(method = "parseComponents", at = @At("HEAD"), remap = false, cancellable = true)
     public void mixinParseComponents(ComponentProvider provider, EntityRollingStockDefinition def, CallbackInfo ci){
-        //Maybe useless?
-        ModelState state1 = this.base.push(builder -> builder.add((ModelState.Animator) (stock, partialTicks) ->
-                new Matrix4().rotate(Math.toRadians(sway.getRollDegrees(stock, partialTicks)), 1, 0, 0)));
         int multiplier = ExtraDefinition.get(def).leftFirstMultiplier;
 
-        this.frame = new Frame(provider, state1, rocking, def.defID);
+        this.frame = new Frame(provider, rocking, rocking, def.defID);
 
         try {
-            drivingWheels = DrivingAssemblyLoader.get(def.getValveGear(), provider, state1, null, 0, multiplier,
+            drivingWheels = DrivingAssemblyLoader.get(def.getValveGear(), provider, rocking, null, 0, multiplier,
                                                 frame != null ? frame.wheels : null,
                                                 bogeyFront != null ? bogeyFront.wheels : null,
                                                 bogeyRear != null ? bogeyRear.wheels : null);
@@ -68,5 +71,11 @@ public class MixinStockModel {
 
         this.shell = provider.parse(ModelComponentType.SHELL);
         rocking.include(shell);
+    }
+
+    @Inject(method = "<init>", at = @At("TAIL"), remap = false)
+    public void injectConstructor(EntityRollingStockDefinition def, CallbackInfo ci, @Local(ordinal = 0) ComponentProvider provider){
+        this.bogeyFront = Bogey.get(provider, frontRocking, unifiedBogies(), ModelComponentType.ModelPosition.FRONT);
+        this.bogeyRear = Bogey.get(provider, rearRocking, unifiedBogies(), ModelComponentType.ModelPosition.REAR);
     }
 }
