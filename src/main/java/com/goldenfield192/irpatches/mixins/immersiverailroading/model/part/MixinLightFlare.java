@@ -57,7 +57,7 @@ public abstract class MixinLightFlare{
 
     @Inject(method = "effects", at = @At("HEAD"), remap = false, cancellable = true)
     public void inject2(EntityMoveableRollingStock stock, CallbackInfo ci){
-        if(IRPatch$isEnabled(stock)){
+        if(!IRPatch$isEnabled(stock)){
             this.removed(stock);
             ci.cancel();
         }
@@ -66,9 +66,10 @@ public abstract class MixinLightFlare{
     @Unique
     private boolean IRPatch$isEnabled(EntityMoveableRollingStock stock){
         if(IRPatch$disableOn == null){
-            return false;
+            return true;
         }
-        return IRPatch$disableOn.equals("forward") && stock.getCurrentSpeed().minecraft() < 0.0 
+        //When disableOn and speed corresponds then return false
+        return IRPatch$disableOn.equals("forward") && stock.getCurrentSpeed().minecraft() < 0.0
                 || IRPatch$disableOn.equals("reverse") && stock.getCurrentSpeed().minecraft() >= 0.0;
     }
 }
