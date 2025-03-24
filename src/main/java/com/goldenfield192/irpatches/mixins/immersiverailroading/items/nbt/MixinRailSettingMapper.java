@@ -1,7 +1,7 @@
 package com.goldenfield192.irpatches.mixins.immersiverailroading.items.nbt;
 
 import cam72cam.immersiverailroading.items.nbt.RailSettings;
-import cam72cam.mod.serialization.*;
+import cam72cam.mod.serialization.TagCompound;
 import com.goldenfield192.irpatches.accessor.IRailSettingsAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

@@ -1,5 +1,6 @@
 package com.goldenfield192.irpatches.mixins.immersiverailroading.model;
 
+import cam72cam.immersiverailroading.entity.EntityMoveableRollingStock;
 import cam72cam.immersiverailroading.library.ValveGearConfig;
 import cam72cam.immersiverailroading.model.ModelState;
 import cam72cam.immersiverailroading.model.StockModel;
@@ -28,6 +29,11 @@ public class MixinStockModel {
 
     @Shadow(remap = false)
     protected Frame frame;
+
+    @Redirect(method = "postRender", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/model/part/SwaySimulator;getRollDegrees(Lcam72cam/immersiverailroading/entity/EntityMoveableRollingStock;F)D"), remap = false)
+    public double redirect(SwaySimulator instance, EntityMoveableRollingStock stock, float partialTicks){
+        return 0f;
+    }
 
     @SuppressWarnings("all")
     @Redirect(method = "parseComponents",
