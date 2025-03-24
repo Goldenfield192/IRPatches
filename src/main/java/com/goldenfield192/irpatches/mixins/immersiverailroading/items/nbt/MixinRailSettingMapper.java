@@ -1,7 +1,6 @@
 package com.goldenfield192.irpatches.mixins.immersiverailroading.items.nbt;
 
 import cam72cam.immersiverailroading.items.nbt.RailSettings;
-import cam72cam.mod.ModCore;
 import cam72cam.mod.serialization.*;
 import com.goldenfield192.irpatches.accessor.IRailSettingsAccessor;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,15 +11,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Optional;
 
 @Mixin(RailSettings.Mapper.class)
 public class MixinRailSettingMapper {
     @Inject(method = "lambda$apply$0", at = @At("RETURN"), remap = false)
     private static void lambda0(String fieldName, TagCompound d, RailSettings o, CallbackInfo ci){
         TagCompound tag = new TagCompound();
-        tag.setFloat("ctrl1", ((IRailSettingsAccessor)o).IRPatch$getFarEndTilt());
-        tag.setFloat("ctrl2", ((IRailSettingsAccessor)o).IRPatch$getNearEndTilt());
+        tag.setFloat("ctrl1", ((IRailSettingsAccessor)o).getFarEndTilt());
+        tag.setFloat("ctrl2", ((IRailSettingsAccessor)o).getNearEndTilt());
         d.set("irp", tag);
     }
 
@@ -37,14 +35,14 @@ public class MixinRailSettingMapper {
         }
 
         if(d.get("irp")!=null && d.get("irp").getFloat("ctrl1") != null){
-            ((IRailSettingsAccessor) m).IRPatch$setFarEnd(d.get("irp").getFloat("ctrl1"));
+            ((IRailSettingsAccessor) m).setFarEnd(d.get("irp").getFloat("ctrl1"));
         } else {
-            ((IRailSettingsAccessor) m).IRPatch$setFarEnd(0);
+            ((IRailSettingsAccessor) m).setFarEnd(0);
         }
         if(d.get("irp")!=null && d.get("irp").getFloat("ctrl2") != null){
-            ((IRailSettingsAccessor) m).IRPatch$setNearEnd(d.get("irp").getFloat("ctrl2"));
+            ((IRailSettingsAccessor) m).setNearEnd(d.get("irp").getFloat("ctrl2"));
         } else {
-            ((IRailSettingsAccessor) m).IRPatch$setNearEnd(0);
+            ((IRailSettingsAccessor) m).setNearEnd(0);
         }
         cir.setReturnValue(m);
     }

@@ -19,9 +19,9 @@ public class ActuatorGui implements IScreen {
 
     public ActuatorGui(TileRailBase tileRailBase) {
         this.pos = tileRailBase.getPos();
-        this.filter = ((ITileRailBaseAccessor) tileRailBase).IRPatch$getCGFilter() == null
+        this.filter = ((ITileRailBaseAccessor) tileRailBase).getCGFilter() == null
                         ? ""
-                        : ((ITileRailBaseAccessor) tileRailBase).IRPatch$getCGFilter();
+                        : ((ITileRailBaseAccessor) tileRailBase).getCGFilter();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class ActuatorGui implements IScreen {
         protected void handle() {
             TileRailBase railBase = this.getWorld().getBlockEntity(pos, TileRailBase.class);
             if(railBase != null){
-                ((ITileRailBaseAccessor) railBase).IRPatch$setCGFilter(this.filter);
+                ((ITileRailBaseAccessor) railBase).setCGFilter(this.filter);
             }
         }
     }

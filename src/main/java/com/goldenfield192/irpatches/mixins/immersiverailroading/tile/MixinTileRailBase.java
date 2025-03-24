@@ -68,13 +68,13 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
     }
 
     @Override
-    public void IRPatch$setCGFilter(String s){
+    public void setCGFilter(String s){
         IRPatch$filter = s;
         this.markDirty();
     }
 
     @Override
-    public String IRPatch$getCGFilter() {
+    public String getCGFilter() {
         return IRPatch$filter;
     }
 }

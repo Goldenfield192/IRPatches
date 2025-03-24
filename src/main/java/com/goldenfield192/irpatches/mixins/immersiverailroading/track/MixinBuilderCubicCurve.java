@@ -53,12 +53,12 @@ public abstract class MixinBuilderCubicCurve extends BuilderIterator {
                 int finalI = i;
                 IRailSettingsAccessor accessor = (IRailSettingsAccessor) info.settings;
                 RailSettings clone = getRailSetting(info.settings).with(b -> {
-                    ((IRailSettingsAccessor) b).IRPatch$setNearEnd(
-                            (accessor.IRPatch$getNearEndTilt() * finalI / splits)
-                                    + (accessor.IRPatch$getFarEndTilt() * (1 - (float) finalI / splits)));
-                    ((IRailSettingsAccessor) b).IRPatch$setFarEnd(
-                            (accessor.IRPatch$getNearEndTilt() * (finalI + 1) / splits)
-                                    + (accessor.IRPatch$getFarEndTilt() * (1 - (float) (finalI + 1) / splits)));
+                    ((IRailSettingsAccessor) b).setNearEnd(
+                            (accessor.getNearEndTilt() * finalI / splits)
+                                    + (accessor.getFarEndTilt() * (1 - (float) finalI / splits)));
+                    ((IRailSettingsAccessor) b).setFarEnd(
+                            (accessor.getNearEndTilt() * (finalI + 1) / splits)
+                                    + (accessor.getFarEndTilt() * (1 - (float) (finalI + 1) / splits)));
                 });
                 RailInfo subInfo = new RailInfo(clone.with(b -> b.type = TrackItems.CUSTOM),
                                                 startPos, endPos, SwitchState.NONE, SwitchState.NONE, 0);
@@ -87,16 +87,16 @@ public abstract class MixinBuilderCubicCurve extends BuilderIterator {
         float roll;
         IRailSettingsAccessor settingsAccessor = (IRailSettingsAccessor) info.settings;
         if (points.size() == 1) {
-            roll = (settingsAccessor.IRPatch$getFarEndTilt() + settingsAccessor.IRPatch$getNearEndTilt()) / 2;
+            roll = (settingsAccessor.getFarEndTilt() + settingsAccessor.getNearEndTilt()) / 2;
         } else if (i == points.size()-1) {
-            roll = settingsAccessor.IRPatch$getFarEndTilt();
+            roll = settingsAccessor.getFarEndTilt();
         } else if (i == 0) {
-            roll = settingsAccessor.IRPatch$getNearEndTilt();
+            roll = settingsAccessor.getNearEndTilt();
         } else {
             float percent = (i+1f) / points.size();
-            roll = settingsAccessor.IRPatch$getFarEndTilt() * percent + settingsAccessor.IRPatch$getNearEndTilt() * (1 - percent);
+            roll = settingsAccessor.getFarEndTilt() * percent + settingsAccessor.getNearEndTilt() * (1 - percent);
         }
-        ((IVec3dAccessor)step).IRPatch$setRoll(roll);
+        ((IVec3dAccessor)step).setRoll(roll);
     }
 
     @Unique

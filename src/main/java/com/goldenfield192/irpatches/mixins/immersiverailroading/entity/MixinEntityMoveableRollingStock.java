@@ -1,32 +1,70 @@
 package com.goldenfield192.irpatches.mixins.immersiverailroading.entity;
 
-@Deprecated
-//@Mixin(EntityMoveableRollingStock.class)
-public class MixinEntityMoveableRollingStock {
-//    @ModifyArgs(method = "onTick",
-//                at = @At(value = "INVOKE", target = "Lcam72cam/mod/world/World;getEntities(Ljava/util/function/Predicate;Ljava/lang/Class;)Ljava/util/List;", ordinal = 0),
-//                remap = false)
-//    public void mixin(Args args){
-//        Predicate<Entity> predicate = args.get(0);
-//        predicate = predicate.negate();
-//        predicate = predicate.or(entity -> (entity.asPlayer() != null && entity.asPlayer().internal.isSpectator()));
-//        predicate = predicate.negate();
-//        args.set(0, predicate);
-//    }
-//
-//    @Redirect(method = "onTick",
-//                at = @At(value = "INVOKE", target = "Lcam72cam/mod/entity/Entity;setVelocity(Lcam72cam/mod/math/Vec3d;)V", ordinal = 1),
-//                remap = false)
-//    public void mixinVelocity(Entity instance, Vec3d motion){
-//        System.out.println(instance);
-//    }
+import cam72cam.immersiverailroading.entity.EntityMoveableRollingStock;
+import cam72cam.immersiverailroading.entity.EntityRidableRollingStock;
+import cam72cam.immersiverailroading.physics.TickPos;
+import cam72cam.mod.serialization.TagCompound;
+import com.goldenfield192.irpatches.accessor.IStockRollAccessor;
+import com.llamalad7.mixinextras.sugar.Local;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-//    @Inject(method = "onTick",
-//            at = @At(value = "INVOKE_ASSIGN", target = "Lcam72cam/mod/world/World;getEntities(Ljava/util/function/Predicate;Ljava/lang/Class;)Ljava/util/List;", ordinal = 0),
-//            remap = false,
-//            locals = LocalCapture.CAPTURE_FAILSOFT)
-//    public void mixinLocal(CallbackInfo ci, TickPos currentPos, Vec3d prevPos, Vec3i var3, TileRailBase var4, double prevPosX, double prevPosY, double prevPosZ, List entitiesWithin){
-//        ((List<Entity>)entitiesWithin).forEach(entity -> System.out.println(entity));
-//        System.out.println();
-//    }
+@Mixin(EntityMoveableRollingStock.class)
+public class MixinEntityMoveableRollingStock
+       extends EntityRidableRollingStock
+       implements IStockRollAccessor{
+    @Unique
+    private Float frontRoll;
+
+    @Unique
+    private Float rearRoll;
+
+    @Inject(method = "onTick", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/entity/EntityMoveableRollingStock;setPosition(Lcam72cam/mod/math/Vec3d;)V"), remap = false)
+    public void inject0(CallbackInfo ci, @Local TickPos currentPos){
+        if(Math.abs(currentPos.speed.metersPerSecond()) >= 0.0001){
+            this.frontRoll = ((IStockRollAccessor)currentPos).getFrontRoll();
+            this.rearRoll = ((IStockRollAccessor)currentPos).getRearRoll();
+        }
+    }
+
+    @Inject(method = "load", at = @At("TAIL"), remap = false)
+    public void mixinLoad(TagCompound data, CallbackInfo ci){
+        TagCompound irp = data.get("irp");
+        if(irp != null){
+            this.frontRoll = irp.getFloat("frontRoll");
+            this.rearRoll = irp.getFloat("rearRoll");
+        }
+    }
+
+    @Override
+    public void save(TagCompound data) {
+        super.save(data);
+        TagCompound irp = new TagCompound();
+        irp.setFloat("frontRoll", this.frontRoll);
+        irp.setFloat("rearRoll", this.rearRoll);
+        data.set("irp", irp);
+    }
+
+    @Override
+    public float getFrontRoll() {
+        return this.frontRoll;
+    }
+
+    @Override
+    public void setFrontRoll(float val) {
+        this.frontRoll = val;
+    }
+
+    @Override
+    public float getRearRoll() {
+        return this.rearRoll;
+    }
+
+    @Override
+    public void setRearRoll(float val) {
+        this.rearRoll = val;
+    }
 }

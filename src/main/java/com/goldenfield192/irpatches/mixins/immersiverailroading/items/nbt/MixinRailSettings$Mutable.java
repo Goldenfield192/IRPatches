@@ -48,35 +48,35 @@ public class MixinRailSettings$Mutable implements IRailSettingsMutableAccessor {
     public float IRPatch$ctrl2Roll;
 
     @Override
-    public void IRPatch$setNearEnd(float degree) {
+    public void setNearEnd(float degree) {
         this.IRPatch$ctrl2Roll = degree;
     }
 
     @Override
-    public void IRPatch$setFarEnd(float degree) {
+    public void setFarEnd(float degree) {
         this.IRPatch$ctrl1Roll = degree;
     }
 
     @Override
-    public float IRPatch$getNearEndTilt() {
+    public float getNearEndTilt() {
         return IRPatch$ctrl2Roll;
     }
 
     @Override
-    public float IRPatch$getFarEndTilt() {
+    public float getFarEndTilt() {
         return IRPatch$ctrl1Roll;
     }
 
     @Inject(method = "<init>(Lcam72cam/immersiverailroading/items/nbt/RailSettings;)V", at = @At("TAIL"), remap = false)
     public void inject0(RailSettings settings, CallbackInfo ci) {
-        this.IRPatch$setFarEnd(((IRailSettingsAccessor) settings).IRPatch$getFarEndTilt());
-        this.IRPatch$setNearEnd(((IRailSettingsAccessor) settings).IRPatch$getNearEndTilt());
+        this.setFarEnd(((IRailSettingsAccessor) settings).getFarEndTilt());
+        this.setNearEnd(((IRailSettingsAccessor) settings).getNearEndTilt());
     }
 
     @Inject(method = "<init>(Lcam72cam/mod/serialization/TagCompound;)V", at = @At("TAIL"), remap = false)
     public void inject1(TagCompound data, CallbackInfo ci) {
-        this.IRPatch$setFarEnd(0);
-        this.IRPatch$setNearEnd(0);
+        this.setFarEnd(0);
+        this.setNearEnd(0);
     }
 
     @Inject(method = "immutable", at = @At("HEAD"), remap = false, cancellable = true)
@@ -96,8 +96,8 @@ public class MixinRailSettings$Mutable implements IRailSettingsMutableAccessor {
                 isPreview,
                 isGradeCrossing
         );
-        settings.IRPatch$setNearEnd(this.IRPatch$ctrl2Roll);
-        settings.IRPatch$setFarEnd(this.IRPatch$ctrl1Roll);
+        settings.setNearEnd(this.IRPatch$ctrl2Roll);
+        settings.setFarEnd(this.IRPatch$ctrl1Roll);
         cir.setReturnValue((RailSettings) settings);
     }
 }

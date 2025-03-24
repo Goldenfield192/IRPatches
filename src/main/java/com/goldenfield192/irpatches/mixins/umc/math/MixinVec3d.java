@@ -20,33 +20,33 @@ public abstract class MixinVec3d implements IVec3dAccessor {
     public float IRPatch$roll;
 
     @Override
-    public void IRPatch$setRoll(float roll) {
+    public void setRoll(float roll) {
         this.IRPatch$roll = roll;
     }
 
     @Override
-    public float IRPatch$getRoll() {
+    public float getRoll() {
         return IRPatch$roll;
     }
 
     @Inject(method = "add(Lcam72cam/mod/math/Vec3d;)Lcam72cam/mod/math/Vec3d;", at = @At("HEAD"), remap = false, cancellable = true)
     public void injectAdd(Vec3d other, CallbackInfoReturnable<Vec3d> cir){
         Vec3d vec3d = new Vec3d(this.x +other.x, this.y + other.y, this.z + other.z);
-        ((IVec3dAccessor)vec3d).IRPatch$setRoll(((IVec3dAccessor)other).IRPatch$getRoll());
+        ((IVec3dAccessor)vec3d).setRoll(((IVec3dAccessor)other).getRoll());
         cir.setReturnValue(vec3d);
     }
 
     @Inject(method = "subtract(Lcam72cam/mod/math/Vec3d;)Lcam72cam/mod/math/Vec3d;", at = @At("HEAD"), remap = false, cancellable = true)
     public void injectSubtract(Vec3d other, CallbackInfoReturnable<Vec3d> cir){
         Vec3d vec3d = new Vec3d(this.x - other.x, this.y - other.y, this.z - other.z);
-        ((IVec3dAccessor)vec3d).IRPatch$setRoll(((IVec3dAccessor)other).IRPatch$getRoll());
+        ((IVec3dAccessor)vec3d).setRoll(((IVec3dAccessor)other).getRoll());
         cir.setReturnValue(vec3d);
     }
 
     @Inject(method = "scale", at = @At("HEAD"), remap = false, cancellable = true)
     public void injectScale(double scale, CallbackInfoReturnable<Vec3d> cir){
         Vec3d vec3d = new Vec3d(this.x * scale, this.y * scale, this.z * scale);
-        ((IVec3dAccessor)vec3d).IRPatch$setRoll(((IVec3dAccessor)this).IRPatch$getRoll());
+        ((IVec3dAccessor)vec3d).setRoll(((IVec3dAccessor)this).getRoll());
         cir.setReturnValue(vec3d);
     }
 }

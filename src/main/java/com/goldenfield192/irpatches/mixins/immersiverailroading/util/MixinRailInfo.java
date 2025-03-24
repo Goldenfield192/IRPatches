@@ -18,7 +18,7 @@ public class MixinRailInfo {
 
     @Redirect(method = "generateID", at = @At(value = "INVOKE", target = "Ljava/util/Arrays;toString([Ljava/lang/Object;)Ljava/lang/String;"), remap = false)
     public String inject(Object[] objects){
-        Object[] tilt = {((IRailSettingsAccessor)settings).IRPatch$getFarEndTilt(), ((IRailSettingsAccessor)settings).IRPatch$getNearEndTilt()};
+        Object[] tilt = {((IRailSettingsAccessor)settings).getFarEndTilt(), ((IRailSettingsAccessor)settings).getNearEndTilt()};
         objects = ObjectArrays.concat(objects, tilt, Object.class);
         return Arrays.toString(objects);
     }

@@ -3,7 +3,6 @@ package com.goldenfield192.irpatches.mixins.immersiverailroading.gui;
 import cam72cam.immersiverailroading.gui.TrackGui;
 import cam72cam.immersiverailroading.items.nbt.RailSettings;
 import cam72cam.immersiverailroading.library.GuiText;
-import cam72cam.mod.ModCore;
 import cam72cam.mod.entity.Player;
 import cam72cam.mod.gui.helpers.GUIHelpers;
 import cam72cam.mod.gui.screen.CheckBox;
@@ -48,19 +47,19 @@ public class MixinTrackGui {
 
         ytop = -GUIHelpers.getScreenHeight() / 4;
         IRailSettingsAccessor accessor = (IRailSettingsMutableAccessor) settings;
-        this.ctrl1RollSlider = new Slider(screen, -150 + (GUIHelpers.getScreenWidth()/2), ytop, "", -14.2, 14.2, accessor.IRPatch$getFarEndTilt(), true) {
+        this.ctrl1RollSlider = new Slider(screen, -150 + (GUIHelpers.getScreenWidth()/2), ytop, "", -14.2, 14.2, accessor.getFarEndTilt(), true) {
             @Override
             public void onSlider() {
-                accessor.IRPatch$setFarEnd((float) this.getValue());
-                ctrl1RollSlider.setText("Far end degrees: " + String.format("%.2f", accessor.IRPatch$getFarEndTilt()));
+                accessor.setFarEnd((float) this.getValue());
+                ctrl1RollSlider.setText("Far end degrees: " + String.format("%.2f", accessor.getFarEndTilt()));
             }
         };
         ytop += height;
-        this.ctrl2RollSlider = new Slider(screen, -150 + (GUIHelpers.getScreenWidth()/2), ytop, "", -14.2, 14.2, accessor.IRPatch$getNearEndTilt(), true) {
+        this.ctrl2RollSlider = new Slider(screen, -150 + (GUIHelpers.getScreenWidth()/2), ytop, "", -14.2, 14.2, accessor.getNearEndTilt(), true) {
             @Override
             public void onSlider() {
-                accessor.IRPatch$setNearEnd((float) this.getValue());
-                ctrl2RollSlider.setText("Near end degrees: " + String.format("%.2f", accessor.IRPatch$getNearEndTilt()));
+                accessor.setNearEnd((float) this.getValue());
+                ctrl2RollSlider.setText("Near end degrees: " + String.format("%.2f", accessor.getNearEndTilt()));
             }
         };
 
