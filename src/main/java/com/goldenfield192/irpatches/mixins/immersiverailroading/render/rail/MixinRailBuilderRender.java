@@ -28,6 +28,6 @@ public class MixinRailBuilderRender {
         double cos = Math.cos(radians);
         double target = info.settings.gauge.scale() * info.getTrackHeight() * sin;
         m.rotate(radians, 0, 0, 1);
-        m.translate(target * cos, target * sin, 0);
+        m.translate(target * cos, -target * sin, 0);
     }
 }
