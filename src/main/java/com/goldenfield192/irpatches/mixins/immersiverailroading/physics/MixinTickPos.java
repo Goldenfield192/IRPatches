@@ -3,12 +3,14 @@ package com.goldenfield192.irpatches.mixins.immersiverailroading.physics;
 import cam72cam.immersiverailroading.entity.physics.SimulationState;
 import cam72cam.immersiverailroading.physics.TickPos;
 import cam72cam.immersiverailroading.util.Speed;
+import cam72cam.mod.ModCore;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.serialization.TagCompound;
 import com.goldenfield192.irpatches.accessor.IStockRollAccessor;
 import com.llamalad7.mixinextras.sugar.Local;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -16,35 +18,33 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(TickPos.class)
 public abstract class MixinTickPos implements IStockRollAccessor {
-    @Shadow(remap = false)
-    public int tickID;
-    @Shadow(remap = false)
-    public Speed speed;
-    @Shadow(remap = false)
-    public Vec3d position;
-    @Shadow(remap = false)
-    public float frontYaw;
-    @Shadow(remap = false)
-    public float rearYaw;
-    @Shadow(remap = false)
-    public float rotationYaw;
-    @Shadow(remap = false)
-    public float rotationPitch;
-    @Shadow(remap = false)
-    public boolean isOffTrack;
-
-    @Shadow(remap = false)
-    private static double skewScalar(double curr, double next, float ratio) {
-        return 0;
-    }
-
-    @Shadow(remap = false)
-    private static float skewAngle(float curr, float next, float ratio) {
-        return 0;
-    }
+    @Shadow(remap = false) public int tickID;
+    @Shadow(remap = false) public Speed speed;
+    @Shadow(remap = false) public Vec3d position;
+    @Shadow(remap = false) public float frontYaw;
+    @Shadow(remap = false) public float rearYaw;
+    @Shadow(remap = false) public float rotationYaw;
+    @Shadow(remap = false) public float rotationPitch;
+    @Shadow(remap = false) public boolean isOffTrack;
 
     public float frontRoll;
     public float rearRoll;
+
+    @Unique
+    private static double skewScalar(double curr, double next, float ratio) {
+        return curr + (next - curr) * ratio;
+    }
+
+    @Unique
+    private static float skewAngle(float curr, float next, float ratio) {
+        if (curr - next > 180) {
+            curr -= 360;
+        }
+        if (next - curr > 180) {
+            curr += 360;
+        }
+        return curr + (next - curr) * ratio;
+    }
 
     @Inject(method = "<init>(Lcam72cam/immersiverailroading/entity/physics/SimulationState;)V", at = @At("TAIL"), remap = false)
     public void injectConstructor0(SimulationState state, CallbackInfo ci){

@@ -3,6 +3,7 @@ package com.goldenfield192.irpatches.mixins.immersiverailroading.entity;
 import cam72cam.immersiverailroading.entity.EntityMoveableRollingStock;
 import cam72cam.immersiverailroading.entity.EntityRidableRollingStock;
 import cam72cam.immersiverailroading.physics.TickPos;
+import cam72cam.mod.ModCore;
 import cam72cam.mod.serialization.TagCompound;
 import com.goldenfield192.irpatches.accessor.IStockRollAccessor;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -16,11 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinEntityMoveableRollingStock
        extends EntityRidableRollingStock
        implements IStockRollAccessor{
-    @Unique
-    private Float frontRoll;
+    private float frontRoll;
 
-    @Unique
-    private Float rearRoll;
+    private float rearRoll;
 
     @Inject(method = "onTick", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/entity/EntityMoveableRollingStock;setPosition(Lcam72cam/mod/math/Vec3d;)V"), remap = false)
     public void inject0(CallbackInfo ci, @Local TickPos currentPos){
@@ -34,6 +33,9 @@ public class MixinEntityMoveableRollingStock
         if(irp != null){
             this.frontRoll = irp.getFloat("frontRoll");
             this.rearRoll = irp.getFloat("rearRoll");
+        } else {
+            this.frontRoll = 0;
+            this.rearRoll = 0;
         }
     }
 

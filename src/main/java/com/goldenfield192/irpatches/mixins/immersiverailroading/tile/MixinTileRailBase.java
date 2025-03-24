@@ -14,6 +14,7 @@ import cam72cam.immersiverailroading.track.CubicCurve;
 import cam72cam.immersiverailroading.util.MathUtil;
 import cam72cam.immersiverailroading.util.SwitchUtil;
 import cam72cam.immersiverailroading.util.VecUtil;
+import cam72cam.mod.ModCore;
 import cam72cam.mod.block.IRedstoneProvider;
 import cam72cam.mod.entity.Player;
 import cam72cam.mod.math.Vec3d;
@@ -44,11 +45,9 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
 
     @Shadow(remap = false) public abstract int getTicksExisted();
 
-    @Shadow
-    public abstract TagCompound getReplaced();
+    @Shadow(remap = false) public abstract TagCompound getReplaced();
 
-    @Shadow
-    private Collection<TileRail> tiles;
+    @Shadow(remap = false) private Collection<TileRail> tiles;
     @Unique
     private String IRPatch$filter;
 
@@ -157,7 +156,7 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
     }
 
     //false mean we need to invert roll
-    public boolean getDirectionAlong(Vec3d currentPosition, Vec3d motion){
+    public boolean getDirectionAlong(Vec3d currentPosition, Vec3d stockDirection){
         TileRailBase self = (TileRailBase) (BlockEntityTrackTickable) this;
         TileRail rail = self instanceof TileRail ?
                         (TileRail) self : self.getParentTile();
@@ -169,8 +168,8 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
         }
         BuilderCubicCurve curve = (BuilderCubicCurve) builderBase;
         CubicCurve cubicCurve = curve.getCurve();
-        Vec3d track = cubicCurve.ctrl2.subtract(cubicCurve.ctrl1);
-        return track.x * motion.x + track.y * motion.y + track.z * motion.z > 0;
+        Vec3d track = cubicCurve.p2.subtract(cubicCurve.p1).normalize();
+        return track.x * stockDirection.x + track.y * stockDirection.y + track.z * stockDirection.z > 0;
     }
 
     @Override

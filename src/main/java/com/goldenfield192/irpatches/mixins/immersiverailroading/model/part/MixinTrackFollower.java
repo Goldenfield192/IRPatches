@@ -37,7 +37,8 @@ public class MixinTrackFollower {
         float offsetRoll = (front ?
                             ((IStockRollAccessor)stock).getFrontRoll() :
                             ((IStockRollAccessor)stock).getRearRoll());
-        matrix.rotate(Math.toRadians(offsetRoll),1,0,0);
+        roll = offsetRoll;
+        matrix.rotate(Math.toRadians(roll),1,0,0);
     }
 
     @Inject(method = "getMatrix", at = @At(value = "INVOKE_ASSIGN", target = "Lcam72cam/mod/math/Vec3d;subtract(Lcam72cam/mod/math/Vec3d;)Lcam72cam/mod/math/Vec3d;", ordinal = 0), remap = false)
