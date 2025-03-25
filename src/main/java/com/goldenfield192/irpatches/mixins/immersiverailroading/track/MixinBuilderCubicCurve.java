@@ -94,7 +94,8 @@ public abstract class MixinBuilderCubicCurve extends BuilderIterator {
             roll = settingsAccessor.getNearEndTilt();
         } else {
             float percent = (i+1f) / points.size();
-            roll = settingsAccessor.getFarEndTilt() * percent + settingsAccessor.getNearEndTilt() * (1 - percent);
+            float factor = (float) ((1.0 - Math.cos(Math.PI * percent)) / 2.0);
+            roll = settingsAccessor.getNearEndTilt() + (settingsAccessor.getFarEndTilt() - settingsAccessor.getNearEndTilt()) * factor;
         }
         ((IVec3dAccessor)step).setRoll(roll);
     }
