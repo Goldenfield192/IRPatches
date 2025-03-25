@@ -8,16 +8,19 @@ import cam72cam.immersiverailroading.model.components.ComponentProvider;
 import cam72cam.immersiverailroading.model.components.ModelComponent;
 import cam72cam.immersiverailroading.model.part.*;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
+import com.goldenfield192.irpatches.accessor.IStockRollAccessor;
 import com.goldenfield192.irpatches.common.umc.DrivingAssemblyLoader;
 import com.goldenfield192.irpatches.common.umc.ExtraDefinition;
 import com.llamalad7.mixinextras.sugar.Local;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import util.Matrix4;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -49,6 +52,10 @@ public abstract class MixinStockModel{
 
     @Shadow(remap = false) protected abstract boolean unifiedBogies();
 
+    @Shadow(remap = false) protected ModelState front;
+
+    @Shadow(remap = false) protected ModelState rear;
+
     @Redirect(method = "postRender", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/model/part/SwaySimulator;getRollDegrees(Lcam72cam/immersiverailroading/entity/EntityMoveableRollingStock;F)D"), remap = false)
     public double redirect(SwaySimulator instance, EntityMoveableRollingStock stock, float partialTicks){
         return 0f;
@@ -75,7 +82,15 @@ public abstract class MixinStockModel{
 
     @Inject(method = "<init>", at = @At("TAIL"), remap = false)
     public void injectConstructor(EntityRollingStockDefinition def, CallbackInfo ci, @Local(ordinal = 0) ComponentProvider provider){
-        this.bogeyFront = Bogey.get(provider, frontRocking, unifiedBogies(), ModelComponentType.ModelPosition.FRONT);
-        this.bogeyRear = Bogey.get(provider, rearRocking, unifiedBogies(), ModelComponentType.ModelPosition.REAR);
+        this.bogeyFront = Bogey.get(provider, addTrackRoll(front), unifiedBogies(), ModelComponentType.ModelPosition.FRONT);
+        this.bogeyRear = Bogey.get(provider, addTrackRoll(rear), unifiedBogies(), ModelComponentType.ModelPosition.REAR);
+    }
+
+    @Unique
+    public ModelState addTrackRoll(ModelState base){
+        return base.push(builder -> builder.add((ModelState.Animator) (stock, v) -> {
+            IStockRollAccessor accessor = (IStockRollAccessor) stock;
+            return new Matrix4().rotate((accessor.getFrontRoll() + accessor.getRearRoll()) / 2, 1, 0, 0);
+        }));
     }
 }
