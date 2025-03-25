@@ -2,6 +2,7 @@ package com.goldenfield192.irpatches.mixins.immersiverailroading.model.part;
 
 import cam72cam.immersiverailroading.ConfigGraphics;
 import cam72cam.immersiverailroading.entity.EntityMoveableRollingStock;
+import cam72cam.mod.ModCore;
 import com.goldenfield192.irpatches.accessor.IStockRollAccessor;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,3 +1,8 @@
+## 1.3.0
+* Add stocks roll
+* Change track rolling center to then center of rails
+* Fix headlight issues
+
 ## 1.2.5
 * Add real tilting rail(Stocks don't tilt for now)
 * Add server side check for track length
