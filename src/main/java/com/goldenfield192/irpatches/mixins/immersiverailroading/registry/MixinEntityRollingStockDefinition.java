@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 /**
  * Prevent widgets with TV modifier being rendered in inventory
+ *
  * @see com.goldenfield192.irpatches.mixins.immersiverailroading.model.part.MixinControl
  */
 @Mixin(value = EntityRollingStockDefinition.class)
@@ -28,15 +29,16 @@ public class MixinEntityRollingStockDefinition {
     public String defID;
 
     @Inject(method = "<init>", at = @At("TAIL"), remap = false)
-    public <T> void mixin(Class<T> type, String defID, DataBlock data, CallbackInfo ci){
-        List<String> list = itemGroups.stream().filter(x -> !x.contains("TV_default") && x.contains("_TV_")).collect(Collectors.toList());
+    public <T> void mixin(Class<T> type, String defID, DataBlock data, CallbackInfo ci) {
+        List<String> list = itemGroups.stream().filter(x -> !x.contains("TV_default") && x.contains("_TV_"))
+                                      .collect(Collectors.toList());
         this.itemGroups.removeAll(list);
     }
 
     @Inject(method = "loadData",
             at = @At(value = "TAIL"),
             remap = false)
-    public void mixinLoadData(DataBlock data, CallbackInfo ci){
+    public void mixinLoadData(DataBlock data, CallbackInfo ci) {
         ExtraDefinition.loadExtraStockProperties(this.defID, data);
     }
 }

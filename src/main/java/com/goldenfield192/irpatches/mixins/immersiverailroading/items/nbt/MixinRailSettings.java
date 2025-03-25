@@ -22,6 +22,33 @@ public class MixinRailSettings implements IRailSettingsAccessor {
     @Unique
     public float IRPatch$ctrl2Roll;
 
+    @Inject(method = "from", at = @At(value = "HEAD"), remap = false, cancellable = true)
+    private static void from(ItemStack stack, CallbackInfoReturnable<RailSettings> cir) {
+        Constructor<RailSettings.Mutable> constructor;
+        RailSettings m;
+        TagCompound tag = stack.getTagCompound();
+        try {
+            constructor = RailSettings.Mutable.class.getDeclaredConstructor(TagCompound.class);
+            constructor.setAccessible(true);
+            m = constructor.newInstance(tag).immutable();
+        } catch(NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        if(tag != null) {
+            if(tag.get("irp") != null && tag.get("irp").getFloat("ctrl1") != null) {
+                ((IRailSettingsAccessor) m).setFarEnd(tag.get("irp").getFloat("ctrl1"));
+            } else {
+                ((IRailSettingsAccessor) m).setFarEnd(0);
+            }
+            if(tag.get("irp") != null && tag.get("irp").getFloat("ctrl2") != null) {
+                ((IRailSettingsAccessor) m).setNearEnd(tag.get("irp").getFloat("ctrl2"));
+            } else {
+                ((IRailSettingsAccessor) m).setNearEnd(0);
+            }
+        }
+        cir.setReturnValue(m);
+    }
+
     @Override
     public void setNearEnd(float degree) {
         this.IRPatch$ctrl2Roll = degree;
@@ -43,38 +70,11 @@ public class MixinRailSettings implements IRailSettingsAccessor {
     }
 
     @Inject(method = "write", at = @At(value = "INVOKE", target = "Lcam72cam/mod/item/ItemStack;setTagCompound(Lcam72cam/mod/serialization/TagCompound;)V"), remap = false)
-    public void write(ItemStack stack, CallbackInfo ci, @Local TagCompound data){
+    public void write(ItemStack stack, CallbackInfo ci, @Local TagCompound data) {
         TagCompound tag = new TagCompound();
-        tag.setFloat("ctrl1", ((IRailSettingsAccessor)this).getFarEndTilt());
-        tag.setFloat("ctrl2", ((IRailSettingsAccessor)this).getNearEndTilt());
+        tag.setFloat("ctrl1", ((IRailSettingsAccessor) this).getFarEndTilt());
+        tag.setFloat("ctrl2", ((IRailSettingsAccessor) this).getNearEndTilt());
         data.set("irp", tag);
-    }
-
-    @Inject(method = "from", at = @At(value = "HEAD"), remap = false, cancellable = true)
-    private static void from(ItemStack stack, CallbackInfoReturnable<RailSettings> cir){
-        Constructor<RailSettings.Mutable> constructor;
-        RailSettings m;
-        TagCompound tag = stack.getTagCompound();
-        try {
-            constructor = RailSettings.Mutable.class.getDeclaredConstructor(TagCompound.class);
-            constructor.setAccessible(true);
-            m = constructor.newInstance(tag).immutable();
-        } catch(NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-        if(tag != null){
-            if(tag.get("irp") != null && tag.get("irp").getFloat("ctrl1") != null){
-                ((IRailSettingsAccessor) m).setFarEnd(tag.get("irp").getFloat("ctrl1"));
-            } else {
-                ((IRailSettingsAccessor) m).setFarEnd(0);
-            }
-            if(tag.get("irp") != null && tag.get("irp").getFloat("ctrl2") != null){
-                ((IRailSettingsAccessor) m).setNearEnd(tag.get("irp").getFloat("ctrl2"));
-            } else {
-                ((IRailSettingsAccessor) m).setNearEnd(0);
-            }
-        }
-        cir.setReturnValue(m);
     }
 
 }

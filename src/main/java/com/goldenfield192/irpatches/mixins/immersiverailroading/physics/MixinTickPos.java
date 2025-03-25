@@ -3,7 +3,6 @@ package com.goldenfield192.irpatches.mixins.immersiverailroading.physics;
 import cam72cam.immersiverailroading.entity.physics.SimulationState;
 import cam72cam.immersiverailroading.physics.TickPos;
 import cam72cam.immersiverailroading.util.Speed;
-import cam72cam.mod.ModCore;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.serialization.TagCompound;
 import com.goldenfield192.irpatches.accessor.IStockRollAccessor;
@@ -18,14 +17,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(TickPos.class)
 public abstract class MixinTickPos implements IStockRollAccessor {
-    @Shadow(remap = false) public int tickID;
-    @Shadow(remap = false) public Speed speed;
-    @Shadow(remap = false) public Vec3d position;
-    @Shadow(remap = false) public float frontYaw;
-    @Shadow(remap = false) public float rearYaw;
-    @Shadow(remap = false) public float rotationYaw;
-    @Shadow(remap = false) public float rotationPitch;
-    @Shadow(remap = false) public boolean isOffTrack;
+    @Shadow(remap = false)
+    public int tickID;
+    @Shadow(remap = false)
+    public Speed speed;
+    @Shadow(remap = false)
+    public Vec3d position;
+    @Shadow(remap = false)
+    public float frontYaw;
+    @Shadow(remap = false)
+    public float rearYaw;
+    @Shadow(remap = false)
+    public float rotationYaw;
+    @Shadow(remap = false)
+    public float rotationPitch;
+    @Shadow(remap = false)
+    public boolean isOffTrack;
 
     public float frontRoll;
     public float rearRoll;
@@ -37,44 +44,13 @@ public abstract class MixinTickPos implements IStockRollAccessor {
 
     @Unique
     private static float skewAngle(float curr, float next, float ratio) {
-        if (curr - next > 180) {
+        if(curr - next > 180) {
             curr -= 360;
         }
-        if (next - curr > 180) {
+        if(next - curr > 180) {
             curr += 360;
         }
         return curr + (next - curr) * ratio;
-    }
-
-    @Inject(method = "<init>(Lcam72cam/immersiverailroading/entity/physics/SimulationState;)V", at = @At("TAIL"), remap = false)
-    public void injectConstructor0(SimulationState state, CallbackInfo ci){
-        this.frontRoll = ((IStockRollAccessor)state).getFrontRoll();
-        this.rearRoll = ((IStockRollAccessor)state).getRearRoll();
-    }
-
-    @Inject(method = "toTag", at = @At("RETURN"), remap = false)
-    public void save(CallbackInfoReturnable<TagCompound> cir, @Local TagCompound data){
-        TagCompound irp = new TagCompound();
-        irp.setFloat("frontRoll", this.frontRoll);
-        irp.setFloat("rearRoll", this.rearRoll);
-        data.set("irp", irp);
-    }
-
-    @Inject(method = "<init>(Lcam72cam/mod/serialization/TagCompound;)V", at = @At("TAIL"), remap = false)
-    public void load(TagCompound data, CallbackInfo ci){
-        TagCompound irp = data.get("irp");
-        if(irp != null){
-            this.frontRoll = irp.getFloat("frontRoll");
-            this.rearRoll = irp.getFloat("rearRoll");
-        }
-    }
-
-    @Inject(method = "clone()Lcam72cam/immersiverailroading/physics/TickPos;", at = @At("HEAD"), remap = false, cancellable = true)
-    public void inject0(CallbackInfoReturnable<TickPos> cir){
-        IStockRollAccessor tickPos = (IStockRollAccessor) new TickPos(this.tickID, this.speed, this.position, this.frontYaw, this.rearYaw, this.rotationYaw, this.rotationPitch, this.isOffTrack);
-        tickPos.setFrontRoll(this.frontRoll);
-        tickPos.setRearRoll(this.rearRoll);
-        cir.setReturnValue((TickPos) tickPos);
     }
 
     @Inject(method = "skew", at = @At("RETURN"), remap = false, cancellable = true)
@@ -93,9 +69,46 @@ public abstract class MixinTickPos implements IStockRollAccessor {
                 skewAngle(current.rotationPitch, next.rotationPitch, ratio),
                 current.isOffTrack
         );
-        accessor.setFrontRoll(skewAngle(((IStockRollAccessor) current).getFrontRoll(), ((IStockRollAccessor) next).getFrontRoll(), ratio));
-        accessor.setRearRoll(skewAngle(((IStockRollAccessor) current).getRearRoll(), ((IStockRollAccessor) next).getRearRoll(), ratio));
+        accessor.setFrontRoll(
+                skewAngle(((IStockRollAccessor) current).getFrontRoll(), ((IStockRollAccessor) next).getFrontRoll(),
+                          ratio));
+        accessor.setRearRoll(
+                skewAngle(((IStockRollAccessor) current).getRearRoll(), ((IStockRollAccessor) next).getRearRoll(),
+                          ratio));
         cir.setReturnValue((TickPos) accessor);
+    }
+
+    @Inject(method = "<init>(Lcam72cam/immersiverailroading/entity/physics/SimulationState;)V", at = @At("TAIL"), remap = false)
+    public void injectConstructor0(SimulationState state, CallbackInfo ci) {
+        this.frontRoll = ((IStockRollAccessor) state).getFrontRoll();
+        this.rearRoll = ((IStockRollAccessor) state).getRearRoll();
+    }
+
+    @Inject(method = "toTag", at = @At("RETURN"), remap = false)
+    public void save(CallbackInfoReturnable<TagCompound> cir, @Local TagCompound data) {
+        TagCompound irp = new TagCompound();
+        irp.setFloat("frontRoll", this.frontRoll);
+        irp.setFloat("rearRoll", this.rearRoll);
+        data.set("irp", irp);
+    }
+
+    @Inject(method = "<init>(Lcam72cam/mod/serialization/TagCompound;)V", at = @At("TAIL"), remap = false)
+    public void load(TagCompound data, CallbackInfo ci) {
+        TagCompound irp = data.get("irp");
+        if(irp != null) {
+            this.frontRoll = irp.getFloat("frontRoll");
+            this.rearRoll = irp.getFloat("rearRoll");
+        }
+    }
+
+    @Inject(method = "clone()Lcam72cam/immersiverailroading/physics/TickPos;", at = @At("HEAD"), remap = false, cancellable = true)
+    public void inject0(CallbackInfoReturnable<TickPos> cir) {
+        IStockRollAccessor tickPos = (IStockRollAccessor) new TickPos(this.tickID, this.speed, this.position,
+                                                                      this.frontYaw, this.rearYaw, this.rotationYaw,
+                                                                      this.rotationPitch, this.isOffTrack);
+        tickPos.setFrontRoll(this.frontRoll);
+        tickPos.setRearRoll(this.rearRoll);
+        cir.setReturnValue((TickPos) tickPos);
     }
 
     @Override

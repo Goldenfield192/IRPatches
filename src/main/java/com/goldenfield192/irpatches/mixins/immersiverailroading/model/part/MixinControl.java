@@ -28,45 +28,53 @@ import java.util.regex.Pattern;
 /**
  * 1.Add TV modifier for widgets to allow more complex functions
  * 2.Let LABEL be translatable
+ *
  * @see com.goldenfield192.irpatches.mixins.immersiverailroading.registry.MixinEntityRollingStockDefinition
  */
 @Mixin(value = Control.class)
 public abstract class MixinControl<T extends EntityMoveableRollingStock> extends Interactable<T>/*For generics compatibility*/ {
     @Final
+    @Shadow(remap = false)
+    public String label;
+    @Unique
+    public String tex_variant;
+    @Final
     @Mutable
     @Shadow(remap = false)
     protected ModelState state;
 
-    @Final
-    @Shadow(remap = false)
-    public String label;
-
-    @Unique
-    public String tex_variant;
+    //Only for compatibility
+    private MixinControl(ModelComponent part) {
+        super(part);
+    }
 
     //Complex implement
     @ModifyVariable(method = "<init>", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/lang/String;replace(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Ljava/lang/String;"), remap = false)
     public ModelState modState(ModelState state) {
         return state.push(builder ->
-                builder.add((ModelState.GroupVisibility) (stock, group) -> {
-                    if (tex_variant == null)
-                        return true;
-                    if (Objects.equals(null, stock.getTexture()) || Objects.equals("", stock.getTexture())) {
-                        return tex_variant.equals("default");
-                    } else {
-                        return Objects.equals(stock.getTexture(), tex_variant);
-                    }
-                }));
+                                  builder.add((ModelState.GroupVisibility) (stock, group) -> {
+                                      if(tex_variant == null) {
+                                          return true;
+                                      }
+                                      if(Objects.equals(null, stock.getTexture()) || Objects.equals("",
+                                                                                                    stock.getTexture())) {
+                                          return tex_variant.equals("default");
+                                      } else {
+                                          return Objects.equals(stock.getTexture(), tex_variant);
+                                      }
+                                  }));
     }
 
     @Inject(method = "<init>", at = @At("TAIL"), remap = false)
     private void onControlLoad(ModelComponent part, ModelState state, double internal_model_scale, Map<String, DataBlock> widgetConfig, CallbackInfo ci) {
         tex_variant = part.modelIDs.stream().map(group -> {
             Matcher matcher = Pattern.compile("_TV_([^_]+)").matcher(group);
-            return matcher.find() ? matcher.group(1).replaceAll("\\^", " ") : null;
+            return matcher.find() ?
+                   matcher.group(1).replaceAll("\\^", " ") :
+                   null;
         }).filter(Objects::nonNull).findFirst().orElse(null);
 
-        if (tex_variant != null) {
+        if(tex_variant != null) {
             System.out.println("TV: " + tex_variant);
         }
     }
@@ -78,23 +86,19 @@ public abstract class MixinControl<T extends EntityMoveableRollingStock> extends
             , remap = false)
     public void labelTranslator(T stock, RenderState state, float partialTicks, CallbackInfo ci, boolean isPressed, Matrix4 m, Vec3d pos, String labelstate, float percent, String str) {
         String[] sp = stock.getDefinition().defID.replaceAll(".json", "").split("/");
-        String localStr = String.format("%s:label.%s.%s.%s", ImmersiveRailroading.MODID, sp[sp.length - 2], sp[sp.length - 1], label);
+        String localStr = String.format("%s:label.%s.%s.%s", ImmersiveRailroading.MODID, sp[sp.length - 2],
+                                        sp[sp.length - 1], label);
         String transStr = TextUtil.translate(localStr);
-        if (localStr.equals(transStr)) {
+        if(localStr.equals(transStr)) {
             return;
         }
 
         transStr = transStr + labelstate;
 
-        if (isPressed) {
+        if(isPressed) {
             transStr = TextColor.BOLD.wrap(transStr);
         }
         GlobalRender.drawText(transStr, state, pos, 0.2F, 180.0F - stock.getRotationYaw() - 90.0F);
         ci.cancel();
-    }
-
-    //Only for compatibility
-    private MixinControl(ModelComponent part) {
-        super(part);
     }
 }

@@ -12,6 +12,7 @@ import java.io.IOException;
 
 /**
  * Element class representing a picture
+ *
  * @see MarkdownElement
  */
 public class MarkdownPicture extends MarkdownElement {
@@ -24,7 +25,7 @@ public class MarkdownPicture extends MarkdownElement {
         this.picture = picture;
         try {
             this.image = ImageIO.read(picture.getResourceStream());
-        } catch (IOException e) {
+        } catch(IOException e) {
             throw new RuntimeException(e);
         }
         this.ratio = (double) this.image.getHeight() / this.image.getWidth();

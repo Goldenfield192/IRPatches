@@ -20,9 +20,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ImmersiveRailroading.class)
 public class MixinImmersiveRailroading {
+    @Inject(method = "lambda$clientEvent$4", at = @At(value = "INVOKE_ASSIGN", target = "Lcam72cam/mod/entity/Player;getRiding()Lcam72cam/mod/entity/Entity;"), remap = false, cancellable = true)
+    private static void mixinMouseGui(ClientEvents.MouseGuiEvent evt, CallbackInfoReturnable<Boolean> cir) {
+        ManualHoverRenderer.updateMousePosition(evt);
+
+        if(ManualGui.onClick(evt)) {
+            cir.setReturnValue(true);
+        }
+    }
+
     @Inject(method = "commonEvent", at = @At("TAIL"), remap = false)
-    public void mixinCommonEvent(ModEvent event, CallbackInfo ci){
-        switch(event){
+    public void mixinCommonEvent(ModEvent event, CallbackInfo ci) {
+        switch(event) {
             case CONSTRUCT:
                 Packet.register(ActuatorGui.AugmentFilterChangePacket::new, PacketDirection.ClientToServer);
                 break;
@@ -33,8 +42,8 @@ public class MixinImmersiveRailroading {
     }
 
     @Inject(method = "clientEvent", at = @At("TAIL"), remap = false)
-    public void mixinClientEvent1(ModEvent event, CallbackInfo ci){
-        switch(event){
+    public void mixinClientEvent1(ModEvent event, CallbackInfo ci) {
+        switch(event) {
             case CONSTRUCT:
                 IRPGUIHelper.register();
                 break;
@@ -46,16 +55,7 @@ public class MixinImmersiveRailroading {
     }
 
     @Inject(method = "clientEvent", at = @At(value = "INVOKE", target = "Lcam72cam/mod/render/GlobalRender;registerOverlay(Lcam72cam/mod/render/RenderFunction;)V"), remap = false)
-    public void mixinClientEvent2(ModEvent event, CallbackInfo ci){
+    public void mixinClientEvent2(ModEvent event, CallbackInfo ci) {
         ClientEvents.SCROLL.subscribe(OnboardCamera::handleScroll);
-    }
-
-    @Inject(method = "lambda$clientEvent$4", at = @At(value = "INVOKE_ASSIGN", target = "Lcam72cam/mod/entity/Player;getRiding()Lcam72cam/mod/entity/Entity;"), remap = false, cancellable = true)
-    private static void mixinMouseGui(ClientEvents.MouseGuiEvent evt, CallbackInfoReturnable<Boolean> cir){
-        ManualHoverRenderer.updateMousePosition(evt);
-
-        if(ManualGui.onClick(evt)){
-            cir.setReturnValue(true);
-        }
     }
 }

@@ -12,8 +12,9 @@ public class GaugeProvider {
 
     public static List<MarkdownDocument.MarkdownLine> parse(String input, MarkdownDocument context) {
         return Gauge.values().stream()
-                .map(gauge -> MarkdownDocument.MarkdownLine.create(new MarkdownStyledText(gauge.toString() + " (" + gauge.value() + "m)"))
-                        .isUnorderedList(true))
-                .collect(Collectors.toList());
+                    .map(gauge -> MarkdownDocument.MarkdownLine.create(
+                                                          new MarkdownStyledText(gauge.toString() + " (" + gauge.value() + "m)"))
+                                                               .isUnorderedList(true))
+                    .collect(Collectors.toList());
     }
 }

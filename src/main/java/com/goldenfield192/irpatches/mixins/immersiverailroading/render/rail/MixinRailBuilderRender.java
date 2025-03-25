@@ -22,7 +22,7 @@ import java.util.List;
 public class MixinRailBuilderRender {
     @Inject(method = "renderRailBuilder", at = @At(value = "INVOKE_ASSIGN", target = "Lutil/Matrix4;rotate(DDDD)Lutil/Matrix4;", ordinal = 1), remap = false, locals = LocalCapture.CAPTURE_FAILSOFT)
     private static void inject(RailInfo info, List renderData, RenderState state, CallbackInfo ci, TrackModel model,
-                        VBO cached, OBJRender.Builder builder, Iterator var6, BuilderBase.VecYawPitch piece, Matrix4 m){
+                               VBO cached, OBJRender.Builder builder, Iterator var6, BuilderBase.VecYawPitch piece, Matrix4 m) {
         double radians = Math.toRadians(((IVec3dAccessor) piece).getRoll());
         double sin = Math.sin(radians);
         double cos = Math.cos(radians);

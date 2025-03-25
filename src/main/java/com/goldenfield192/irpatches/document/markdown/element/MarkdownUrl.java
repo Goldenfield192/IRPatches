@@ -24,6 +24,7 @@ import static com.goldenfield192.irpatches.document.markdown.Colors.DEFAULT_TEXT
  * Element class representing a url, which is clickable
  * <p>
  * Also parses Markdown format url
+ *
  * @see MarkdownClickableElement
  * @see MarkdownElement
  */
@@ -44,10 +45,11 @@ public class MarkdownUrl extends MarkdownClickableElement {
 
     /**
      * Helper method to parse a String into MarkdownUrl element
+     *
      * @param input Raw String needed to be parsed
      * @return The parsed element, or null if it can't be parsed
      */
-    public static MarkdownUrl compileSingle(String input){
+    public static MarkdownUrl compileSingle(String input) {
         Matcher matcher = MARKDOWN_URL_PATTERN.matcher(input);
         if(matcher.find()) {
             return new MarkdownUrl(matcher.group("text"), matcher.group("url"));
@@ -58,6 +60,7 @@ public class MarkdownUrl extends MarkdownClickableElement {
 
     /**
      * Helper method to split a text element into a list by urls
+     *
      * @param input Raw String needed to be parsed
      * @return The parsed element, or null if it can't be parsed
      */
@@ -66,14 +69,14 @@ public class MarkdownUrl extends MarkdownClickableElement {
 
         Matcher matcher = MARKDOWN_URL_PATTERN.matcher(input.text);
         int prev = 0;
-        while (matcher.find()) {
+        while(matcher.find()) {
             urls.add(new MarkdownStyledText(input.text.substring(prev, matcher.start("text") - 1), input.styles));
             urls.add(new MarkdownUrl(matcher.group("text"),
-                    matcher.group("url")));
+                                     matcher.group("url")));
             prev = matcher.end("url") + 1;
         }
         //Last element is not a url, finalize as ordinary text
-        if(prev != input.text.length() -1){
+        if(prev != input.text.length() - 1) {
             urls.add(new MarkdownStyledText(input.text.substring(prev), input.styles));
         }
         return urls;
@@ -87,9 +90,9 @@ public class MarkdownUrl extends MarkdownClickableElement {
     @Override
     public MarkdownElement[] split(int splitPos) {
         int i = splitPos;
-        while (this.text.charAt(i) == ' '){
+        while(this.text.charAt(i) == ' ') {
             i++;
-            if(i == this.text.length()){//rest are all space
+            if(i == this.text.length()) {//rest are all space
                 return new MarkdownElement[]{
                         new MarkdownUrl(this.text.substring(0, splitPos), this.destination),
                         new MarkdownUrl("", this.destination)};
@@ -110,9 +113,9 @@ public class MarkdownUrl extends MarkdownClickableElement {
 
     @Override
     public void click(MarkdownDocument document) {
-        if(MarkdownPageManager.validate(this.destination)){
+        if(MarkdownPageManager.validate(this.destination)) {
             ManualGui.pushContent(this.destination);
-        } else if(this.destination.getDomain().equals("https")){
+        } else if(this.destination.getDomain().equals("https")) {
             MinecraftClient.getPlayer().sendMessage(PlayerMessage.url(this.destination.toString()));
         } else {
             //What should we do?
@@ -122,16 +125,16 @@ public class MarkdownUrl extends MarkdownClickableElement {
     @Override
     public void updateSection(Vec3d offset) {
         this.section = new Rectangle((int) offset.x, (int) offset.y,
-                (int) (IRPGUIHelper.getTextWidth(this.apply()) * IRPConfig.ManualFontSize),
-                (int) (10 * IRPConfig.ManualFontSize));
+                                     (int) (IRPGUIHelper.getTextWidth(this.apply()) * IRPConfig.ManualFontSize),
+                                     (int) (10 * IRPConfig.ManualFontSize));
     }
 
     //TODO Translation file
     @Override
     public void renderTooltip(Identifier id, int bottomBound) {
-        if(MarkdownPageManager.getPageName(id) != null){
+        if(MarkdownPageManager.getPageName(id) != null) {
             renderTooltip("Open page: " + MarkdownPageManager.getPageName(destination), bottomBound);
-        } else if(this.destination.getDomain().equals("https")){
+        } else if(this.destination.getDomain().equals("https")) {
             renderTooltip("Click to send this website to your dialog!", bottomBound);
         } else {
             //What should we do?

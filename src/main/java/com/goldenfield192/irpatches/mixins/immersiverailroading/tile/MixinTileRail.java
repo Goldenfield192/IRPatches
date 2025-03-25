@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(TileRail.class)
 public class MixinTileRail {
     @Inject(method = "getRenderDistance", at = @At("HEAD"), remap = false, cancellable = true)
-    public void inject(CallbackInfoReturnable<Double> cir){
+    public void inject(CallbackInfoReturnable<Double> cir) {
         cir.setReturnValue((double) IRPConfig.TrackRenderDistance);
     }
 }

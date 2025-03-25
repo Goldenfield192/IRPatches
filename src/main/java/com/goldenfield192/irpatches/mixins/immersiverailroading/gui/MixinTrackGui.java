@@ -23,9 +23,11 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(TrackGui.class)
 public class MixinTrackGui {
-    @Shadow(remap = false) private CheckBox isGradeCrossingCB;
+    @Shadow(remap = false)
+    private CheckBox isGradeCrossingCB;
 
-    @Shadow(remap = false) private RailSettings.Mutable settings;
+    @Shadow(remap = false)
+    private RailSettings.Mutable settings;
 
     @Unique
     private Slider ctrl1RollSlider;
@@ -33,13 +35,14 @@ public class MixinTrackGui {
     private Slider ctrl2RollSlider;
 
     @ModifyConstant(method = "init", constant = @Constant(intValue = 6), remap = false)
-    private int inject1(int constant){
+    private int inject1(int constant) {
         return constant - 1;
     }
 
     @Inject(method = "init", at = @At("TAIL"), remap = false, locals = LocalCapture.CAPTURE_FAILSOFT)
-    public void inject2(IScreenBuilder screen, CallbackInfo ci, int width, int height, int xtop, int ytop, Slider zoom_slider){
-        isGradeCrossingCB = new CheckBox(screen, xtop + 102, ytop - 38, GuiText.SELECTOR_GRADE_CROSSING.toString(), settings.isGradeCrossing) {
+    public void inject2(IScreenBuilder screen, CallbackInfo ci, int width, int height, int xtop, int ytop, Slider zoom_slider) {
+        isGradeCrossingCB = new CheckBox(screen, xtop + 102, ytop - 38, GuiText.SELECTOR_GRADE_CROSSING.toString(),
+                                         settings.isGradeCrossing) {
             public void onClick(Player.Hand hand) {
                 settings.isGradeCrossing = isGradeCrossingCB.isChecked();
             }
@@ -47,7 +50,8 @@ public class MixinTrackGui {
 
         ytop = -GUIHelpers.getScreenHeight() / 4;
         IRailSettingsAccessor accessor = (IRailSettingsMutableAccessor) settings;
-        this.ctrl1RollSlider = new Slider(screen, -150 + (GUIHelpers.getScreenWidth()/2), ytop, "", -14.2, 14.2, accessor.getFarEndTilt(), true) {
+        this.ctrl1RollSlider = new Slider(screen, -150 + (GUIHelpers.getScreenWidth() / 2), ytop, "", -14.2, 14.2,
+                                          accessor.getFarEndTilt(), true) {
             @Override
             public void onSlider() {
                 accessor.setFarEnd((float) this.getValue());
@@ -55,7 +59,8 @@ public class MixinTrackGui {
             }
         };
         ytop += height;
-        this.ctrl2RollSlider = new Slider(screen, -150 + (GUIHelpers.getScreenWidth()/2), ytop, "", -14.2, 14.2, accessor.getNearEndTilt(), true) {
+        this.ctrl2RollSlider = new Slider(screen, -150 + (GUIHelpers.getScreenWidth() / 2), ytop, "", -14.2, 14.2,
+                                          accessor.getNearEndTilt(), true) {
             @Override
             public void onSlider() {
                 accessor.setNearEnd((float) this.getValue());
@@ -68,7 +73,7 @@ public class MixinTrackGui {
     }
 
     @ModifyConstant(method = "lambda$init$0", constant = @Constant(intValue = 1000), remap = false)
-    public int modConst(int constant){
+    public int modConst(int constant) {
         return IRPConfig.MaxTrackLength;
     }
 }

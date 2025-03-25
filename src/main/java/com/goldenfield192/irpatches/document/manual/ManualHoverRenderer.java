@@ -17,19 +17,20 @@ public class ManualHoverRenderer {
 
     /**
      * Core method to render tooltip, currently only supports single-line tooltip
-     * @param text Tooltip's text
+     *
+     * @param text        Tooltip's text
      * @param bottomBound The expected bottom bound of the tip, if intersects then the tooltip will be rendered on the top of the mouse
      */
-    public static void renderTooltip(String text, int bottomBound){
-        if(text != null && !text.isEmpty()){
+    public static void renderTooltip(String text, int bottomBound) {
+        if(text != null && !text.isEmpty()) {
             int textWidth = IRPGUIHelper.getTextWidth(text);
 
             int x = mouseX;
             int y = mouseY;
-            if(mouseY + 20 >= bottomBound){//Not enough space downward, render on the top
+            if(mouseY + 20 >= bottomBound) {//Not enough space downward, render on the top
                 y -= 18;
             }
-            if(mouseX + textWidth > GUIHelpers.getScreenWidth()){//Not enough space on the right, render on the left
+            if(mouseX + textWidth > GUIHelpers.getScreenWidth()) {//Not enough space on the right, render on the left
                 x -= textWidth;
             }
 

@@ -17,9 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class MarkdownItemRenderer extends MarkdownClickableElement{
-    public ItemStack stack;
-
+public class MarkdownItemRenderer extends MarkdownClickableElement {
     private static final List<ItemStack> ITEM_STOCKS;
 
     static {
@@ -30,10 +28,12 @@ public class MarkdownItemRenderer extends MarkdownClickableElement{
         ITEM_STOCKS.addAll(IRItems.ITEM_ROLLING_STOCK.getItemVariants(ItemTabs.STOCK_TAB));
     }
 
-    public MarkdownItemRenderer(EntityRollingStockDefinition def){
+    public ItemStack stack;
+
+    public MarkdownItemRenderer(EntityRollingStockDefinition def) {
         Optional<ItemStack> item =
                 ITEM_STOCKS.stream().filter(stack -> new ItemRollingStock.Data(stack).def.equals(def)).findFirst();
-        if(item.isPresent()){
+        if(item.isPresent()) {
             this.stack = item.get();
         } else {
             throw new IllegalStateException("Can't find definition!");
@@ -57,9 +57,9 @@ public class MarkdownItemRenderer extends MarkdownClickableElement{
     @Override
     public int render(RenderState state, int pageWidth) {
         RenderState state1 = state.clone();
-        state1.scale(5,5,5);
+        state1.scale(5, 5, 5);
         GUIHelpers.drawItem(stack, 0, 0, state1.model_view());
-        state.translate(0,80,0);
+        state.translate(0, 80, 0);
         return 80;
     }
 
@@ -71,8 +71,8 @@ public class MarkdownItemRenderer extends MarkdownClickableElement{
     @Override
     public void updateSection(Vec3d offset) {
         this.section = new Rectangle((int) offset.x, (int) offset.y,
-                (int) (10 * IRPConfig.ManualFontSize),
-                (int) (10 * IRPConfig.ManualFontSize));
+                                     (int) (10 * IRPConfig.ManualFontSize),
+                                     (int) (10 * IRPConfig.ManualFontSize));
     }
 
     @Override

@@ -21,14 +21,15 @@ public class MixinSteamChimney {
             at = @At(value = "INVOKE_ASSIGN", target = "Lcam72cam/mod/math/Vec3d;add(Lcam72cam/mod/math/Vec3d;)Lcam72cam/mod/math/Vec3d;"),
             remap = false)
     public void inject0(LocomotiveSteam stock, boolean isEndStroke, CallbackInfo ci,
-                        @Local ModelComponent smoke, @Share("pos") LocalRef<Vec3d> vec3dLocalRef){
-        double rotation = Math.toRadians((((IStockRollAccessor)stock).getFrontRoll() + ((IStockRollAccessor)stock).getRearRoll()) / 2);
+                        @Local ModelComponent smoke, @Share("pos") LocalRef<Vec3d> vec3dLocalRef) {
+        double rotation = Math.toRadians(
+                (((IStockRollAccessor) stock).getFrontRoll() + ((IStockRollAccessor) stock).getRearRoll()) / 2);
         Vec3d particlePos = stock.getModelMatrix().rotate(rotation, 1, 0, 0).apply(smoke.center);
         vec3dLocalRef.set(particlePos);
     }
 
     @ModifyArgs(method = "effects", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/render/SmokeParticle$SmokeParticleData;<init>(Lcam72cam/mod/world/World;Lcam72cam/mod/math/Vec3d;Lcam72cam/mod/math/Vec3d;IFFDLcam72cam/mod/resource/Identifier;)V"), remap = false)
-    public void mod(Args args, @Share("pos") LocalRef<Vec3d> vec3dLocalRef){
+    public void mod(Args args, @Share("pos") LocalRef<Vec3d> vec3dLocalRef) {
         args.set(1, vec3dLocalRef.get());
     }
 }

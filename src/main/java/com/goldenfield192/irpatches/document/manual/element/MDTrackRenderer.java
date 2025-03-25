@@ -18,17 +18,17 @@ public class MDTrackRenderer extends MarkdownElement {
         this(DefinitionManager.getTrack(trackID));
     }
 
-    public MDTrackRenderer(TrackDefinition def){
+    public MDTrackRenderer(TrackDefinition def) {
         model = new StandardModel().addCustom((state, partialTicks) -> {
             TrackModel trackModel = def.getTrackForGauge(STANDARD);
             RenderState state1 = state.clone();
-            try(OBJRender.Binding binding = trackModel.binder().bind(state1)){
+            try(OBJRender.Binding binding = trackModel.binder().bind(state1)) {
                 binding.draw();
             }
-            try(OBJRender.Binding binding = trackModel.binder().bind(state1.translate(1,0,0))){
+            try(OBJRender.Binding binding = trackModel.binder().bind(state1.translate(1, 0, 0))) {
                 binding.draw();
             }
-            try(OBJRender.Binding binding = trackModel.binder().bind(state1.translate(-2,0,0))){
+            try(OBJRender.Binding binding = trackModel.binder().bind(state1.translate(-2, 0, 0))) {
                 binding.draw();
             }
         });
@@ -48,15 +48,15 @@ public class MDTrackRenderer extends MarkdownElement {
     public int render(RenderState state, int pageWidth) {
         RenderState state1 = state.clone();
         double scale = pageWidth / 4.0 / IRPConfig.ManualFontSize;
-        state1.translate(scale * 2,scale,100);
-        state1.rotate(180,0,0,1);
-        state1.rotate(30,1,0,0);
-        state1.rotate(30,0,1,0);
+        state1.translate(scale * 2, scale, 100);
+        state1.rotate(180, 0, 0, 1);
+        state1.rotate(30, 1, 0, 0);
+        state1.rotate(30, 0, 1, 0);
         state1.scale(scale, scale, scale);
         state1.lighting(true);
-        state1.lightmap(1,1);
+        state1.lightmap(1, 1);
         model.render(state1);
-        state.translate(0,scale * 2,0);
+        state.translate(0, scale * 2, 0);
         return (int) (scale * 2 / IRPConfig.ManualFontSize);
     }
 }

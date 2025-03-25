@@ -22,27 +22,38 @@ import util.Matrix4;
 
 @Mixin(TrackFollower.class)
 public class MixinTrackFollower {
-    @Shadow(remap = false) @Final private boolean front;
-    @Shadow(remap = false) @Final private EntityMoveableRollingStock stock;
-    @Shadow(remap = false) @Final private Matrix4 matrix;
-    @Shadow(remap = false) private Vec3d pos;
-    @Shadow(remap = false) @Final private float offset;
-    @Shadow(remap = false) @Final private float min;
+    @Shadow(remap = false)
+    @Final
+    private boolean front;
+    @Shadow(remap = false)
+    @Final
+    private EntityMoveableRollingStock stock;
+    @Shadow(remap = false)
+    @Final
+    private Matrix4 matrix;
+    @Shadow(remap = false)
+    private Vec3d pos;
+    @Shadow(remap = false)
+    @Final
+    private float offset;
+    @Shadow(remap = false)
+    @Final
+    private float min;
     @Unique
     private float roll;
 
     @Inject(method = "getMatrix", at = @At(value = "INVOKE_ASSIGN", target = "Lutil/Matrix4;rotate(DDDD)Lutil/Matrix4;", ordinal = 0), remap = false)
-    public void inject0(CallbackInfoReturnable<Matrix4> cir){
+    public void inject0(CallbackInfoReturnable<Matrix4> cir) {
         //TODO Frame wheel and steam
         float offsetRoll = (front ?
-                            ((IStockRollAccessor)stock).getFrontRoll() :
-                            ((IStockRollAccessor)stock).getRearRoll());
+                            ((IStockRollAccessor) stock).getFrontRoll() :
+                            ((IStockRollAccessor) stock).getRearRoll());
         roll = offsetRoll;
-        matrix.rotate(Math.toRadians(roll),1,0,0);
+        matrix.rotate(Math.toRadians(roll), 1, 0, 0);
     }
 
     @Inject(method = "getMatrix", at = @At(value = "INVOKE_ASSIGN", target = "Lcam72cam/mod/math/Vec3d;subtract(Lcam72cam/mod/math/Vec3d;)Lcam72cam/mod/math/Vec3d;", ordinal = 0), remap = false)
-    public void inject1(CallbackInfoReturnable<Matrix4> cir){
+    public void inject1(CallbackInfoReturnable<Matrix4> cir) {
         float offsetYaw = (front ?
                            stock.getFrontYaw() :
                            stock.getRearYaw());
@@ -53,12 +64,15 @@ public class MixinTrackFollower {
 
     public float nextRoll(World world, Gauge gauge, Vec3d currentPosition, float rotationYaw, float bogeyYaw, double distance) {
         ITrack rail = MovementTrack.findTrack(world, currentPosition, rotationYaw, gauge.value());
-        if (rail == null) {
+        if(rail == null) {
             return 0;
         }
         Vec3d result = rail.getNextPosition(currentPosition, VecUtil.fromWrongYaw(distance, bogeyYaw));
-        float r = rail instanceof TileRailBase ? ((ITileRailBaseAccessor) rail).getNextRoll(currentPosition, VecUtil.fromWrongYaw(distance, bogeyYaw)) : 0;
-        if (result == null) {
+        float r = rail instanceof TileRailBase ?
+                  ((ITileRailBaseAccessor) rail).getNextRoll(currentPosition,
+                                                             VecUtil.fromWrongYaw(distance, bogeyYaw)) :
+                  0;
+        if(result == null) {
             return 0;
         }
         return r;

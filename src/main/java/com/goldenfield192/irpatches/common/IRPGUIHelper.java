@@ -14,25 +14,30 @@ import net.minecraft.client.renderer.GlStateManager;
 import util.Matrix4;
 
 public class IRPGUIHelper {
-    public static final GuiRegistry.GUI MANUAL = GuiRegistry.register(new Identifier(IRPatches.MODID, "MANUAL"), ManualGui::new);
+    public static final GuiRegistry.GUI MANUAL = GuiRegistry.register(new Identifier(IRPatches.MODID, "MANUAL"),
+                                                                      ManualGui::new);
     public static final GuiRegistry.BlockGUI ACTUATOR = GuiRegistry.registerBlock(TileRailBase.class, ActuatorGui::new);
 
-    public static int getTextWidth(String s){
+    public static int getTextWidth(String s) {
         return Minecraft.getMinecraft().fontRenderer.getStringWidth(s);
     }
 
-    /** Draw a left-aligned shadowed string */
+    /**
+     * Draw a left-aligned shadowed string
+     */
     public static void drawString(String text, int x, int y, int color) {
         drawString(text, x, y, color, new Matrix4());
     }
+
     public static void drawString(String text, int x, int y, int color, Matrix4 matrix) {
         RenderState state = new RenderState().color(1, 1, 1, 1).alpha_test(true);
         state.model_view().multiply(matrix);
-        try (With ctx = RenderContext.apply(state)) {
+        try(With ctx = RenderContext.apply(state)) {
             GlStateManager.color(1, 1, 1, 0);
             Minecraft.getMinecraft().fontRenderer.drawString(text, x, y, color);
         }
     }
 
-    public static void register(){}
+    public static void register() {
+    }
 }

@@ -19,12 +19,12 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(PlacementInfo.class)
 public abstract class MixinPlacementInfo {
     @Shadow(remap = false)
-    public abstract Facing facing();
-
-    @Shadow(remap = false)
     @Final
     @Mutable
     public Vec3d placementPosition;
+
+    @Shadow(remap = false)
+    public abstract Facing facing();
 
     @Inject(method = "<init>(Lcam72cam/mod/item/ItemStack;FLcam72cam/mod/math/Vec3d;)V",
             at = @At("RETURN"),
@@ -41,10 +41,10 @@ public abstract class MixinPlacementInfo {
             case PIXELS:
                 hitX = ((int) (hitX * 16)) / 16f;
                 hitZ = ((int) (hitZ * 16)) / 16f;
-                if(hit.z < 0){
+                if(hit.z < 0) {
                     hitZ += 1;
                 }
-                if(hit.x < 0){
+                if(hit.x < 0) {
                     hitX += 1;
                 }
                 break;
@@ -52,11 +52,11 @@ public abstract class MixinPlacementInfo {
                 hitX = ((int) (hitX * 16)) / 16f;
                 hitZ = ((int) (hitZ * 16)) / 16f;
 
-                if(quarter != 0){
-                    if(hit.z < 0){
+                if(quarter != 0) {
+                    if(hit.z < 0) {
                         hitZ += 1;
                     }
-                    if(hit.x < 0){
+                    if(hit.x < 0) {
                         hitX += 1;
                     }
                     break;
@@ -66,14 +66,14 @@ public abstract class MixinPlacementInfo {
                     case EAST:
                     case WEST:
                         hitZ = 0.5f;
-                        if(hit.x < 0){
+                        if(hit.x < 0) {
                             hitX += 1;
                         }
                         break;
                     case NORTH:
                     case SOUTH:
                         hitX = 0.5f;
-                        if(hit.z < 0){
+                        if(hit.z < 0) {
                             hitZ += 1;
                         }
                         break;
@@ -82,19 +82,19 @@ public abstract class MixinPlacementInfo {
                 }
                 break;
             case SMOOTH:
-                if(hit.z < 0){
+                if(hit.z < 0) {
                     hitZ += 1;
                 }
-                if(hit.x < 0){
+                if(hit.x < 0) {
                     hitX += 1;
                 }
                 break;
             case SMOOTH_LOCKED:
-                if(quarter != 0){
-                    if(hit.z < 0){
+                if(quarter != 0) {
+                    if(hit.z < 0) {
                         hitZ += 1;
                     }
-                    if(hit.x < 0){
+                    if(hit.x < 0) {
                         hitX += 1;
                     }
                     break;
@@ -104,14 +104,14 @@ public abstract class MixinPlacementInfo {
                     case EAST:
                     case WEST:
                         hitZ = 0.5f;
-                        if(hit.x < 0){
+                        if(hit.x < 0) {
                             hitX += 1;
                         }
                         break;
                     case NORTH:
                     case SOUTH:
                         hitX = 0.5f;
-                        if(hit.z < 0){
+                        if(hit.z < 0) {
                             hitZ += 1;
                         }
                         break;

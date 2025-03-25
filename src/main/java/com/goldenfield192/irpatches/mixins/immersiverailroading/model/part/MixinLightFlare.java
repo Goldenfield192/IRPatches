@@ -24,48 +24,51 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 
 @Mixin(LightFlare.class)
-public abstract class MixinLightFlare{
-    @Shadow(remap = false) @Final private Map<UUID, List<Light>> castLights;
-    @Shadow(remap = false) @Final private Map<UUID, List<Vec3d>> castPositions;
-
-    @Shadow(remap = false) public abstract void removed(EntityMoveableRollingStock stock);
-
+public abstract class MixinLightFlare {
     @Unique
     public boolean IRPatches$useTex = true;
-
     @Unique
     public String IRPatch$disableOn = null;
+    @Shadow(remap = false)
+    @Final
+    private Map<UUID, List<Light>> castLights;
+    @Shadow(remap = false)
+    @Final
+    private Map<UUID, List<Vec3d>> castPositions;
+
+    @Shadow(remap = false)
+    public abstract void removed(EntityMoveableRollingStock stock);
 
     @Inject(method = "<init>", at = @At("TAIL"), remap = false, locals = LocalCapture.CAPTURE_FAILSOFT)
-    public void injectConstructor(EntityRollingStockDefinition def, ModelState state, ModelComponent component, CallbackInfo ci, Matcher rgbValues, EntityRollingStockDefinition.LightDefinition config, ModelState mystate){
+    public void injectConstructor(EntityRollingStockDefinition def, ModelState state, ModelComponent component, CallbackInfo ci, Matcher rgbValues, EntityRollingStockDefinition.LightDefinition config, ModelState mystate) {
         ExtraDefinition.LightDefinition light = ExtraDefinition.get(def)
                 .extraLightDef.get(component.type.toString()
-                .replace("_X", "_" + component.id)
-                .replace("_POS_", "_" + component.pos + "_"));
-        if(light != null){
+                                                 .replace("_X", "_" + component.id)
+                                                 .replace("_POS_", "_" + component.pos + "_"));
+        if(light != null) {
             this.IRPatches$useTex = light.enableTex;
             this.IRPatch$disableOn = light.disableOn;
         }
     }
 
     @Inject(method = "postRender", at = @At("HEAD"), remap = false, cancellable = true)
-    public void inject1(EntityMoveableRollingStock stock, RenderState state, CallbackInfo ci){
-        if(!IRPatches$useTex || !IRPatch$isEnabled(stock)){
+    public void inject1(EntityMoveableRollingStock stock, RenderState state, CallbackInfo ci) {
+        if(!IRPatches$useTex || !IRPatch$isEnabled(stock)) {
             ci.cancel();
         }
     }
 
     @Inject(method = "effects", at = @At("HEAD"), remap = false, cancellable = true)
-    public void inject2(EntityMoveableRollingStock stock, CallbackInfo ci){
-        if(!IRPatch$isEnabled(stock)){
+    public void inject2(EntityMoveableRollingStock stock, CallbackInfo ci) {
+        if(!IRPatch$isEnabled(stock)) {
             this.removed(stock);
             ci.cancel();
         }
     }
-    
+
     @Unique
-    private boolean IRPatch$isEnabled(EntityMoveableRollingStock stock){
-        if(IRPatch$disableOn == null){
+    private boolean IRPatch$isEnabled(EntityMoveableRollingStock stock) {
+        if(IRPatch$disableOn == null) {
             return true;
         }
         //When disableOn and speed corresponds then return false

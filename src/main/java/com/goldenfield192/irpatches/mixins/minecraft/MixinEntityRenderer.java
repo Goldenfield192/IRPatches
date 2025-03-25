@@ -10,12 +10,16 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 @Mixin(EntityRenderer.class)
 public class MixinEntityRenderer {
     @ModifyConstant(method = "updateRenderer", constant = @Constant(floatValue = 4.0F))
-    public float inject1(float constant){
-        return IRPConfig.OnboardCameraCollideWithBlock ? (float) OnboardCamera.distance : 4f;
+    public float inject1(float constant) {
+        return IRPConfig.OnboardCameraCollideWithBlock ?
+               (float) OnboardCamera.distance :
+               4f;
     }
 
     @ModifyConstant(method = "orientCamera", constant = @Constant(floatValue = 4.0F))
-    public float inject2(float constant){
-        return IRPConfig.OnboardCameraCollideWithBlock ? (float) OnboardCamera.distance : 4f;
+    public float inject2(float constant) {
+        return IRPConfig.OnboardCameraCollideWithBlock ?
+               (float) OnboardCamera.distance :
+               4f;
     }
 }

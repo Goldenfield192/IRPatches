@@ -20,37 +20,52 @@ public class DrivingAssemblyLoader {
 
     static {
         try {
-            valveGear$get = ValveGear.class.getDeclaredMethod("get", WheelSet.class, ValveGearConfig.class, ComponentProvider.class, ModelState.class, ModelComponentType.ModelPosition.class, float.class);
+            valveGear$get = ValveGear.class.getDeclaredMethod("get", WheelSet.class, ValveGearConfig.class,
+                                                              ComponentProvider.class, ModelState.class,
+                                                              ModelComponentType.ModelPosition.class, float.class);
             valveGear$get.setAccessible(true);
-        } catch (NoSuchMethodException e) {
+        } catch(NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
     }
 
     //Replace of DrivingAssembly.get
     public static DrivingAssembly get(ValveGearConfig type, ComponentProvider provider, ModelState state, ModelComponentType.ModelPosition pos, float angleOffset, int multiplier, WheelSet... backups) throws InvocationTargetException, IllegalAccessException {
-        WheelSet wheels = WheelSet.get(provider, state, pos == null ? ModelComponentType.WHEEL_DRIVER_X : ModelComponentType.WHEEL_DRIVER_POS_X, pos, angleOffset);
-        if (wheels == null) {
-            for (WheelSet backup : backups) {
-                if (backup != null) {
+        WheelSet wheels = WheelSet.get(provider, state, pos == null ?
+                                                        ModelComponentType.WHEEL_DRIVER_X :
+                                                        ModelComponentType.WHEEL_DRIVER_POS_X, pos, angleOffset);
+        if(wheels == null) {
+            for(WheelSet backup : backups) {
+                if(backup != null) {
                     wheels = backup;
                     break;
                 }
             }
         }
-        if (wheels == null) {
+        if(wheels == null) {
             return null;
         }
 
-        ValveGear left = (ValveGear) valveGear$get.invoke(null, wheels, type, provider, state, ModelComponentType.ModelPosition.LEFT.and(pos), 0);
-        ValveGear inner_left = (ValveGear) valveGear$get.invoke(null, wheels, type, provider, state, ModelComponentType.ModelPosition.INNER_LEFT.and(pos), 180 * multiplier);
-        ValveGear center = (ValveGear) valveGear$get.invoke(null, wheels, type, provider, state, ModelComponentType.ModelPosition.CENTER.and(pos), -120 * multiplier);
-        ValveGear inner_right = (ValveGear) valveGear$get.invoke(null, wheels, type, provider, state, ModelComponentType.ModelPosition.INNER_RIGHT.and(pos), 90 * multiplier);
-        ValveGear right = (ValveGear) valveGear$get.invoke(null, wheels, type, provider, state, ModelComponentType.ModelPosition.RIGHT.and(pos), (center == null ? -90 : -240) * multiplier);
+        ValveGear left = (ValveGear) valveGear$get.invoke(null, wheels, type, provider, state,
+                                                          ModelComponentType.ModelPosition.LEFT.and(pos), 0);
+        ValveGear inner_left = (ValveGear) valveGear$get.invoke(null, wheels, type, provider, state,
+                                                                ModelComponentType.ModelPosition.INNER_LEFT.and(pos),
+                                                                180 * multiplier);
+        ValveGear center = (ValveGear) valveGear$get.invoke(null, wheels, type, provider, state,
+                                                            ModelComponentType.ModelPosition.CENTER.and(pos),
+                                                            -120 * multiplier);
+        ValveGear inner_right = (ValveGear) valveGear$get.invoke(null, wheels, type, provider, state,
+                                                                 ModelComponentType.ModelPosition.INNER_RIGHT.and(pos),
+                                                                 90 * multiplier);
+        ValveGear right = (ValveGear) valveGear$get.invoke(null, wheels, type, provider, state,
+                                                           ModelComponentType.ModelPosition.RIGHT.and(pos),
+                                                           (center == null ?
+                                                            -90 :
+                                                            -240) * multiplier);
 
         ModelComponent steamChest = pos == null ?
-                provider.parse(ModelComponentType.STEAM_CHEST) :
-                provider.parse(ModelComponentType.STEAM_CHEST_POS, pos);
+                                    provider.parse(ModelComponentType.STEAM_CHEST) :
+                                    provider.parse(ModelComponentType.STEAM_CHEST_POS, pos);
 
         state.include(steamChest);
 

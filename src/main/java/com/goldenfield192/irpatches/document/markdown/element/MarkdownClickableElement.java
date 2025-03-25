@@ -9,9 +9,10 @@ import java.awt.geom.Rectangle2D;
 
 /**
  * Abstract class for those elements which can be clicked
+ *
  * @see MarkdownUrl
  */
-public abstract class MarkdownClickableElement extends MarkdownElement{
+public abstract class MarkdownClickableElement extends MarkdownElement {
     public Rectangle2D section;
 
     /**
@@ -23,14 +24,16 @@ public abstract class MarkdownClickableElement extends MarkdownElement{
 
     /**
      * Render a specific string as tooltip
+     *
      * @param bottomBound Param for internal use
      */
-    public void renderTooltip(String text, int bottomBound){
+    public void renderTooltip(String text, int bottomBound) {
         ManualHoverRenderer.renderTooltip(text, bottomBound);
     }
 
     /**
      * Called when mouse is hovering
+     *
      * @param bottomBound Param for internal use
      */
     public abstract void renderTooltip(Identifier id, int bottomBound);

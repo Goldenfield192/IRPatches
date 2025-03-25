@@ -20,21 +20,22 @@ import static com.goldenfield192.irpatches.document.markdown.Colors.DEFAULT_TEXT
  * 4+ -> normal text
  * <p>
  * CANNOT CONTAIN URL
+ *
  * @see MarkdownElement
  */
 public class MarkdownTitle extends MarkdownElement {
+    //Store reciprocals to avoid division
+    public static final double LEVEL1 = 1 / 1.8;
+    public static final double LEVEL2 = 1 / 1.5;
+    public static final double LEVEL3 = 1 / 1.2;
     //Starting from 1
     public final int level;
 
-    //Store reciprocals to avoid division
-    public static final double LEVEL1 = 1/1.8;
-    public static final double LEVEL2 = 1/1.5;
-    public static final double LEVEL3 = 1/1.2;
-
     public MarkdownTitle(String text) {
-        label: {
-            for (int i = 0; i < text.length(); i++) {
-                if (text.charAt(i) != '#') {
+        label:
+        {
+            for(int i = 0; i < text.length(); i++) {
+                if(text.charAt(i) != '#') {
                     this.level = i;
                     this.text = text.substring(i).trim();
                     break label;
@@ -53,7 +54,7 @@ public class MarkdownTitle extends MarkdownElement {
 
     @Override
     public String apply() {
-        if(level == -1){//Invalid
+        if(level == -1) {//Invalid
             return "";
         } else {
             return text;
@@ -63,9 +64,9 @@ public class MarkdownTitle extends MarkdownElement {
     @Override
     public MarkdownElement[] split(int splitPos) {
         int i = splitPos;
-        while (this.text.charAt(i) == ' '){
+        while(this.text.charAt(i) == ' ') {
             i++;
-            if(i == this.text.length()){//Reaching end, which means chars after splitPos are all spaces
+            if(i == this.text.length()) {//Reaching end, which means chars after splitPos are all spaces
                 return new MarkdownElement[]{
                         new MarkdownTitle(this.text.substring(0, splitPos), this.level),
                         //Just return empty string
@@ -78,10 +79,10 @@ public class MarkdownTitle extends MarkdownElement {
     }
 
     @Override
-    public int render(RenderState state, int pageWidth){
+    public int render(RenderState state, int pageWidth) {
         Vec3d offset = state.model_view().apply(Vec3d.ZERO);
         String str = this.apply();
-        if(this.level == 1){
+        if(this.level == 1) {
             //Scale matrix
             state.scale(1.8, 1.8, 1.8);
             IRPGUIHelper.drawString(str, 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
@@ -92,7 +93,7 @@ public class MarkdownTitle extends MarkdownElement {
             //Move down
             state.translate(0, 18, 0);
             return 18;
-        } else if(this.level == 2){
+        } else if(this.level == 2) {
             //Scale matrix
             state.scale(1.5, 1.5, 1.5);
             IRPGUIHelper.drawString(str, 0, 0, DEFAULT_TEXT_COLOR, state.model_view());
@@ -102,7 +103,7 @@ public class MarkdownTitle extends MarkdownElement {
             //Move down
             state.translate(0, 15, 0);
             return 15;
-        } else if (this.level == 3) {
+        } else if(this.level == 3) {
             //Scale matrix
             state.scale(1.2, 1.2, 1.2);
             IRPGUIHelper.drawString(str, 0, 0, DEFAULT_TEXT_COLOR, state.model_view());

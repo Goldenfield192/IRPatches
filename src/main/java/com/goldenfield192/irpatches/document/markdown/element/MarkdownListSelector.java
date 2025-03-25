@@ -21,18 +21,18 @@ import static com.goldenfield192.irpatches.document.markdown.Colors.DEFAULT_TEXT
 /**
  *
  */
-public class MarkdownListSelector extends MarkdownClickableElement{
+public class MarkdownListSelector extends MarkdownClickableElement {
     public static final Pattern LIST_SELECTOR_PATTERN =
             Pattern.compile("\\[(?<name>[^\\[\\] ]+)]\\{(?!\\s*})(?<content>[^{}]+)}");// [name]{content,allow space}
 
     private final List<String> choices = new LinkedList<>();
+    private final String name;
     private int maxLength = -1;
     private int currentState;
-    private final String name;
 
     public MarkdownListSelector(String input) {
         Matcher matcher = LIST_SELECTOR_PATTERN.matcher(input);
-        if(matcher.find()){
+        if(matcher.find()) {
             this.name = matcher.group("name");
             String[] sel = matcher.group("content").split(",");
             Arrays.stream(sel).map(String::trim).forEach(str -> {
@@ -81,7 +81,9 @@ public class MarkdownListSelector extends MarkdownClickableElement{
 
     @Override
     public void click(MarkdownDocument context) {
-        currentState = currentState == choices.size() -1 ? 0 : currentState + 1;
+        currentState = currentState == choices.size() - 1 ?
+                       0 :
+                       currentState + 1;
         context.changeProperty(name, currentState);
         MarkdownPageManager.refreshByID(context.page);
     }
@@ -89,8 +91,8 @@ public class MarkdownListSelector extends MarkdownClickableElement{
     @Override
     public void updateSection(Vec3d offset) {
         this.section = new Rectangle((int) offset.x - 2, (int) offset.y - 1,
-                (int) ((this.maxLength + 10) * IRPConfig.ManualFontSize),
-                (int) (12 * IRPConfig.ManualFontSize));
+                                     (int) ((this.maxLength + 10) * IRPConfig.ManualFontSize),
+                                     (int) (12 * IRPConfig.ManualFontSize));
     }
 
     @Override

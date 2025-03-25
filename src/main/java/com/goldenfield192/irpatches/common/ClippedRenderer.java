@@ -6,11 +6,11 @@ import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.opengl.GL11;
 
 public class ClippedRenderer {
-    public static int getScaleFactor(){
+    public static int getScaleFactor() {
         return new ScaledResolution(Minecraft.getMinecraft()).getScaleFactor();
     }
 
-    public static void renderInRegion(int x, int y, int width, int height, Runnable function){
+    public static void renderInRegion(int x, int y, int width, int height, Runnable function) {
         int x1 = x * getScaleFactor();
         int y1 = y * getScaleFactor();
         int x2 = width * getScaleFactor();

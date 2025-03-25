@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 @Mixin(BuilderBase.class)
 public class MixinBuilderBase implements IBuilderBaseAccessor {
-    @Shadow(remap = false) protected ArrayList<TrackBase> tracks;
+    @Shadow(remap = false)
+    protected ArrayList<TrackBase> tracks;
 
     @Override
     public ArrayList<TrackBase> getTracks() {

@@ -11,9 +11,13 @@ import java.util.stream.Collectors;
 public class TrackProvider {
     public static final String SYNTAX = "[track_provider]";
 
-    public static List<MarkdownDocument.MarkdownLine> parse(String input, MarkdownDocument context){
+    public static List<MarkdownDocument.MarkdownLine> parse(String input, MarkdownDocument context) {
         return DefinitionManager.getTracks().stream()
-                .map(def -> MarkdownDocument.MarkdownLine.create(new MarkdownUrl(def.name, new Identifier("irtrack", def.trackID.split("/")[1]))))
-                .collect(Collectors.toList());
+                                .map(def -> MarkdownDocument.MarkdownLine.create(new MarkdownUrl(def.name,
+                                                                                                 new Identifier(
+                                                                                                         "irtrack",
+                                                                                                         def.trackID.split(
+                                                                                                                 "/")[1]))))
+                                .collect(Collectors.toList());
     }
 }

@@ -16,24 +16,30 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(TileRailPreview.class)
 public abstract class MixinTileRailPreview {
-    @Shadow(remap = false) private PlacementInfo placementInfo;
+    @Shadow(remap = false)
+    private PlacementInfo placementInfo;
 
-    @Shadow(remap = false) private PlacementInfo customInfo;
+    @Shadow(remap = false)
+    private PlacementInfo customInfo;
 
-    @Shadow(remap = false) private ItemStack item;
+    @Shadow(remap = false)
+    private ItemStack item;
 
-    @Shadow(remap = false) public abstract void markDirty();
+    @Shadow(remap = false)
+    public abstract void markDirty();
 
     @Inject(method = "setCustomInfo",
             at = @At(value = "INVOKE_ASSIGN", target = "Lcam72cam/immersiverailroading/items/nbt/RailSettings;from(Lcam72cam/mod/item/ItemStack;)Lcam72cam/immersiverailroading/items/nbt/RailSettings;"),
             remap = false,
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
-    public void injectCustomInfo(PlacementInfo info, CallbackInfo ci, RailSettings settings){
-        float yaw = settings.type == TrackItems.TURN ? placementInfo.yaw / 2 : placementInfo.yaw;
-        if(settings.type ==TrackItems.TURN
+    public void injectCustomInfo(PlacementInfo info, CallbackInfo ci, RailSettings settings) {
+        float yaw = settings.type == TrackItems.TURN ?
+                    placementInfo.yaw / 2 :
+                    placementInfo.yaw;
+        if(settings.type == TrackItems.TURN
                 || settings.type == TrackItems.STRAIGHT
-                || settings.type == TrackItems.SLOPE){
+                || settings.type == TrackItems.SLOPE) {
             Vec3d placeOffset = new Vec3d(
                     customInfo.placementPosition.x - placementInfo.placementPosition.x,
                     0,
@@ -43,12 +49,14 @@ public abstract class MixinTileRailPreview {
             int shadowLength = (int) Math.round(VecUtils.dotMultiply(placeOffset, unit));
             int length;
 
-            switch (settings.type) {
+            switch(settings.type) {
                 case TURN:
                     double sin = Math.sin(Math.toRadians(settings.degrees / 2));
                     length = sin != 0d
-                             ? Math.max(0, (int) ((shadowLength / 2d) / sin)) + 1
-                             : 1;
+                             ?
+                             Math.max(0, (int) ((shadowLength / 2d) / sin)) + 1
+                             :
+                             1;
                     break;
                 case STRAIGHT:
                 case SLOPE:

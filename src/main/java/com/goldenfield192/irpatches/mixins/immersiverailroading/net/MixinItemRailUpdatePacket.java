@@ -11,13 +11,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ItemRailUpdatePacket.class)
 public class MixinItemRailUpdatePacket {
-    @Shadow(remap = false) private RailSettings settings;
+    @Shadow(remap = false)
+    private RailSettings settings;
 
     @Inject(method = "handle", at = @At("HEAD"), remap = false)
-    public void inject(CallbackInfo ci){
+    public void inject(CallbackInfo ci) {
         //Server side check for MaxTrackLength(unnecessary?)
         RailSettings.Mutable mutable = settings.mutable();
-            if(mutable.length > IRPConfig.MaxTrackLength){
+        if(mutable.length > IRPConfig.MaxTrackLength) {
             mutable.length = IRPConfig.MaxTrackLength;
         }
         settings = mutable.immutable();

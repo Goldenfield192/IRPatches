@@ -13,22 +13,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityMoveableRollingStock.class)
 public class MixinEntityMoveableRollingStock
-       extends EntityRidableRollingStock
-       implements IStockRollAccessor{
+        extends EntityRidableRollingStock
+        implements IStockRollAccessor {
     private float frontRoll;
 
     private float rearRoll;
 
     @Inject(method = "onTick", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/entity/EntityMoveableRollingStock;setPosition(Lcam72cam/mod/math/Vec3d;)V"), remap = false)
-    public void inject0(CallbackInfo ci, @Local TickPos currentPos){
-        this.frontRoll = ((IStockRollAccessor)currentPos).getFrontRoll();
-        this.rearRoll = ((IStockRollAccessor)currentPos).getRearRoll();
+    public void inject0(CallbackInfo ci, @Local TickPos currentPos) {
+        this.frontRoll = ((IStockRollAccessor) currentPos).getFrontRoll();
+        this.rearRoll = ((IStockRollAccessor) currentPos).getRearRoll();
     }
 
     @Inject(method = "load", at = @At("TAIL"), remap = false)
-    public void mixinLoad(TagCompound data, CallbackInfo ci){
+    public void mixinLoad(TagCompound data, CallbackInfo ci) {
         TagCompound irp = data.get("irp");
-        if(irp != null){
+        if(irp != null) {
             this.frontRoll = irp.getFloat("frontRoll");
             this.rearRoll = irp.getFloat("rearRoll");
         } else {

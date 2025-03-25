@@ -20,30 +20,35 @@ public class MixinBuilderIterator {
     public void inject0(CallbackInfoReturnable<List<BuilderBase.VecYawPitch>> cir, @Local(ordinal = 0) List data, @Local(ordinal = 1) PosStep switchPos) {
         ((IVec3dAccessor) data.get(data.size() - 1)).setRoll(((IVec3dAccessor) switchPos).getRoll());
     }
+
     @Inject(method = "getRenderData",
             at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 1),
             remap = false)
     public void inject1(CallbackInfoReturnable<List<BuilderBase.VecYawPitch>> cir, @Local(ordinal = 0) List data, @Local(ordinal = 1) PosStep switchPos) {
         ((IVec3dAccessor) data.get(data.size() - 1)).setRoll(((IVec3dAccessor) switchPos).getRoll());
     }
+
     @Inject(method = "getRenderData",
             at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 2),
             remap = false)
     public void inject2(CallbackInfoReturnable<List<BuilderBase.VecYawPitch>> cir, @Local(ordinal = 0) List data, @Local(ordinal = 1) PosStep switchPos) {
         ((IVec3dAccessor) data.get(data.size() - 1)).setRoll(((IVec3dAccessor) switchPos).getRoll());
     }
+
     @Inject(method = "getRenderData",
             at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 3),
             remap = false)
     public void inject3(CallbackInfoReturnable<List<BuilderBase.VecYawPitch>> cir, @Local(ordinal = 0) List data, @Local(ordinal = 1) PosStep switchPos) {
         ((IVec3dAccessor) data.get(data.size() - 1)).setRoll(((IVec3dAccessor) switchPos).getRoll());
     }
+
     @Inject(method = "getRenderData",
             at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 4),
             remap = false)
     public void inject4(CallbackInfoReturnable<List<BuilderBase.VecYawPitch>> cir, @Local(ordinal = 0) List data, @Local(ordinal = 1) PosStep switchPos) {
         ((IVec3dAccessor) data.get(data.size() - 1)).setRoll(((IVec3dAccessor) switchPos).getRoll());
     }
+
     @Inject(method = "getRenderData",
             at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 5),
             remap = false)

@@ -17,36 +17,45 @@ import java.util.stream.Collectors;
 public class StockListProvider {
     public static final String SYNTAX = "[list_stock_page]";
 
-    public static List<MarkdownDocument.MarkdownLine> parse(String input, MarkdownDocument context){
+    public static List<MarkdownDocument.MarkdownLine> parse(String input, MarkdownDocument context) {
         List<MutablePair<String, EntityRollingStockDefinition>> definitions =
                 DefinitionManager.getDefinitions().stream()
-                .map(def -> {
-                    ExtraDefinition extra = ExtraDefinition.get(def);
-                    switch (context.getProperty("stock")){
-                        case 0:
-                            return MutablePair.of("N/A".equals(extra.name) ? "Unknown" : extra.name, def);
-                        case 1:
-                            return MutablePair.of("N/A".equals(extra.modelerName) ? "Unknown" : extra.modelerName, def);
-                        case 2:
-                        default:
-                            return MutablePair.of("N/A".equals(extra.packName) ? "Unknown" : extra.packName, def);
-                    }
-                })
-                .sorted(Comparator.comparing(MutablePair::getLeft))
-                .collect(Collectors.toList());
+                                 .map(def -> {
+                                     ExtraDefinition extra = ExtraDefinition.get(def);
+                                     switch(context.getProperty("stock")) {
+                                         case 0:
+                                             return MutablePair.of("N/A".equals(extra.name) ?
+                                                                   "Unknown" :
+                                                                   extra.name, def);
+                                         case 1:
+                                             return MutablePair.of("N/A".equals(extra.modelerName) ?
+                                                                   "Unknown" :
+                                                                   extra.modelerName, def);
+                                         case 2:
+                                         default:
+                                             return MutablePair.of("N/A".equals(extra.packName) ?
+                                                                   "Unknown" :
+                                                                   extra.packName, def);
+                                     }
+                                 })
+                                 .sorted(Comparator.comparing(MutablePair::getLeft))
+                                 .collect(Collectors.toList());
         List<MarkdownDocument.MarkdownLine> lines = new LinkedList<>();
         Character lastStartingChar = null;
         String lastFullName = null;
-        for (MutablePair<String, EntityRollingStockDefinition> definition : definitions) {
-            if(lastStartingChar == null || lastStartingChar != definition.getLeft().charAt(0)){
+        for(MutablePair<String, EntityRollingStockDefinition> definition : definitions) {
+            if(lastStartingChar == null || lastStartingChar != definition.getLeft().charAt(0)) {
                 lastStartingChar = definition.getLeft().charAt(0);
                 lines.add(MarkdownDocument.MarkdownLine.create(new MarkdownTitle(lastStartingChar.toString(), 1)));
             }
-            if(context.getProperty("stock") != 0 && (lastFullName == null || !lastFullName.equals(definition.getLeft()))){
+            if(context.getProperty("stock") != 0 && (lastFullName == null || !lastFullName.equals(
+                    definition.getLeft()))) {
                 lastFullName = definition.getLeft();
                 lines.add(MarkdownDocument.MarkdownLine.create(new MarkdownTitle(lastFullName, 2)));
             }
-            lines.add(MarkdownDocument.MarkdownLine.create(new MarkdownUrl(ExtraDefinition.get(definition.getRight()).name, new Identifier("irstock", definition.getRight().defID))));
+            lines.add(MarkdownDocument.MarkdownLine.create(
+                    new MarkdownUrl(ExtraDefinition.get(definition.getRight()).name,
+                                    new Identifier("irstock", definition.getRight().defID))));
         }
         return lines;
     }

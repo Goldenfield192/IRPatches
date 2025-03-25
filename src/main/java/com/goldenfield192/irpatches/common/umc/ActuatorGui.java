@@ -12,21 +12,23 @@ import cam72cam.mod.serialization.TagField;
 import com.goldenfield192.irpatches.accessor.ITileRailBaseAccessor;
 
 public class ActuatorGui implements IScreen {
+    private final Vec3i pos;
     private TextField textField;
     private String filter;
-
-    private final Vec3i pos;
 
     public ActuatorGui(TileRailBase tileRailBase) {
         this.pos = tileRailBase.getPos();
         this.filter = ((ITileRailBaseAccessor) tileRailBase).getCGFilter() == null
-                        ? ""
-                        : ((ITileRailBaseAccessor) tileRailBase).getCGFilter();
+                      ?
+                      ""
+                      :
+                      ((ITileRailBaseAccessor) tileRailBase).getCGFilter();
     }
 
     @Override
     public void init(IScreenBuilder screen) {
-        textField = new TextField(screen, -GUIHelpers.getScreenWidth() / 4, -(GUIHelpers.getScreenHeight() / 8), 200-1,20);
+        textField = new TextField(screen, -GUIHelpers.getScreenWidth() / 4, -(GUIHelpers.getScreenHeight() / 8),
+                                  200 - 1, 20);
         textField.setText(filter);
         textField.setFocused(true);
         textField.setValidator(s -> {
@@ -50,17 +52,18 @@ public class ActuatorGui implements IScreen {
     public void draw(IScreenBuilder builder, RenderState state) {
         IScreen.super.draw(builder, state);
         textField.setText(filter);
-        GUIHelpers.drawRect(0,0,GUIHelpers.getScreenWidth(), GUIHelpers.getScreenHeight(), 0x88000000);
+        GUIHelpers.drawRect(0, 0, GUIHelpers.getScreenWidth(), GUIHelpers.getScreenHeight(), 0x88000000);
     }
 
-    public static class AugmentFilterChangePacket extends Packet{
+    public static class AugmentFilterChangePacket extends Packet {
         @TagField
         Vec3i pos;
 
         @TagField
         String filter;
 
-        public AugmentFilterChangePacket() {}
+        public AugmentFilterChangePacket() {
+        }
 
         public AugmentFilterChangePacket(Vec3i pos, String filter) {
             this.pos = pos;
@@ -70,7 +73,7 @@ public class ActuatorGui implements IScreen {
         @Override
         protected void handle() {
             TileRailBase railBase = this.getWorld().getBlockEntity(pos, TileRailBase.class);
-            if(railBase != null){
+            if(railBase != null) {
                 ((ITileRailBaseAccessor) railBase).setCGFilter(this.filter);
             }
         }

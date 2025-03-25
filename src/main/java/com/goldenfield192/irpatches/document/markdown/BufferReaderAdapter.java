@@ -12,15 +12,15 @@ public class BufferReaderAdapter {
     public BufferReaderAdapter(Identifier identifier) {
         try {
             this.reader = new BufferedReader(new InputStreamReader(identifier.getResourceStream()));
-        } catch (IOException e) {
+        } catch(IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public String readLine(){
+    public String readLine() {
         try {
             return reader.readLine();
-        } catch (IOException e) {
+        } catch(IOException e) {
             throw new RuntimeException(e);
         }
     }

@@ -32,13 +32,14 @@ public class MixinLocomotiveModel extends StockModel {
     }
 
     @Redirect(method = "parseComponents(Lcam72cam/immersiverailroading/model/components/ComponentProvider;Lcam72cam/immersiverailroading/registry/LocomotiveDefinition;)V",
-              at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/model/part/DrivingAssembly;get(Lcam72cam/immersiverailroading/library/ValveGearConfig;Lcam72cam/immersiverailroading/model/components/ComponentProvider;Lcam72cam/immersiverailroading/model/ModelState;Lcam72cam/immersiverailroading/library/ModelComponentType$ModelPosition;F[Lcam72cam/immersiverailroading/model/part/WheelSet;)Lcam72cam/immersiverailroading/model/part/DrivingAssembly;", ordinal = 0),
-              remap = false)
-    public DrivingAssembly mixinDrivingWheelsFrontInit(ValveGearConfig type, ComponentProvider localProvider, ModelState state, ModelComponentType.ModelPosition pos, float angle, WheelSet[] backup, ComponentProvider provider, LocomotiveDefinition def){
+            at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/model/part/DrivingAssembly;get(Lcam72cam/immersiverailroading/library/ValveGearConfig;Lcam72cam/immersiverailroading/model/components/ComponentProvider;Lcam72cam/immersiverailroading/model/ModelState;Lcam72cam/immersiverailroading/library/ModelComponentType$ModelPosition;F[Lcam72cam/immersiverailroading/model/part/WheelSet;)Lcam72cam/immersiverailroading/model/part/DrivingAssembly;", ordinal = 0),
+            remap = false)
+    public DrivingAssembly mixinDrivingWheelsFrontInit(ValveGearConfig type, ComponentProvider localProvider, ModelState state, ModelComponentType.ModelPosition pos, float angle, WheelSet[] backup, ComponentProvider provider, LocomotiveDefinition def) {
         int multiplier = ExtraDefinition.get(def).leftFirstMultiplier;
         try {
-            return DrivingAssemblyLoader.get(type, localProvider, addRoll(this.frontLocomotive), ModelComponentType.ModelPosition.FRONT, 0, multiplier, new WheelSet[0]);
-        } catch (InvocationTargetException | IllegalAccessException e) {
+            return DrivingAssemblyLoader.get(type, localProvider, addRoll(this.frontLocomotive),
+                                             ModelComponentType.ModelPosition.FRONT, 0, multiplier, new WheelSet[0]);
+        } catch(InvocationTargetException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }
@@ -46,11 +47,12 @@ public class MixinLocomotiveModel extends StockModel {
     @Redirect(method = "parseComponents(Lcam72cam/immersiverailroading/model/components/ComponentProvider;Lcam72cam/immersiverailroading/registry/LocomotiveDefinition;)V",
             at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/model/part/DrivingAssembly;get(Lcam72cam/immersiverailroading/library/ValveGearConfig;Lcam72cam/immersiverailroading/model/components/ComponentProvider;Lcam72cam/immersiverailroading/model/ModelState;Lcam72cam/immersiverailroading/library/ModelComponentType$ModelPosition;F[Lcam72cam/immersiverailroading/model/part/WheelSet;)Lcam72cam/immersiverailroading/model/part/DrivingAssembly;", ordinal = 1),
             remap = false)
-    public DrivingAssembly mixinDrivingWheelsRearInit(ValveGearConfig type, ComponentProvider localProvider, ModelState state, ModelComponentType.ModelPosition pos, float angle, WheelSet[] backup, ComponentProvider provider, LocomotiveDefinition def){
+    public DrivingAssembly mixinDrivingWheelsRearInit(ValveGearConfig type, ComponentProvider localProvider, ModelState state, ModelComponentType.ModelPosition pos, float angle, WheelSet[] backup, ComponentProvider provider, LocomotiveDefinition def) {
         int multiplier = ExtraDefinition.get(def).leftFirstMultiplier;
         try {
-            return DrivingAssemblyLoader.get(type, localProvider, addRoll(this.rearLocomotive), ModelComponentType.ModelPosition.REAR, 45.0F, multiplier, new WheelSet[0]);
-        } catch (InvocationTargetException | IllegalAccessException e) {
+            return DrivingAssemblyLoader.get(type, localProvider, addRoll(this.rearLocomotive),
+                                             ModelComponentType.ModelPosition.REAR, 45.0F, multiplier, new WheelSet[0]);
+        } catch(InvocationTargetException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }

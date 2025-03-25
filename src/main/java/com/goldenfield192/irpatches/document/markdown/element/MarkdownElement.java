@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 /**
  * Abstract element class
+ *
  * @see MarkdownTitle
  * @see MarkdownStyledText
  * @see MarkdownPicture

@@ -8,9 +8,10 @@ import net.minecraft.util.ResourceLocation;
 import java.awt.image.BufferedImage;
 
 public class BufferedImageRenderer {
-    public static Identifier getTextureIdentifier(BufferedImage image){
+    public static Identifier getTextureIdentifier(BufferedImage image) {
         ResourceLocation location =
-                Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation("test", new DynamicTexture(image));
+                Minecraft.getMinecraft().getTextureManager()
+                         .getDynamicTextureLocation("test", new DynamicTexture(image));
         return new Identifier(location);
     }
 }

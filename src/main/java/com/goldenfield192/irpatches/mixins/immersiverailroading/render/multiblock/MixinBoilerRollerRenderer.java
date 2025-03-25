@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Mixin(BoilerRollerRender.class)
 public class MixinBoilerRollerRenderer {
     @ModifyArgs(method = "render", at = @At(value = "INVOKE", target = "Lcam72cam/mod/render/opengl/RenderState;translate(DDD)Lcam72cam/mod/render/opengl/RenderState;", ordinal = 1), remap = false)
-    public void modArgs(Args args){
+    public void modArgs(Args args) {
         args.set(0, -3.5);
     }
 }
