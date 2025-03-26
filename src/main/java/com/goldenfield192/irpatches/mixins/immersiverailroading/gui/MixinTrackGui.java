@@ -1,13 +1,14 @@
 package com.goldenfield192.irpatches.mixins.immersiverailroading.gui;
 
 import cam72cam.immersiverailroading.gui.TrackGui;
+import cam72cam.immersiverailroading.gui.components.ListSelector;
 import cam72cam.immersiverailroading.items.nbt.RailSettings;
 import cam72cam.immersiverailroading.library.GuiText;
+import cam72cam.immersiverailroading.library.TrackItems;
+import cam72cam.immersiverailroading.track.BuilderTurnTable;
 import cam72cam.mod.entity.Player;
 import cam72cam.mod.gui.helpers.GUIHelpers;
-import cam72cam.mod.gui.screen.CheckBox;
-import cam72cam.mod.gui.screen.IScreenBuilder;
-import cam72cam.mod.gui.screen.Slider;
+import cam72cam.mod.gui.screen.*;
 import com.goldenfield192.irpatches.accessor.IRailSettingsAccessor;
 import com.goldenfield192.irpatches.accessor.IRailSettingsMutableAccessor;
 import com.goldenfield192.irpatches.common.umc.IRPConfig;
@@ -21,14 +22,21 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.stream.Collectors;
+
 @Mixin(TrackGui.class)
 public class MixinTrackGui {
-    @Shadow(remap = false)
-    private CheckBox isGradeCrossingCB;
-
-    @Shadow(remap = false)
-    private RailSettings.Mutable settings;
-
+    @Shadow(remap = false) private CheckBox isGradeCrossingCB;
+    @Shadow(remap = false) private RailSettings.Mutable settings;
+    @Shadow(remap = false) private ListSelector<TrackItems> typeSelector;
+    @Shadow(remap = false) private Button typeButton;
+    @Shadow(remap = false) private Slider degreesSlider;
+    @Shadow(remap = false) private Slider curvositySlider;
+    @Shadow(remap = false) private Button smoothingButton;
+    @Shadow(remap = false) private Button directionButton;
+    @Shadow(remap = false) private TextField lengthInput;
     @Unique
     private Slider ctrl1RollSlider;
     @Unique
@@ -67,6 +75,30 @@ public class MixinTrackGui {
                 ctrl2RollSlider.setText("Near end degrees: " + String.format("%.2f", accessor.getNearEndTilt()));
             }
         };
+
+        this.typeSelector = new ListSelector<TrackItems>(screen, width, 100, height, settings.type,
+                                                         Arrays.stream(TrackItems.values())
+                                                               .filter(i -> i != TrackItems.CROSSING)
+                                                               .collect(Collectors.toMap(TrackItems::toString, g -> g, (u, v) -> u, LinkedHashMap::new))
+        ) {
+            @Override
+            public void onClick(TrackItems option) {
+                settings.type = option;
+                typeButton.setText(GuiText.SELECTOR_TYPE.toString(settings.type));
+                degreesSlider.setVisible(settings.type.hasQuarters());
+                curvositySlider.setVisible(settings.type.hasCurvosity());
+                smoothingButton.setVisible(settings.type.hasSmoothing());
+                directionButton.setVisible(settings.type.hasDirection());
+                ctrl1RollSlider.setVisible(settings.type != TrackItems.TURNTABLE);
+                ctrl2RollSlider.setVisible(settings.type != TrackItems.TURNTABLE);
+                if (settings.type == TrackItems.TURNTABLE) {
+                    lengthInput.setText("" + Math.min(Integer.parseInt(lengthInput.getText()), BuilderTurnTable.maxLength(settings.gauge))); // revalidate
+                }
+            }
+        };
+
+        this.ctrl1RollSlider.setVisible(settings.type != TrackItems.TURNTABLE && settings.type != TrackItems.SWITCH);
+        this.ctrl2RollSlider.setVisible(settings.type != TrackItems.TURNTABLE && settings.type != TrackItems.SWITCH);
 
         this.ctrl1RollSlider.onSlider();
         this.ctrl2RollSlider.onSlider();
