@@ -33,7 +33,7 @@ public class MarkdownItemRenderer extends MarkdownClickableElement {
     public MarkdownItemRenderer(EntityRollingStockDefinition def) {
         Optional<ItemStack> item =
                 ITEM_STOCKS.stream().filter(stack -> new ItemRollingStock.Data(stack).def.equals(def)).findFirst();
-        if(item.isPresent()) {
+        if (item.isPresent()) {
             this.stack = item.get();
         } else {
             throw new IllegalStateException("Can't find definition!");

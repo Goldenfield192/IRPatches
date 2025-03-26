@@ -49,18 +49,18 @@ public class DefaultPageBuilder implements IPageBuilder {
         Deque<Set<MarkdownStyledText.MarkdownTextStyle>> styleStack = new ArrayDeque<>();
         int currentPos = 0;
 
-        while(currentPos < input.length()) {
+        while (currentPos < input.length()) {
             boolean markerMatched = false;
 
             // Try to match the longest possible marker
-            for(String marker : MARKER_PARSE_PRIORITY) {
+            for (String marker : MARKER_PARSE_PRIORITY) {
                 int len = marker.length();
-                if(currentPos + len > input.length()) {
+                if (currentPos + len > input.length()) {
                     continue;
                 }
 
                 String substring = input.substring(currentPos, currentPos + len);
-                if(MARKER_STYLES.containsKey(substring)) {
+                if (MARKER_STYLES.containsKey(substring)) {
                     handleMarker(substring, styleStack);
                     currentPos += len;
                     markerMatched = true;
@@ -68,7 +68,7 @@ public class DefaultPageBuilder implements IPageBuilder {
                 }
             }
 
-            if(!markerMatched) {
+            if (!markerMatched) {
                 //Pure text, add to stateMap
                 Set<MarkdownStyledText.MarkdownTextStyle> currentStyles = mergeStackStyles(styleStack);
                 stateMap.add(currentStyles);
@@ -78,8 +78,8 @@ public class DefaultPageBuilder implements IPageBuilder {
 
         //Build a String that matches stateMap
         StringBuilder builder = new StringBuilder();
-        for(char c : input.toCharArray()) {
-            if(c != '+' && c != '~' && c != '*' && c != '`') {
+        for (char c : input.toCharArray()) {
+            if (c != '+' && c != '~' && c != '*' && c != '`') {
                 builder.append(c);
             }
         }
@@ -97,7 +97,7 @@ public class DefaultPageBuilder implements IPageBuilder {
      */
     private static Set<MarkdownStyledText.MarkdownTextStyle> mergeStackStyles(Deque<Set<MarkdownStyledText.MarkdownTextStyle>> stack) {
         Set<MarkdownStyledText.MarkdownTextStyle> styles = new HashSet<>();
-        for(Set<MarkdownStyledText.MarkdownTextStyle> s : stack) styles.addAll(s);
+        for (Set<MarkdownStyledText.MarkdownTextStyle> s : stack) styles.addAll(s);
         return styles;
     }
 
@@ -110,7 +110,7 @@ public class DefaultPageBuilder implements IPageBuilder {
     private static void handleMarker(String marker, Deque<Set<MarkdownStyledText.MarkdownTextStyle>> stack) {
         Set<MarkdownStyledText.MarkdownTextStyle> styles = MARKER_STYLES.get(marker);
         //If stack's peek value equals current marker means current marker is the end of corresponding style, pop it
-        if(stack.peek() != null && stack.peek().equals(styles)) {
+        if (stack.peek() != null && stack.peek().equals(styles)) {
             stack.pop();
         } else {
             //Otherwise it's the beginning, push it
@@ -127,15 +127,15 @@ public class DefaultPageBuilder implements IPageBuilder {
      */
     private static List<MarkdownElement> mergeElements(String input, List<Set<MarkdownStyledText.MarkdownTextStyle>> stateMap) {
         List<MarkdownElement> elements = new ArrayList<>();
-        if(stateMap.isEmpty()) {
+        if (stateMap.isEmpty()) {
             return elements;
         }
 
         Set<MarkdownStyledText.MarkdownTextStyle> currentStyles = new HashSet<>(stateMap.get(0));
         int start = 0;
 
-        for(int i = 1; i < stateMap.size(); i++) {
-            if(!stateMap.get(i).equals(currentStyles)) {
+        for (int i = 1; i < stateMap.size(); i++) {
+            if (!stateMap.get(i).equals(currentStyles)) {
                 elements.addAll(createElement(input, start, i, currentStyles));
 
                 currentStyles = new HashSet<>(stateMap.get(i));
@@ -205,30 +205,30 @@ public class DefaultPageBuilder implements IPageBuilder {
         BufferReaderAdapter reader = new BufferReaderAdapter(id);
 
         MarkdownDocument document = new MarkdownDocument(id);
-        if(MarkdownPageManager.getPageByID(id) != null) {
+        if (MarkdownPageManager.getPageByID(id) != null) {
             document.copyProperties(MarkdownPageManager.getPageByID(id));
         }
         String currentLine;
         //Interline state storage
         boolean isInTips = false;
 
-        while((currentLine = reader.readLine()) != null) {
+        while ((currentLine = reader.readLine()) != null) {
             //Deal with custom parser logic first
             String finalStr = currentLine.trim();
             Optional<Map.Entry<String, BiFunction<String, MarkdownDocument, List<MarkdownDocument.MarkdownLine>>>> optionalFunc =
                     SPECIAL_MATCHER.entrySet().stream().filter(entry -> finalStr.startsWith(entry.getKey()))
                                    .findFirst();
-            if(optionalFunc.isPresent()) {
+            if (optionalFunc.isPresent()) {
                 document.addLines(optionalFunc.get().getValue().apply(currentLine, document));
                 continue;
             }
 
-            if(isInTips) {
-                if(!currentLine.startsWith(">")) {
+            if (isInTips) {
+                if (!currentLine.startsWith(">")) {
                     document.addLine(MarkdownDocument.MarkdownLine.create(new MarkdownStyledText("")).isTipEnd(true));
                     isInTips = false;
                 } else {
-                    if(currentLine.length() > 1) {//More than just 1 '>', we should read its content
+                    if (currentLine.length() > 1) {//More than just 1 '>', we should read its content
                         document.addLine(MarkdownDocument.MarkdownLine.create(
                                 parse(currentLine.substring(Math.min(2, currentLine.length() - 1)))));
                     } else {//Only one '>', just marks tips block hasn't end
@@ -242,42 +242,42 @@ public class DefaultPageBuilder implements IPageBuilder {
             currentLine = serializeEscape(currentLine);
             currentLine = currentLine.trim();
 
-            if(currentLine.startsWith("#")) {
+            if (currentLine.startsWith("#")) {
                 //Title
                 //Cannot contain URL
                 document.addLine(Collections.singletonList(new MarkdownTitle(currentLine)));
-            } else if(currentLine.startsWith("!")) {
+            } else if (currentLine.startsWith("!")) {
                 //Picture
                 MarkdownUrl url = MarkdownUrl.compileSingle(currentLine.substring(1));
-                if(url != null) {
+                if (url != null) {
                     document.addLine(
                             new MarkdownPicture(new Identifier(deserializeEscape(url.destination.toString()))));
                 }
-            } else if(currentLine.startsWith("```")) {
+            } else if (currentLine.startsWith("```")) {
                 //Code block, let specific proxy class parse it
                 MarkdownCodeBlock.parse(reader, document, currentLine);
-            } else if(currentLine.startsWith("* ") || currentLine.startsWith("- ")) {
+            } else if (currentLine.startsWith("* ") || currentLine.startsWith("- ")) {
                 //Unsorted list
                 document.addLine(
                         MarkdownDocument.MarkdownLine.create(parse(currentLine.substring(2))).isUnorderedList(true));
-            } else if(currentLine.startsWith("> ")) {
+            } else if (currentLine.startsWith("> ")) {
                 //Tips
                 //Must be more than just 1 '>'
                 document.addLine(MarkdownDocument.MarkdownLine.create(new MarkdownStyledText("")).isTipStart(true))
                         .addLine(MarkdownDocument.MarkdownLine.create(
                                 parse(currentLine.substring(Math.min(2, currentLine.length() - 1)))));
                 isInTips = true;
-            } else if(currentLine.startsWith("[list_selector]")) {
+            } else if (currentLine.startsWith("[list_selector]")) {
                 MarkdownListSelector selector = new MarkdownListSelector(currentLine.substring(15));
-                if(document.getProperty(selector.getName()) != 0) {
+                if (document.getProperty(selector.getName()) != 0) {
                     selector.setCurrentState(document.getProperty(selector.getName()));
                 }
                 document.addLine(selector);
-            } else if(MarkdownSplitLine.validate(currentLine)) {
+            } else if (MarkdownSplitLine.validate(currentLine)) {
                 //Split line
                 document.addLine(new MarkdownSplitLine());
             } else {
-                if(!currentLine.isEmpty()) {
+                if (!currentLine.isEmpty()) {
                     //Basic String
                     document.addLine(parse(currentLine));
                 } else {
@@ -286,7 +286,7 @@ public class DefaultPageBuilder implements IPageBuilder {
             }
         }
         //If the file ends but code(proxy class has done it)/tips block doesn't end, finalize it
-        if(isInTips) {
+        if (isInTips) {
             document.addLine(MarkdownDocument.MarkdownLine.create(new MarkdownStyledText("")).isTipEnd(true));
         }
         //Deal wit line break

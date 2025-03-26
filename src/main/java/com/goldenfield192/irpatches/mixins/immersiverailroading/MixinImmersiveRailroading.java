@@ -24,14 +24,14 @@ public class MixinImmersiveRailroading {
     private static void mixinMouseGui(ClientEvents.MouseGuiEvent evt, CallbackInfoReturnable<Boolean> cir) {
         ManualHoverRenderer.updateMousePosition(evt);
 
-        if(ManualGui.onClick(evt)) {
+        if (ManualGui.onClick(evt)) {
             cir.setReturnValue(true);
         }
     }
 
     @Inject(method = "commonEvent", at = @At("TAIL"), remap = false)
     public void mixinCommonEvent(ModEvent event, CallbackInfo ci) {
-        switch(event) {
+        switch (event) {
             case CONSTRUCT:
                 Packet.register(ActuatorGui.AugmentFilterChangePacket::new, PacketDirection.ClientToServer);
                 break;
@@ -43,7 +43,7 @@ public class MixinImmersiveRailroading {
 
     @Inject(method = "clientEvent", at = @At("TAIL"), remap = false)
     public void mixinClientEvent1(ModEvent event, CallbackInfo ci) {
-        switch(event) {
+        switch (event) {
             case CONSTRUCT:
                 IRPGUIHelper.register();
                 break;

@@ -33,7 +33,7 @@ public class MarkdownPageManager {
      */
     public static synchronized MarkdownDocument getOrComputePageByID(Identifier id, int screenWidth) {
         MarkdownDocument document;
-        if(BUILDERS.containsKey(id.getDomain())) {
+        if (BUILDERS.containsKey(id.getDomain())) {
             IPageBuilder builder = BUILDERS.get(id.getDomain());
             document = CUSTOM_PAGES.get(id.getDomain()).computeIfAbsent(id, identifier -> builder.build(id));
         } else {
@@ -51,7 +51,7 @@ public class MarkdownPageManager {
      */
     public static synchronized MarkdownDocument getPageByID(Identifier id) {
         MarkdownDocument document;
-        if(BUILDERS.containsKey(id.getDomain())) {
+        if (BUILDERS.containsKey(id.getDomain())) {
             document = CUSTOM_PAGES.get(id.getDomain()).get(id);
         } else {
             throw new IllegalArgumentException();
@@ -65,7 +65,7 @@ public class MarkdownPageManager {
      * @param id The cached page need to be cleared
      */
     public static synchronized void refreshByID(Identifier id) {
-        if(BUILDERS.containsKey(id.getDomain())) {
+        if (BUILDERS.containsKey(id.getDomain())) {
             IPageBuilder builder = BUILDERS.get(id.getDomain());
             CUSTOM_PAGES.get(id.getDomain()).computeIfPresent(id, (ident, document) -> builder.build(ident));
             ManualGui.refresh();
@@ -73,7 +73,7 @@ public class MarkdownPageManager {
     }
 
     public static String getPageName(Identifier id) {
-        if(BUILDERS.containsKey(id.getDomain())) {
+        if (BUILDERS.containsKey(id.getDomain())) {
             return BUILDERS.get(id.getDomain()).getPageTooltipName(id);
         }
         return "";

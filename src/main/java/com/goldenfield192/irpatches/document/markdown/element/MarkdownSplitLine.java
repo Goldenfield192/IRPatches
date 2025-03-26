@@ -16,14 +16,14 @@ public class MarkdownSplitLine extends MarkdownElement {
     private static final char[] ALLOWED_CHARS_FOR_SPLIT = new char[]{'*', '-', '_'};
 
     public static boolean validate(String str) {
-        if(str.length() < 3) {
+        if (str.length() < 3) {
             return false;
         }
-        for(char c : ALLOWED_CHARS_FOR_SPLIT) {
+        for (char c : ALLOWED_CHARS_FOR_SPLIT) {
             label:
             {
-                for(int i = 0; i < str.length(); i++) {
-                    if(str.charAt(i) != c) {
+                for (int i = 0; i < str.length(); i++) {
+                    if (str.charAt(i) != c) {
                         break label;
                     }
                 }

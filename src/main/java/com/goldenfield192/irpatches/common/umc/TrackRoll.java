@@ -13,28 +13,28 @@ import java.util.List;
 
 public class TrackRoll {
     public static float getRollMovementTrack(World world, Vec3d currentPosition, TileRail rail, Vec3d delta) {
-        if(rail == null) {
+        if (rail == null) {
             return 0;
         }
         double railHeight = rail.info.getTrackHeight();
         double heightOffset = railHeight * rail.info.settings.gauge.scale();
 
-        if(rail.info.settings.type == TrackItems.CROSSING) {
+        if (rail.info.settings.type == TrackItems.CROSSING) {
             return 0;
-        } else if(rail.info.settings.type == TrackItems.TURNTABLE) {
+        } else if (rail.info.settings.type == TrackItems.TURNTABLE) {
             return 0;
-        } else if(rail.info.getBuilder(world) instanceof IIterableTrack) {
+        } else if (rail.info.getBuilder(world) instanceof IIterableTrack) {
             List<PosStep> positions = ((IIterableTrack) rail.info.getBuilder(world)).getPath(
                     0.25 * rail.info.settings.gauge.scale());
             Vec3d center = rail.info.placementInfo.placementPosition.add(rail.getPos()).add(0, heightOffset, 0);
             Vec3d target = currentPosition.add(delta);
             Vec3d relative = target.subtract(center);
 
-            if(positions.isEmpty()) {
+            if (positions.isEmpty()) {
                 ImmersiveRailroading.error("Invalid track path %s", rail.info.uniqueID);
                 return 0; // keep in same place for debugging
             }
-            if(positions.size() == 1) {
+            if (positions.size() == 1) {
                 // track with length == 1
                 PosStep pos = positions.get(0);
                 return ((IVec3dAccessor) pos).getRoll();
@@ -44,8 +44,8 @@ public class TrackRoll {
             double leftDistance = positions.get(left).distanceToSquared(relative);
             int right = positions.size() - 1;
             double rightDistance = positions.get(right).distanceToSquared(relative);
-            while(right - left > 1) {
-                if(leftDistance > rightDistance) {
+            while (right - left > 1) {
+                if (leftDistance > rightDistance) {
                     left = (int) Math.ceil(left + (right - left) / 3f);
                     leftDistance = positions.get(left).distanceToSquared(relative);
                 } else {
@@ -53,10 +53,10 @@ public class TrackRoll {
                     rightDistance = positions.get(right).distanceToSquared(relative);
                 }
             }
-            if(right == left) {
+            if (right == left) {
                 ImmersiveRailroading.warn("Correcting track pathing tree...");
                 // Hack for edge case
-                if(right == positions.size() - 1) {
+                if (right == positions.size() - 1) {
                     left -= 1;
                 } else {
                     right += 1;
@@ -66,10 +66,10 @@ public class TrackRoll {
             PosStep leftPos = positions.get(left);
             PosStep rightPos = positions.get(right);
 
-            if(leftDistance < 0.000001) {
+            if (leftDistance < 0.000001) {
                 return ((IVec3dAccessor) leftPos).getRoll();
             }
-            if(rightDistance < 0.000001) {
+            if (rightDistance < 0.000001) {
                 return ((IVec3dAccessor) rightPos).getRoll();
             }
 

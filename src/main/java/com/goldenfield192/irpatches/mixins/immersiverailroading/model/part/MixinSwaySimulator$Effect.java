@@ -23,15 +23,16 @@ public class MixinSwaySimulator$Effect {
     public void inject0(float partialTicks, CallbackInfoReturnable<Double> cir) {
         IStockRollAccessor accessor = (IStockRollAccessor) this.stock;
         double track = (accessor.getRearRoll() + accessor.getFrontRoll()) / 2d;
-        if(Math.abs(this.stock.getCurrentSpeed().metric() * this.stock.gauge.scale()) >= 4.0) {
+        if (Math.abs(this.stock.getCurrentSpeed().metric() * this.stock.gauge.scale()) >= 4.0) {
             double sway = Math.cos(Math.toRadians(
                     ((float) this.stock.getTickCount() + partialTicks) * 13.0F)) * this.swayMagnitude / 5.0 * this.stock.getDefinition()
                                                                                                                         .getSwayMultiplier() * ConfigGraphics.StockSwayMultiplier;
             double tilt = this.stock.getDefinition()
-                                    .getTiltMultiplier() * (double) (this.stock.getPrevRotationYaw() - this.stock.getRotationYaw()) * (double) (this.stock.getCurrentSpeed()
-                                                                                                                                                          .minecraft() > 0.0 ?
-                                                                                                                                                1 :
-                                                                                                                                                -1);
+                                    .getTiltMultiplier() * (double) (this.stock.getPrevRotationYaw() - this.stock.getRotationYaw()) * (double) (
+                    this.stock.getCurrentSpeed()
+                              .minecraft() > 0.0 ?
+                    1 :
+                    -1);
             track += sway + tilt;
         }
         cir.setReturnValue(track);

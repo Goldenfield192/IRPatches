@@ -51,34 +51,22 @@ public class MixinSimulationState implements IStockRollAccessor {
         Vec3d stockDirection = positionFront.subtract(positionRear).normalize();
 
         boolean frontDirection = trackFront instanceof TileRailBase
-                                 ?
-                                 ((ITileRailBaseAccessor) trackFront).getDirectionAlong(positionFront, stockDirection)
-                                 :
-                                 false;
+                                 ? ((ITileRailBaseAccessor) trackFront).getDirectionAlong(positionFront, stockDirection)
+                                 : false;
         boolean rearDirection = trackRear instanceof TileRailBase
-                                ?
-                                ((ITileRailBaseAccessor) trackRear).getDirectionAlong(positionRear, stockDirection)
-                                :
-                                false;
+                                ? ((ITileRailBaseAccessor) trackRear).getDirectionAlong(positionRear, stockDirection)
+                                : false;
 
         rollFront = trackFront instanceof TileRailBase
-                    ?
-                    ((ITileRailBaseAccessor) trackFront).getNextRoll(positionFront,
-                                                                     VecUtil.fromWrongYaw(distance, yawFront))
-                    :
-                    0;
-        rollFront *= frontDirection ?
-                     -1 :
-                     1;
+                    ? ((ITileRailBaseAccessor) trackFront).getNextRoll(positionFront,
+                                                                       VecUtil.fromWrongYaw(distance, yawFront))
+                    : 0;
+        rollFront *= frontDirection ? -1 : 1;
         rollRear = trackRear instanceof TileRailBase
-                   ?
-                   ((ITileRailBaseAccessor) trackRear).getNextRoll(positionRear,
-                                                                   VecUtil.fromWrongYaw(distance, yawRear))
-                   :
-                   0;
-        rollRear *= rearDirection ?
-                    -1 :
-                    1;
+                   ? ((ITileRailBaseAccessor) trackRear).getNextRoll(positionRear,
+                                                                     VecUtil.fromWrongYaw(distance, yawRear))
+                   : 0;
+        rollRear *= rearDirection ? -1 : 1;
     }
 
 

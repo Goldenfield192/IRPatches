@@ -30,16 +30,17 @@ public class MixinRailSettingMapper {
             constructor = RailSettings.Mutable.class.getDeclaredConstructor(TagCompound.class);
             constructor.setAccessible(true);
             m = constructor.newInstance(d.get(fieldName)).immutable();
-        } catch(NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
+                 InvocationTargetException e) {
             throw new RuntimeException(e);
         }
 
-        if(d.get("irp") != null && d.get("irp").getFloat("ctrl1") != null) {
+        if (d.get("irp") != null && d.get("irp").getFloat("ctrl1") != null) {
             ((IRailSettingsAccessor) m).setFarEnd(d.get("irp").getFloat("ctrl1"));
         } else {
             ((IRailSettingsAccessor) m).setFarEnd(0);
         }
-        if(d.get("irp") != null && d.get("irp").getFloat("ctrl2") != null) {
+        if (d.get("irp") != null && d.get("irp").getFloat("ctrl2") != null) {
             ((IRailSettingsAccessor) m).setNearEnd(d.get("irp").getFloat("ctrl2"));
         } else {
             ((IRailSettingsAccessor) m).setNearEnd(0);

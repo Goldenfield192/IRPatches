@@ -30,7 +30,7 @@ public class ItemComponentPageBuilder implements IPageBuilder {
             ItemRollingStockComponent.Data data = new ItemRollingStockComponent.Data(itemstack);
             return data.componentType.name().equals(type) && data.def.defID.equals(defID);
         }).findFirst();
-        if(!stack.isPresent()) {
+        if (!stack.isPresent()) {
             return null;
         }
         document.addLine(new MarkdownItemRenderer(stack.get()));
@@ -38,7 +38,7 @@ public class ItemComponentPageBuilder implements IPageBuilder {
 
         document.addLine(new MarkdownStyledText("Item component for "),
                          new MarkdownUrl(d.def.name(), new Identifier("irstock", defID)));
-        if(d.componentType.crafting == CraftingType.CASTING || d.componentType.crafting == CraftingType.CASTING_HAMMER) {
+        if (d.componentType.crafting == CraftingType.CASTING || d.componentType.crafting == CraftingType.CASTING_HAMMER) {
             document.addLine(new MarkdownStyledText("Can be crafted in "), new MarkdownUrl("Casting Basin",
                                                                                            "immersiverailroading:wiki/en_us/machines/casting_basin.md"));
         } else {
@@ -49,7 +49,7 @@ public class ItemComponentPageBuilder implements IPageBuilder {
                              new MarkdownUrl("Boiler Roller",
                                              "immersiverailroading:wiki/en_us/machines/boiler_roller.md"));
         }
-        if(d.requiresHammering()) {
+        if (d.requiresHammering()) {
             document.addLine(new MarkdownStyledText("And this component requires the following in the "),
                              new MarkdownUrl("Steam Hammer",
                                              "immersiverailroading:wiki/en_us/machines/steam_hammer.md"));
@@ -64,7 +64,7 @@ public class ItemComponentPageBuilder implements IPageBuilder {
 
     @Override
     public String getPageTooltipName(Identifier id) {
-        if(validatePath(id)) {
+        if (validatePath(id)) {
             return id.getPath().split("@")[1];
         }
         return "N/A";

@@ -29,7 +29,7 @@ public class TrackPageBuilder implements IPageBuilder {
 
     @Override
     public String getPageTooltipName(Identifier id) {
-        if(validatePath(id)) {
+        if (validatePath(id)) {
             return id.getPath();
         }
         return "";

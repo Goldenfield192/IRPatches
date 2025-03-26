@@ -30,9 +30,6 @@ public abstract class MixinVec3d implements IVec3dAccessor {
         Vec3d vec3d = new Vec3d(this.x + other.x, this.y + other.y, this.z + other.z);
         ((IVec3dAccessor) vec3d).setRoll(((IVec3dAccessor) other).getRoll());
         cir.setReturnValue(vec3d);
-    }    @Override
-    public void setRoll(float roll) {
-        this.IRPatch$roll = roll;
     }
 
     @Inject(method = "subtract(Lcam72cam/mod/math/Vec3d;)Lcam72cam/mod/math/Vec3d;", at = @At("HEAD"), remap = false, cancellable = true)
@@ -40,9 +37,16 @@ public abstract class MixinVec3d implements IVec3dAccessor {
         Vec3d vec3d = new Vec3d(this.x - other.x, this.y - other.y, this.z - other.z);
         ((IVec3dAccessor) vec3d).setRoll(((IVec3dAccessor) other).getRoll());
         cir.setReturnValue(vec3d);
-    }    @Override
+    }
+
+    @Override
     public float getRoll() {
         return IRPatch$roll;
+    }
+
+    @Override
+    public void setRoll(float roll) {
+        this.IRPatch$roll = roll;
     }
 
     @Inject(method = "scale", at = @At("HEAD"), remap = false, cancellable = true)
@@ -51,8 +55,6 @@ public abstract class MixinVec3d implements IVec3dAccessor {
         ((IVec3dAccessor) vec3d).setRoll(((IVec3dAccessor) this).getRoll());
         cir.setReturnValue(vec3d);
     }
-
-
 
 
 }

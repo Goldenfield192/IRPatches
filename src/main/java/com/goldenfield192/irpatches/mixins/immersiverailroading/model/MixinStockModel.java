@@ -83,7 +83,7 @@ public abstract class MixinStockModel {
                                                       bogeyRear != null ?
                                                       bogeyRear.wheels :
                                                       null);
-        } catch(InvocationTargetException | IllegalAccessException e) {
+        } catch (InvocationTargetException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
 

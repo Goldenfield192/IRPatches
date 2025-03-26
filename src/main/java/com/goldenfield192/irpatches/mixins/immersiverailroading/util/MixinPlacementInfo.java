@@ -33,7 +33,7 @@ public abstract class MixinPlacementInfo {
     public void injectVecFix(ItemStack stack, float yawHead, Vec3d hit, CallbackInfo ci, RailSettings settings, TrackDirection direction, int quarter, double hitX, double hitZ) {
         hitX = hit.x % 1.0;
         hitZ = hit.z % 1.0;
-        switch(settings.posType) {
+        switch (settings.posType) {
             case FIXED:
                 hitX = 0.5f;
                 hitZ = 0.5f;
@@ -41,10 +41,10 @@ public abstract class MixinPlacementInfo {
             case PIXELS:
                 hitX = ((int) (hitX * 16)) / 16f;
                 hitZ = ((int) (hitZ * 16)) / 16f;
-                if(hit.z < 0) {
+                if (hit.z < 0) {
                     hitZ += 1;
                 }
-                if(hit.x < 0) {
+                if (hit.x < 0) {
                     hitX += 1;
                 }
                 break;
@@ -52,28 +52,28 @@ public abstract class MixinPlacementInfo {
                 hitX = ((int) (hitX * 16)) / 16f;
                 hitZ = ((int) (hitZ * 16)) / 16f;
 
-                if(quarter != 0) {
-                    if(hit.z < 0) {
+                if (quarter != 0) {
+                    if (hit.z < 0) {
                         hitZ += 1;
                     }
-                    if(hit.x < 0) {
+                    if (hit.x < 0) {
                         hitX += 1;
                     }
                     break;
                 }
 
-                switch(facing()) {
+                switch (facing()) {
                     case EAST:
                     case WEST:
                         hitZ = 0.5f;
-                        if(hit.x < 0) {
+                        if (hit.x < 0) {
                             hitX += 1;
                         }
                         break;
                     case NORTH:
                     case SOUTH:
                         hitX = 0.5f;
-                        if(hit.z < 0) {
+                        if (hit.z < 0) {
                             hitZ += 1;
                         }
                         break;
@@ -82,36 +82,36 @@ public abstract class MixinPlacementInfo {
                 }
                 break;
             case SMOOTH:
-                if(hit.z < 0) {
+                if (hit.z < 0) {
                     hitZ += 1;
                 }
-                if(hit.x < 0) {
+                if (hit.x < 0) {
                     hitX += 1;
                 }
                 break;
             case SMOOTH_LOCKED:
-                if(quarter != 0) {
-                    if(hit.z < 0) {
+                if (quarter != 0) {
+                    if (hit.z < 0) {
                         hitZ += 1;
                     }
-                    if(hit.x < 0) {
+                    if (hit.x < 0) {
                         hitX += 1;
                     }
                     break;
                 }
 
-                switch(facing()) {
+                switch (facing()) {
                     case EAST:
                     case WEST:
                         hitZ = 0.5f;
-                        if(hit.x < 0) {
+                        if (hit.x < 0) {
                             hitX += 1;
                         }
                         break;
                     case NORTH:
                     case SOUTH:
                         hitX = 0.5f;
-                        if(hit.z < 0) {
+                        if (hit.z < 0) {
                             hitZ += 1;
                         }
                         break;

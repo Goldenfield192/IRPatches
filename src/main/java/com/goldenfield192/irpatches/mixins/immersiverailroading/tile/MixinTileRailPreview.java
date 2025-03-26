@@ -37,7 +37,7 @@ public abstract class MixinTileRailPreview {
         float yaw = settings.type == TrackItems.TURN ?
                     placementInfo.yaw / 2 :
                     placementInfo.yaw;
-        if(settings.type == TrackItems.TURN
+        if (settings.type == TrackItems.TURN
                 || settings.type == TrackItems.STRAIGHT
                 || settings.type == TrackItems.SLOPE) {
             Vec3d placeOffset = new Vec3d(
@@ -49,7 +49,7 @@ public abstract class MixinTileRailPreview {
             int shadowLength = (int) Math.round(VecUtils.dotMultiply(placeOffset, unit));
             int length;
 
-            switch(settings.type) {
+            switch (settings.type) {
                 case TURN:
                     double sin = Math.sin(Math.toRadians(settings.degrees / 2));
                     length = sin != 0d

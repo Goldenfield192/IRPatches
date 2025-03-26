@@ -28,7 +28,7 @@ public class MixinEntityMoveableRollingStock
     @Inject(method = "load", at = @At("TAIL"), remap = false)
     public void mixinLoad(TagCompound data, CallbackInfo ci) {
         TagCompound irp = data.get("irp");
-        if(irp != null) {
+        if (irp != null) {
             this.frontRoll = irp.getFloat("frontRoll");
             this.rearRoll = irp.getFloat("rearRoll");
         } else {

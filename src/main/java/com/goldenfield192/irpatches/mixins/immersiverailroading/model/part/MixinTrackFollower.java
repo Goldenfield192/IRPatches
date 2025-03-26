@@ -64,7 +64,7 @@ public class MixinTrackFollower {
 
     public float nextRoll(World world, Gauge gauge, Vec3d currentPosition, float rotationYaw, float bogeyYaw, double distance) {
         ITrack rail = MovementTrack.findTrack(world, currentPosition, rotationYaw, gauge.value());
-        if(rail == null) {
+        if (rail == null) {
             return 0;
         }
         Vec3d result = rail.getNextPosition(currentPosition, VecUtil.fromWrongYaw(distance, bogeyYaw));
@@ -72,7 +72,7 @@ public class MixinTrackFollower {
                   ((ITileRailBaseAccessor) rail).getNextRoll(currentPosition,
                                                              VecUtil.fromWrongYaw(distance, bogeyYaw)) :
                   0;
-        if(result == null) {
+        if (result == null) {
             return 0;
         }
         return r;

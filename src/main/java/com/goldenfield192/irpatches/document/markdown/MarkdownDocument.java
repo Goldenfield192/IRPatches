@@ -88,26 +88,26 @@ public class MarkdownDocument {
         hoveredElement = null;
         //We need the iterator so here we use while instead of for each
         Iterator<MarkdownLine> lineIterator = brokenLines.iterator();
-        while(lineIterator.hasNext()) {
+        while (lineIterator.hasNext()) {
             MarkdownLine line = lineIterator.next();
             int currWidth = 0;
             //Stores current matrix result
             offset = state.model_view().apply(Vec3d.ZERO);
-            if(line.codeBlockStart) {
+            if (line.codeBlockStart) {
                 //Let proxy class do it
                 height += MarkdownCodeBlock.render(state, lineIterator, this, line);
                 continue;
             }
 
             //Tips block have a green bar
-            if(line.tipStart) {
+            if (line.tipStart) {
                 inTips = true;
                 continue;
-            } else if(line.tipEnd) {
+            } else if (line.tipEnd) {
                 inTips = false;
                 continue;
             }
-            if(inTips) {
+            if (inTips) {
                 GUIHelpers.drawRect((int) offset.x, (int) offset.y,
                                     MarkdownLine.LIST_PREFIX_WIDTH / 4,
                                     (int) (10 * IRPConfig.ManualFontSize), TIPS_BAR_COLOR);
@@ -116,7 +116,7 @@ public class MarkdownDocument {
             //Should we translate the matrix to next line manually?
             boolean shouldStartANewLine = false;
 
-            for(MarkdownElement element : line.elements) {
+            for (MarkdownElement element : line.elements) {
                 //Show current matrix result
                 offset = state.model_view().apply(Vec3d.ZERO);
 
@@ -125,18 +125,18 @@ public class MarkdownDocument {
                 String str = element.apply();
 
                 //These two element could be used multiply times in a line so they can't auto start new line, need manual translate
-                if(element instanceof MarkdownStyledText || element instanceof MarkdownUrl) {
+                if (element instanceof MarkdownStyledText || element instanceof MarkdownUrl) {
                     shouldStartANewLine = true;
                     currWidth += IRPGUIHelper.getTextWidth(str);
-                    if(element instanceof MarkdownStyledText && ((MarkdownStyledText) element).hasCode()) {
+                    if (element instanceof MarkdownStyledText && ((MarkdownStyledText) element).hasCode()) {
                         currWidth += 2;
                     }
                 }
 
                 //Dynamically update clickable elements' pos(for now only url is included)
-                if(element instanceof MarkdownClickableElement) {
+                if (element instanceof MarkdownClickableElement) {
                     ((MarkdownClickableElement) element).updateSection(offset);
-                    if(this.scrollRegion.contains(ManualHoverRenderer.mouseX, ManualHoverRenderer.mouseY)
+                    if (this.scrollRegion.contains(ManualHoverRenderer.mouseX, ManualHoverRenderer.mouseY)
                             && ((MarkdownClickableElement) element).section.contains(ManualHoverRenderer.mouseX,
                                                                                      ManualHoverRenderer.mouseY)) {
                         hoveredElement = (MarkdownClickableElement) element;
@@ -144,7 +144,7 @@ public class MarkdownDocument {
                 }
             }
             state.translate(-currWidth, 0, 0);
-            if(shouldStartANewLine) {
+            if (shouldStartANewLine) {
                 state.translate(0, 10, 0);
                 height += 10;
             }
@@ -240,7 +240,7 @@ public class MarkdownDocument {
      */
     public void onScroll(ClientEvents.MouseGuiEvent scrollEvent) {
         //Check validate
-        if(scrollRegion != null && scrollRegion.contains(scrollEvent.x, scrollEvent.y)) {
+        if (scrollRegion != null && scrollRegion.contains(scrollEvent.x, scrollEvent.y)) {
             this.scrollSpeed = Math.min(50, Math.max(-50, this.scrollSpeed - (10 * scrollEvent.scroll)));
         }
     }
@@ -251,10 +251,10 @@ public class MarkdownDocument {
      * @param releaseEvent We only consider a mouse release as a click
      */
     public void onMouseRelease(ClientEvents.MouseGuiEvent releaseEvent) {
-        if(this.scrollRegion.contains(releaseEvent.x, releaseEvent.y)) {
+        if (this.scrollRegion.contains(releaseEvent.x, releaseEvent.y)) {
             this.brokenLines.forEach(line -> line.elements.stream().filter(e -> e instanceof MarkdownClickableElement)
                                                           .forEach(element -> {
-                                                              if(((MarkdownClickableElement) element).section.contains(
+                                                              if (((MarkdownClickableElement) element).section.contains(
                                                                       releaseEvent.x, releaseEvent.y)) {
                                                                   ((MarkdownClickableElement) element).click(this);
                                                               }

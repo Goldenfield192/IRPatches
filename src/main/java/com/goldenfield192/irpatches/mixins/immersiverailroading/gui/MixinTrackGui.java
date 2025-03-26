@@ -28,15 +28,24 @@ import java.util.stream.Collectors;
 
 @Mixin(TrackGui.class)
 public class MixinTrackGui {
-    @Shadow(remap = false) private CheckBox isGradeCrossingCB;
-    @Shadow(remap = false) private RailSettings.Mutable settings;
-    @Shadow(remap = false) private ListSelector<TrackItems> typeSelector;
-    @Shadow(remap = false) private Button typeButton;
-    @Shadow(remap = false) private Slider degreesSlider;
-    @Shadow(remap = false) private Slider curvositySlider;
-    @Shadow(remap = false) private Button smoothingButton;
-    @Shadow(remap = false) private Button directionButton;
-    @Shadow(remap = false) private TextField lengthInput;
+    @Shadow(remap = false)
+    private CheckBox isGradeCrossingCB;
+    @Shadow(remap = false)
+    private RailSettings.Mutable settings;
+    @Shadow(remap = false)
+    private ListSelector<TrackItems> typeSelector;
+    @Shadow(remap = false)
+    private Button typeButton;
+    @Shadow(remap = false)
+    private Slider degreesSlider;
+    @Shadow(remap = false)
+    private Slider curvositySlider;
+    @Shadow(remap = false)
+    private Button smoothingButton;
+    @Shadow(remap = false)
+    private Button directionButton;
+    @Shadow(remap = false)
+    private TextField lengthInput;
     @Unique
     private Slider ctrl1RollSlider;
     @Unique
@@ -79,7 +88,9 @@ public class MixinTrackGui {
         this.typeSelector = new ListSelector<TrackItems>(screen, width, 100, height, settings.type,
                                                          Arrays.stream(TrackItems.values())
                                                                .filter(i -> i != TrackItems.CROSSING)
-                                                               .collect(Collectors.toMap(TrackItems::toString, g -> g, (u, v) -> u, LinkedHashMap::new))
+                                                               .collect(Collectors.toMap(TrackItems::toString, g -> g,
+                                                                                         (u, v) -> u,
+                                                                                         LinkedHashMap::new))
         ) {
             @Override
             public void onClick(TrackItems option) {
@@ -92,7 +103,8 @@ public class MixinTrackGui {
                 ctrl1RollSlider.setVisible(settings.type != TrackItems.TURNTABLE);
                 ctrl2RollSlider.setVisible(settings.type != TrackItems.TURNTABLE);
                 if (settings.type == TrackItems.TURNTABLE) {
-                    lengthInput.setText("" + Math.min(Integer.parseInt(lengthInput.getText()), BuilderTurnTable.maxLength(settings.gauge))); // revalidate
+                    lengthInput.setText("" + Math.min(Integer.parseInt(lengthInput.getText()),
+                                                      BuilderTurnTable.maxLength(settings.gauge))); // revalidate
                 }
             }
         };

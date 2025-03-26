@@ -35,10 +35,10 @@ public abstract class MixinBuilderCubicCurve extends BuilderIterator {
 
     @Inject(method = "<init>(Lcam72cam/immersiverailroading/util/RailInfo;Lcam72cam/mod/world/World;Lcam72cam/mod/math/Vec3i;Z)V", at = @At("TAIL"), remap = false)
     public void inject0(RailInfo info, World world, Vec3i pos, boolean endOfTrack, CallbackInfo ci, @Local(ordinal = 0) List<CubicCurve> subCurves) {
-        if(subCurves.size() > 1) {
+        if (subCurves.size() > 1) {
             subBuilders = new ArrayList<>();
             int splits = subCurves.size();
-            for(int i = 0; i < subCurves.size(); i++) {
+            for (int i = 0; i < subCurves.size(); i++) {
                 CubicCurve subCurve = subCurves.get(i);
                 // main pos -> subCurve's start pos
                 Vec3d relOff = info.placementInfo.placementPosition.add(subCurve.p1);
@@ -68,9 +68,9 @@ public abstract class MixinBuilderCubicCurve extends BuilderIterator {
 
                 BuilderCubicCurve subBuilder = new BuilderCubicCurve(subInfo, world, sPos);
                 IBuilderBaseAccessor accessor1 = (IBuilderBaseAccessor) subBuilder;
-                if(!subBuilders.isEmpty()) {
-                    for(TrackBase track : accessor1.getTracks()) {
-                        if(track instanceof TrackRail) {
+                if (!subBuilders.isEmpty()) {
+                    for (TrackBase track : accessor1.getTracks()) {
+                        if (track instanceof TrackRail) {
                             track.overrideParent(subBuilders.get(0).getParentPos());
                         }
                     }
@@ -89,11 +89,11 @@ public abstract class MixinBuilderCubicCurve extends BuilderIterator {
 
         float roll;
         IRailSettingsAccessor settingsAccessor = (IRailSettingsAccessor) info.settings;
-        if(points.size() == 1) {
+        if (points.size() == 1) {
             roll = (settingsAccessor.getFarEndTilt() + settingsAccessor.getNearEndTilt()) / 2;
-        } else if(i == points.size() - 1) {
+        } else if (i == points.size() - 1) {
             roll = settingsAccessor.getFarEndTilt();
-        } else if(i == 0) {
+        } else if (i == 0) {
             roll = settingsAccessor.getNearEndTilt();
         } else {
             float percent = (i + 1f) / points.size();

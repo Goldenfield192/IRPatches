@@ -22,13 +22,13 @@ public class MDTrackRenderer extends MarkdownElement {
         model = new StandardModel().addCustom((state, partialTicks) -> {
             TrackModel trackModel = def.getTrackForGauge(STANDARD);
             RenderState state1 = state.clone();
-            try(OBJRender.Binding binding = trackModel.binder().bind(state1)) {
+            try (OBJRender.Binding binding = trackModel.binder().bind(state1)) {
                 binding.draw();
             }
-            try(OBJRender.Binding binding = trackModel.binder().bind(state1.translate(1, 0, 0))) {
+            try (OBJRender.Binding binding = trackModel.binder().bind(state1.translate(1, 0, 0))) {
                 binding.draw();
             }
-            try(OBJRender.Binding binding = trackModel.binder().bind(state1.translate(-2, 0, 0))) {
+            try (OBJRender.Binding binding = trackModel.binder().bind(state1.translate(-2, 0, 0))) {
                 binding.draw();
             }
         });

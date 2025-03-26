@@ -53,11 +53,11 @@ public abstract class MixinControl<T extends EntityMoveableRollingStock> extends
     public ModelState modState(ModelState state) {
         return state.push(builder ->
                                   builder.add((ModelState.GroupVisibility) (stock, group) -> {
-                                      if(tex_variant == null) {
+                                      if (tex_variant == null) {
                                           return true;
                                       }
-                                      if(Objects.equals(null, stock.getTexture()) || Objects.equals("",
-                                                                                                    stock.getTexture())) {
+                                      if (Objects.equals(null, stock.getTexture()) || Objects.equals("",
+                                                                                                     stock.getTexture())) {
                                           return tex_variant.equals("default");
                                       } else {
                                           return Objects.equals(stock.getTexture(), tex_variant);
@@ -74,7 +74,7 @@ public abstract class MixinControl<T extends EntityMoveableRollingStock> extends
                    null;
         }).filter(Objects::nonNull).findFirst().orElse(null);
 
-        if(tex_variant != null) {
+        if (tex_variant != null) {
             System.out.println("TV: " + tex_variant);
         }
     }
@@ -89,13 +89,13 @@ public abstract class MixinControl<T extends EntityMoveableRollingStock> extends
         String localStr = String.format("%s:label.%s.%s.%s", ImmersiveRailroading.MODID, sp[sp.length - 2],
                                         sp[sp.length - 1], label);
         String transStr = TextUtil.translate(localStr);
-        if(localStr.equals(transStr)) {
+        if (localStr.equals(transStr)) {
             return;
         }
 
         transStr = transStr + labelstate;
 
-        if(isPressed) {
+        if (isPressed) {
             transStr = TextColor.BOLD.wrap(transStr);
         }
         GlobalRender.drawText(transStr, state, pos, 0.2F, 180.0F - stock.getRotationYaw() - 90.0F);

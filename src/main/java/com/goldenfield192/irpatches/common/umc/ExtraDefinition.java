@@ -28,14 +28,14 @@ public class ExtraDefinition {
                                   -1;
 
         List<DataBlock.Value> list = properties.getValues("fuel");
-        if(list != null) {
+        if (list != null) {
             List<Pair<String, Integer>> burnable = new ArrayList<>();
-            for(DataBlock.Value value : list) {
+            for (DataBlock.Value value : list) {
                 String s = value.asString("");
-                if(s.contains(":")) {
+                if (s.contains(":")) {
                     String[] split = s.split(":");
                     burnable.add(Pair.of(split[0], Integer.valueOf(split[1])));
-                } else if(Config.ConfigBalance.dieselFuels.containsKey(s)) {
+                } else if (Config.ConfigBalance.dieselFuels.containsKey(s)) {
                     burnable.add(Pair.of(s, Config.ConfigBalance.dieselFuels.get(s)));
                 }
             }
@@ -47,14 +47,14 @@ public class ExtraDefinition {
         def.name = data.getValue("name").asString();
         def.modelerName = data.getValue("modeler").asString();
         def.packName = data.getValue("pack").asString();
-        if(data.getValue("description") != null) {
+        if (data.getValue("description") != null) {
             def.description = data.getValue("description").asIdentifier();
         } else {
             def.description = null;
         }
 
         DataBlock lights = data.getBlock("lights");
-        if(lights != null) {
+        if (lights != null) {
             lights.getBlockMap().forEach((key, block) -> {
                 def.extraLightDef.put(key, new LightDefinition(block));
             });

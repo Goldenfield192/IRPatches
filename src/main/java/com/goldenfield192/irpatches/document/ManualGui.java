@@ -44,18 +44,18 @@ public class ManualGui implements IScreen {
     }
 
     public static void pushContent(Identifier identifier, double offset) {
-        if(instance == null) {
+        if (instance == null) {
             return;
         }
 
-        if(!futurePageStack.isEmpty() && futurePageStack.peek().getLeft().equals(identifier)) {
+        if (!futurePageStack.isEmpty() && futurePageStack.peek().getLeft().equals(identifier)) {
             historyPageStack.push(MutablePair.of(identifier, offset));
             futurePageStack.pop();
         }
 
-        if(!historyPageStack.peek().getLeft().equals(identifier)) {
+        if (!historyPageStack.peek().getLeft().equals(identifier)) {
             historyPageStack.push(MutablePair.of(identifier, offset));
-            if(!futurePageStack.isEmpty() && identifier != futurePageStack.peek().getLeft()) {
+            if (!futurePageStack.isEmpty() && identifier != futurePageStack.peek().getLeft()) {
                 futurePageStack.clear();
             }
         }
@@ -67,24 +67,24 @@ public class ManualGui implements IScreen {
 
     //Return true if the event is handled
     public static boolean onClick(ClientEvents.MouseGuiEvent event) {
-        if(instance == null) {
+        if (instance == null) {
             return false;
         }
 
-        if(event.scroll != 0) {
+        if (event.scroll != 0) {
             instance.sidebar.onScroll(event);
             instance.content.onScroll(event);
         }
 
-        if(event.action == ClientEvents.MouseAction.RELEASE) {
-            if(prevPageButton.contains(event.x, event.y)) {
-                if(historyPageStack.size() > 1) {
+        if (event.action == ClientEvents.MouseAction.RELEASE) {
+            if (prevPageButton.contains(event.x, event.y)) {
+                if (historyPageStack.size() > 1) {
                     futurePageStack.push(historyPageStack.pop());
                 }
                 //Terminates unnecessary call of sidebar&content's onMouseRelease as the mouse's pos cannot inside them
                 return true;
-            } else if(nextPageButton.contains(event.x, event.y)) {
-                if(!futurePageStack.isEmpty()) {
+            } else if (nextPageButton.contains(event.x, event.y)) {
+                if (!futurePageStack.isEmpty()) {
                     pushContent(futurePageStack.peek().getLeft(), futurePageStack.peek().getRight());
                 }
                 return true;
@@ -97,7 +97,7 @@ public class ManualGui implements IScreen {
 
     //For scroll
     public static void onClientTick() {
-        if(instance == null) {
+        if (instance == null) {
             return;
         }
 
@@ -134,7 +134,7 @@ public class ManualGui implements IScreen {
         width = builder.getWidth();
         height = builder.getHeight();
 
-        if(lastPage != historyPageStack.peek().getLeft() || refresh) {
+        if (lastPage != historyPageStack.peek().getLeft() || refresh) {
             //Meaning that we should refresh it
             content = MarkdownPageManager.getOrComputePageByID(historyPageStack.peek().getLeft(), width - 240);
             content.setScrollRegion(new Rectangle(170, 20, width - 220, height - 30));
@@ -174,19 +174,19 @@ public class ManualGui implements IScreen {
         });
 
         //Header
-        if(historyPageStack.size() != 1) {
+        if (historyPageStack.size() != 1) {
             GUIHelpers.texturedRect(new Identifier("immersiverailroading:gui/wiki/left.png"),
                                     60, 15, 20, 20);
         }
-        if(!futurePageStack.isEmpty()) {
+        if (!futurePageStack.isEmpty()) {
             GUIHelpers.texturedRect(new Identifier("immersiverailroading:gui/wiki/right.png"),
                                     140, 15, 20, 20);
         }
 
         //Tooltip
         //Currently only MarkdownUrl inherits MarkdownClickableElement, need change when more types are added
-        for(MarkdownDocument screen : new MarkdownDocument[]{sidebar, content}) {
-            if(screen.getHoveredElement() != null && screen.getHoveredElement() instanceof MarkdownUrl) {
+        for (MarkdownDocument screen : new MarkdownDocument[]{sidebar, content}) {
+            if (screen.getHoveredElement() != null && screen.getHoveredElement() instanceof MarkdownUrl) {
                 MarkdownUrl clickable = (MarkdownUrl) screen.getHoveredElement();
                 clickable.renderTooltip(screen.page, (int) screen.getScrollRegion().getMaxY());
                 break;

@@ -20,12 +20,12 @@ public class MixinItemRailUpdatePacket {
     public void inject(CallbackInfo ci) {
         //Server side check for MaxTrackLength(unnecessary?)
         RailSettings.Mutable mutable = settings.mutable();
-        if(mutable.length > IRPConfig.MaxTrackLength) {
+        if (mutable.length > IRPConfig.MaxTrackLength) {
             mutable.length = IRPConfig.MaxTrackLength;
         }
-        if(mutable.type == TrackItems.TURNTABLE){
-            ((IRailSettingsMutableAccessor)mutable).setFarEnd(0f);
-            ((IRailSettingsMutableAccessor)mutable).setNearEnd(0f);
+        if (mutable.type == TrackItems.TURNTABLE) {
+            ((IRailSettingsMutableAccessor) mutable).setFarEnd(0f);
+            ((IRailSettingsMutableAccessor) mutable).setNearEnd(0f);
         }
         settings = mutable.immutable();
     }

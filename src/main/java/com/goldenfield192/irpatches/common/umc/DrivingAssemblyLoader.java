@@ -24,7 +24,7 @@ public class DrivingAssemblyLoader {
                                                               ComponentProvider.class, ModelState.class,
                                                               ModelComponentType.ModelPosition.class, float.class);
             valveGear$get.setAccessible(true);
-        } catch(NoSuchMethodException e) {
+        } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
     }
@@ -34,15 +34,15 @@ public class DrivingAssemblyLoader {
         WheelSet wheels = WheelSet.get(provider, state, pos == null ?
                                                         ModelComponentType.WHEEL_DRIVER_X :
                                                         ModelComponentType.WHEEL_DRIVER_POS_X, pos, angleOffset);
-        if(wheels == null) {
-            for(WheelSet backup : backups) {
-                if(backup != null) {
+        if (wheels == null) {
+            for (WheelSet backup : backups) {
+                if (backup != null) {
                     wheels = backup;
                     break;
                 }
             }
         }
-        if(wheels == null) {
+        if (wheels == null) {
             return null;
         }
 

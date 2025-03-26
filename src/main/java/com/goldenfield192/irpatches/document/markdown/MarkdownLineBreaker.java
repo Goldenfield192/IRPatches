@@ -29,40 +29,40 @@ public class MarkdownLineBreaker {
         document.brokenLines.clear();
         boolean codeBlockFlag = false;
         boolean tipsFlag = false;
-        for(MarkdownDocument.MarkdownLine markdownLine : document.originalLines) {
-            if(markdownLine.codeBlockStart) {
+        for (MarkdownDocument.MarkdownLine markdownLine : document.originalLines) {
+            if (markdownLine.codeBlockStart) {
                 //No need to split
                 document.brokenLines.add(markdownLine);
                 codeBlockFlag = true;
                 continue;
             }
-            if(markdownLine.codeBlockEnd) {
+            if (markdownLine.codeBlockEnd) {
                 document.brokenLines.add(markdownLine);
                 codeBlockFlag = false;
                 continue;
             }
-            if(markdownLine.tipStart) {
+            if (markdownLine.tipStart) {
                 document.brokenLines.add(markdownLine);
                 tipsFlag = true;
                 continue;
             }
-            if(markdownLine.tipEnd) {
+            if (markdownLine.tipEnd) {
                 document.brokenLines.add(markdownLine);
                 tipsFlag = false;
                 continue;
             }
 
             List<List<MarkdownElement>> lines;
-            if(markdownLine.unorderedList) {
+            if (markdownLine.unorderedList) {
                 lines = breakLine(markdownLine, screenWidth - LIST_PREFIX_WIDTH, true);
                 lines.get(0).add(0, new MarkdownStyledText("• "));
-                for(int i = 1; i < lines.size(); i++) {
+                for (int i = 1; i < lines.size(); i++) {
                     lines.get(i).add(0, new MarkdownStyledText("  "));
                 }
-            } else if(tipsFlag) {
+            } else if (tipsFlag) {
                 lines = breakLine(markdownLine, screenWidth - LIST_PREFIX_WIDTH, true);
                 lines.forEach(line -> line.add(0, new MarkdownStyledText("  ")));
-            } else if(codeBlockFlag) {
+            } else if (codeBlockFlag) {
                 lines = breakLine(markdownLine, screenWidth, false);
             } else {
                 lines = breakLine(markdownLine, screenWidth, true);
@@ -87,7 +87,7 @@ public class MarkdownLineBreaker {
         List<MarkdownElement> currentLine = new LinkedList<>();
         int currentLineWidth = 0;
 
-        while(!processingDeque.isEmpty()) {
+        while (!processingDeque.isEmpty()) {
             MarkdownElement element = processingDeque.poll();
             //Bold text is wider; Titles are wider too
             double multiplier = (element instanceof MarkdownStyledText && ((MarkdownStyledText) element).hasBold()) ?
@@ -101,13 +101,13 @@ public class MarkdownLineBreaker {
             int elementWidth = (int) (IRPGUIHelper.getTextWidth(element.text) * multiplier);
 
             // If the element is oversize...
-            if(elementWidth > screenWidth && currentLine.isEmpty()) {
+            if (elementWidth > screenWidth && currentLine.isEmpty()) {
                 handleOversizeElement(element, screenWidth, processingDeque, lines, multiplier, preferSpace);
                 continue;
             }
 
             // Or
-            if(currentLineWidth + elementWidth <= screenWidth) {
+            if (currentLineWidth + elementWidth <= screenWidth) {
                 currentLine.add(element);
                 currentLineWidth += elementWidth;
             } else {
@@ -118,7 +118,7 @@ public class MarkdownLineBreaker {
             }
         }
 
-        if(!currentLine.isEmpty()) {
+        if (!currentLine.isEmpty()) {
             lines.add(currentLine);
         }
 
@@ -139,7 +139,7 @@ public class MarkdownLineBreaker {
                                               Deque<MarkdownElement> queue, List<List<MarkdownElement>> lines,
                                               double multiplier, boolean preferSpace) {
         int splitPos = findOptimalPosOrSpace(element.text, screenWidth, multiplier);
-        if(!preferSpace || splitPos == -1) {
+        if (!preferSpace || splitPos == -1) {
             //Very long string without spacing or don't want, use default method
             splitPos = findOptimalPos(element.text, screenWidth, multiplier);
         }
@@ -168,12 +168,12 @@ public class MarkdownLineBreaker {
                                          List<MarkdownElement> currentLine, List<List<MarkdownElement>> lines,
                                          int currentWidth, int screenWidth, double multiplier, boolean preferSpace) {
         int splitPos;
-        if(preferSpace) {
+        if (preferSpace) {
             splitPos = findOptimalPosOrSpace(element.text, screenWidth - currentWidth, multiplier);
         } else {
             splitPos = findOptimalPos(element.text, screenWidth - currentWidth, multiplier);
         }
-        if(splitPos != -1) {
+        if (splitPos != -1) {
             //We should break it
             MarkdownElement[] splitElements = element.split(splitPos);
 
@@ -200,8 +200,8 @@ public class MarkdownLineBreaker {
         int result = findOptimalPos(text, maxWidth, widthMultiplier);
 
         //Try to find a space to break down
-        for(int i = result; i >= 1; i--) {
-            if(Character.isWhitespace(text.charAt(i))) {
+        for (int i = result; i >= 1; i--) {
+            if (Character.isWhitespace(text.charAt(i))) {
                 return i;
             }
         }
@@ -222,11 +222,11 @@ public class MarkdownLineBreaker {
         int high = text.length();
         int bestPos = 0;
 
-        while(low <= high) {
+        while (low <= high) {
             int mid = (low + high) / 2;
             int currentWidth = (int) (IRPGUIHelper.getTextWidth(text.substring(0, mid)) * widthMultiplier);
 
-            if(currentWidth <= maxWidth) {
+            if (currentWidth <= maxWidth) {
                 bestPos = mid;
                 low = mid + 1;
             } else {

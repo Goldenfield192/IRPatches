@@ -57,7 +57,7 @@ public class MarkdownStyledText extends MarkdownElement {
     @Override
     public String apply() {
         String str = text;
-        for(MarkdownTextStyle style : styles) {
+        for (MarkdownTextStyle style : styles) {
             str = style.wrapper.wrap(str);
         }
         return str;
@@ -66,9 +66,9 @@ public class MarkdownStyledText extends MarkdownElement {
     @Override
     public MarkdownElement[] split(int splitPos) {
         int i = splitPos;
-        while(this.text.charAt(i) == ' ') {
+        while (this.text.charAt(i) == ' ') {
             i++;
-            if(i == this.text.length()) {//Reaching end, which means chars after splitPos are all spaces
+            if (i == this.text.length()) {//Reaching end, which means chars after splitPos are all spaces
                 return new MarkdownElement[]{
                         new MarkdownStyledText(this.text.substring(0, splitPos), this.styles),
                         //Just return empty String
@@ -83,7 +83,7 @@ public class MarkdownStyledText extends MarkdownElement {
     @Override
     public int render(RenderState state, int pageWidth) {
         String str = this.apply();
-        if(this.hasCode()) {
+        if (this.hasCode()) {
             Vec3d offset = state.model_view().apply(Vec3d.ZERO);
             GUIHelpers.drawRect((int) offset.x - 2, (int) offset.y - 1,
                                 (int) (IRPGUIHelper.getTextWidth(str) * IRPConfig.ManualFontSize + 4),

@@ -26,7 +26,7 @@ public class MDStockModelRenderer extends MarkdownElement {
     public MDStockModelRenderer(EntityRollingStockDefinition definition, String... groups) {
         this.model = definition.getModel();
         this.def = definition;
-        if(groups.length != 0) {
+        if (groups.length != 0) {
             this.groups = Arrays.stream(groups).collect(Collectors.toList());
         } else {
             this.groups = new ArrayList<>(model.groups.keySet());
@@ -61,7 +61,7 @@ public class MDStockModelRenderer extends MarkdownElement {
         state1.scale(-scale, -scale, -scale);
         state1.lightmap(1, 1);
         state1.lighting(true);
-        try(OBJRender.Binding binding = model.binder().bind(state1)) {
+        try (OBJRender.Binding binding = model.binder().bind(state1)) {
             binding.draw(groups);
         }
         state.translate(0, screenHeight * 1.8, 0);

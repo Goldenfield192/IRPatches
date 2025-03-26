@@ -32,7 +32,7 @@ public class IRPGUIHelper {
     public static void drawString(String text, int x, int y, int color, Matrix4 matrix) {
         RenderState state = new RenderState().color(1, 1, 1, 1).alpha_test(true);
         state.model_view().multiply(matrix);
-        try(With ctx = RenderContext.apply(state)) {
+        try (With ctx = RenderContext.apply(state)) {
             GlStateManager.color(1, 1, 1, 0);
             Minecraft.getMinecraft().fontRenderer.drawString(text, x, y, color);
         }

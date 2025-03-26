@@ -32,7 +32,7 @@ public class MarkdownListSelector extends MarkdownClickableElement {
 
     public MarkdownListSelector(String input) {
         Matcher matcher = LIST_SELECTOR_PATTERN.matcher(input);
-        if(matcher.find()) {
+        if (matcher.find()) {
             this.name = matcher.group("name");
             String[] sel = matcher.group("content").split(",");
             Arrays.stream(sel).map(String::trim).forEach(str -> {

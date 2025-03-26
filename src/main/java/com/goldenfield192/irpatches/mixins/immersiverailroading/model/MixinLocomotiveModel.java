@@ -39,7 +39,7 @@ public class MixinLocomotiveModel extends StockModel {
         try {
             return DrivingAssemblyLoader.get(type, localProvider, addRoll(this.frontLocomotive),
                                              ModelComponentType.ModelPosition.FRONT, 0, multiplier, new WheelSet[0]);
-        } catch(InvocationTargetException | IllegalAccessException e) {
+        } catch (InvocationTargetException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }
@@ -52,7 +52,7 @@ public class MixinLocomotiveModel extends StockModel {
         try {
             return DrivingAssemblyLoader.get(type, localProvider, addRoll(this.rearLocomotive),
                                              ModelComponentType.ModelPosition.REAR, 45.0F, multiplier, new WheelSet[0]);
-        } catch(InvocationTargetException | IllegalAccessException e) {
+        } catch (InvocationTargetException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }

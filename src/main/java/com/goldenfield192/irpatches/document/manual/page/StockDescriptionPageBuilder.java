@@ -27,7 +27,7 @@ public class StockDescriptionPageBuilder implements IPageBuilder {
         EntityRollingStockDefinition def = DefinitionManager.getDefinition(id.getPath());
         ExtraDefinition extra = ExtraDefinition.get(def);
 
-        if(extra.description != null && extra.description.canLoad()) {
+        if (extra.description != null && extra.description.canLoad()) {
             return DefaultPageBuilder.INSTANCE.build(extra.description);
         }
 
@@ -37,7 +37,7 @@ public class StockDescriptionPageBuilder implements IPageBuilder {
                 .addLine(new MarkdownStyledText(""))
                 .addLine(new MarkdownStyledText("Required components:"));
         Map<String, Integer> componentMap = new HashMap<>();
-        for(ItemComponentType componentType : def.getItemComponents()) {
+        for (ItemComponentType componentType : def.getItemComponents()) {
             componentMap.computeIfPresent(componentType.name(), (string, integer) -> integer + 1);
             componentMap.putIfAbsent(componentType.name(), 1);
         }
@@ -64,7 +64,7 @@ public class StockDescriptionPageBuilder implements IPageBuilder {
 
     @Override
     public String getPageTooltipName(Identifier id) {
-        if(validatePath(id)) {
+        if (validatePath(id)) {
             return id.getPath().split("/")[id.getPath().split("/").length - 1];
         }
         return "";

@@ -44,10 +44,10 @@ public abstract class MixinTickPos implements IStockRollAccessor {
 
     @Unique
     private static float skewAngle(float curr, float next, float ratio) {
-        if(curr - next > 180) {
+        if (curr - next > 180) {
             curr -= 360;
         }
-        if(next - curr > 180) {
+        if (next - curr > 180) {
             curr += 360;
         }
         return curr + (next - curr) * ratio;
@@ -95,7 +95,7 @@ public abstract class MixinTickPos implements IStockRollAccessor {
     @Inject(method = "<init>(Lcam72cam/mod/serialization/TagCompound;)V", at = @At("TAIL"), remap = false)
     public void load(TagCompound data, CallbackInfo ci) {
         TagCompound irp = data.get("irp");
-        if(irp != null) {
+        if (irp != null) {
             this.frontRoll = irp.getFloat("frontRoll");
             this.rearRoll = irp.getFloat("rearRoll");
         }

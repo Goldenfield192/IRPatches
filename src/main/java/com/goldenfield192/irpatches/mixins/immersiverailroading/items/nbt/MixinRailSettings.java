@@ -31,16 +31,17 @@ public class MixinRailSettings implements IRailSettingsAccessor {
             constructor = RailSettings.Mutable.class.getDeclaredConstructor(TagCompound.class);
             constructor.setAccessible(true);
             m = constructor.newInstance(tag).immutable();
-        } catch(NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
+                 InvocationTargetException e) {
             throw new RuntimeException(e);
         }
-        if(tag != null) {
-            if(tag.get("irp") != null && tag.get("irp").getFloat("ctrl1") != null) {
+        if (tag != null) {
+            if (tag.get("irp") != null && tag.get("irp").getFloat("ctrl1") != null) {
                 ((IRailSettingsAccessor) m).setFarEnd(tag.get("irp").getFloat("ctrl1"));
             } else {
                 ((IRailSettingsAccessor) m).setFarEnd(0);
             }
-            if(tag.get("irp") != null && tag.get("irp").getFloat("ctrl2") != null) {
+            if (tag.get("irp") != null && tag.get("irp").getFloat("ctrl2") != null) {
                 ((IRailSettingsAccessor) m).setNearEnd(tag.get("irp").getFloat("ctrl2"));
             } else {
                 ((IRailSettingsAccessor) m).setNearEnd(0);

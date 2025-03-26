@@ -51,7 +51,7 @@ public class MarkdownUrl extends MarkdownClickableElement {
      */
     public static MarkdownUrl compileSingle(String input) {
         Matcher matcher = MARKDOWN_URL_PATTERN.matcher(input);
-        if(matcher.find()) {
+        if (matcher.find()) {
             return new MarkdownUrl(matcher.group("text"), matcher.group("url"));
         } else {
             return null;
@@ -69,14 +69,14 @@ public class MarkdownUrl extends MarkdownClickableElement {
 
         Matcher matcher = MARKDOWN_URL_PATTERN.matcher(input.text);
         int prev = 0;
-        while(matcher.find()) {
+        while (matcher.find()) {
             urls.add(new MarkdownStyledText(input.text.substring(prev, matcher.start("text") - 1), input.styles));
             urls.add(new MarkdownUrl(matcher.group("text"),
                                      matcher.group("url")));
             prev = matcher.end("url") + 1;
         }
         //Last element is not a url, finalize as ordinary text
-        if(prev != input.text.length() - 1) {
+        if (prev != input.text.length() - 1) {
             urls.add(new MarkdownStyledText(input.text.substring(prev), input.styles));
         }
         return urls;
@@ -90,9 +90,9 @@ public class MarkdownUrl extends MarkdownClickableElement {
     @Override
     public MarkdownElement[] split(int splitPos) {
         int i = splitPos;
-        while(this.text.charAt(i) == ' ') {
+        while (this.text.charAt(i) == ' ') {
             i++;
-            if(i == this.text.length()) {//rest are all space
+            if (i == this.text.length()) {//rest are all space
                 return new MarkdownElement[]{
                         new MarkdownUrl(this.text.substring(0, splitPos), this.destination),
                         new MarkdownUrl("", this.destination)};
@@ -113,9 +113,9 @@ public class MarkdownUrl extends MarkdownClickableElement {
 
     @Override
     public void click(MarkdownDocument document) {
-        if(MarkdownPageManager.validate(this.destination)) {
+        if (MarkdownPageManager.validate(this.destination)) {
             ManualGui.pushContent(this.destination);
-        } else if(this.destination.getDomain().equals("https")) {
+        } else if (this.destination.getDomain().equals("https")) {
             MinecraftClient.getPlayer().sendMessage(PlayerMessage.url(this.destination.toString()));
         } else {
             //What should we do?
@@ -132,9 +132,9 @@ public class MarkdownUrl extends MarkdownClickableElement {
     //TODO Translation file
     @Override
     public void renderTooltip(Identifier id, int bottomBound) {
-        if(MarkdownPageManager.getPageName(id) != null) {
+        if (MarkdownPageManager.getPageName(id) != null) {
             renderTooltip("Open page: " + MarkdownPageManager.getPageName(destination), bottomBound);
-        } else if(this.destination.getDomain().equals("https")) {
+        } else if (this.destination.getDomain().equals("https")) {
             renderTooltip("Click to send this website to your dialog!", bottomBound);
         } else {
             //What should we do?

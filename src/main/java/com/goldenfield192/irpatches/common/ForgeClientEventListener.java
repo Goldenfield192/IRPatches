@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 public class ForgeClientEventListener {
     @SubscribeEvent
     public static void setOnboardFOV(EntityViewRenderEvent.FOVModifier event) {
-        if(OnboardCamera.enabled && Minecraft.getMinecraft().gameSettings.thirdPersonView != 0) {
+        if (OnboardCamera.enabled && Minecraft.getMinecraft().gameSettings.thirdPersonView != 0) {
             event.setFOV((float) OnboardCamera.fov);
         }
     }
@@ -21,12 +21,12 @@ public class ForgeClientEventListener {
 
     @SubscribeEvent
     public static void setOnboardCameraPosition(EntityViewRenderEvent.CameraSetup event) {
-        if(IRPConfig.OnboardCameraCollideWithBlock) {
+        if (IRPConfig.OnboardCameraCollideWithBlock) {
             return;
         }
-        if(Minecraft.getMinecraft().gameSettings.thirdPersonView == 1) {//back
+        if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 1) {//back
             GlStateManager.translate(0, 0, -(OnboardCamera.distance - 4));
-        } else if(Minecraft.getMinecraft().gameSettings.thirdPersonView == 2) {//front
+        } else if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 2) {//front
             GlStateManager.translate(0, 0, (OnboardCamera.distance - 4));
         }
     }

@@ -56,7 +56,7 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
 
     @Inject(method = "onClick", at = @At("HEAD"), remap = false, cancellable = true)
     public void inject(Player player, Player.Hand hand, Facing facing, Vec3d hit, CallbackInfoReturnable<Boolean> cir) {
-        if(player.getHeldItem(Player.Hand.PRIMARY).isEmpty() && Augment.ACTUATOR.equals(this.augment)) {
+        if (player.getHeldItem(Player.Hand.PRIMARY).isEmpty() && Augment.ACTUATOR.equals(this.augment)) {
             IRPGUIHelper.ACTUATOR.open(player, this.getPos());
             cir.setReturnValue(true);
         }
@@ -78,13 +78,13 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
             cancellable = true)
     public void update0(CallbackInfo ci) {
         EntityRollingStock stock = getStockNearBy(EntityRollingStock.class);
-        if(stock == null) {
+        if (stock == null) {
             ci.cancel();
             return;
         }
         String[] cg = IRPatch$filter.split(",");
         float value = (float) this.getWorld().getRedstone(this.getPos()) / 15.0F;
-        for(String s : cg) {
+        for (String s : cg) {
             stock.setControlPosition(s, value);
         }
         ci.cancel();
@@ -93,34 +93,34 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
     @Override
     public float getNextRoll(Vec3d currentPosition, Vec3d motion) {
         TileRailBase self = (TileRailBase) (BlockEntityTrackTickable) this;
-        if(this.getReplaced() == null) {
+        if (this.getReplaced() == null) {
             TileRail tile = self instanceof TileRail ?
                             (TileRail) self :
                             self.getParentTile();
-            if(tile == null) {
+            if (tile == null) {
                 return 0;
             }
 
             SwitchState state = SwitchUtil.getSwitchState(tile, currentPosition);
 
-            if(state == SwitchState.STRAIGHT) {
+            if (state == SwitchState.STRAIGHT) {
                 tile = tile.getParentTile();
             }
 
             return TrackRoll.getRollMovementTrack(getWorld(), currentPosition, tile, motion);
         }
-        if(this.tiles == null) {
+        if (this.tiles == null) {
             Map<Vec3i, TileRail> tileMap = new HashMap<>();
-            for(TileRailBase current = self; current != null; current = current.getReplacedTile()) {
+            for (TileRailBase current = self; current != null; current = current.getReplacedTile()) {
                 TileRail tile = current instanceof TileRail ?
                                 (TileRail) current :
                                 current.getParentTile();
                 TileRail parent = tile;
-                while(parent != null && !parent.getPos().equals(parent.getParent())) {
+                while (parent != null && !parent.getPos().equals(parent.getParent())) {
                     // Move to root of switch (if applicable)
                     parent = parent.getParentTile();
                 }
-                if(tile != null && parent != null) {
+                if (tile != null && parent != null) {
                     tileMap.putIfAbsent(parent.getPos(), tile);
                 }
             }
@@ -133,27 +133,27 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
         boolean hasSwitchSet = false;
         float nextRoll = 0;
 
-        for(TileRail tile : tiles) {
+        for (TileRail tile : tiles) {
             SwitchState state = SwitchUtil.getSwitchState(tile, currentPosition);
 
-            if(state == SwitchState.STRAIGHT) {
+            if (state == SwitchState.STRAIGHT) {
                 tile = tile.getParentTile();
             }
 
             Vec3d potential = MovementTrack.nextPositionDirect(getWorld(), currentPosition, tile, motion);
-            if(potential != null) {
-                if(state == SwitchState.TURN) {
+            if (potential != null) {
+                if (state == SwitchState.TURN) {
                     float other = VecUtil.toWrongYaw(potential.subtract(currentPosition));
                     float rotationYaw = VecUtil.toWrongYaw(motion);
                     double diff = MathUtil.trueModulus(other - rotationYaw, 360);
                     diff = Math.min(360 - diff, diff);
-                    if(diff < 2.5) {
+                    if (diff < 2.5) {
                         hasSwitchSet = true;
                         nextPos = potential;
                         nextRoll = TrackRoll.getRollMovementTrack(getWorld(), currentPosition, tile, motion);
                     }
                 }
-                if(currentPosition == nextPos || !hasSwitchSet && potential.distanceToSquared(
+                if (currentPosition == nextPos || !hasSwitchSet && potential.distanceToSquared(
                         predictedPos) < nextPos.distanceToSquared(predictedPos)) {
                     nextPos = potential;
                     nextRoll = TrackRoll.getRollMovementTrack(getWorld(), currentPosition, tile, motion);
@@ -176,7 +176,7 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
                                    rail.info).getBuilder(getWorld(),
                                                          new Vec3i(rail.info.placementInfo.placementPosition).add(
                                                                  getPos()));
-        if(!(builderBase instanceof BuilderCubicCurve)) {
+        if (!(builderBase instanceof BuilderCubicCurve)) {
             return true;
         }
         BuilderCubicCurve curve = (BuilderCubicCurve) builderBase;
@@ -186,13 +186,13 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
     }
 
     @Override
-    public void setCGFilter(String s) {
-        IRPatch$filter = s;
-        this.markDirty();
+    public String getCGFilter() {
+        return IRPatch$filter;
     }
 
     @Override
-    public String getCGFilter() {
-        return IRPatch$filter;
+    public void setCGFilter(String s) {
+        IRPatch$filter = s;
+        this.markDirty();
     }
 }

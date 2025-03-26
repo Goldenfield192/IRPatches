@@ -22,7 +22,7 @@ public class StockListProvider {
                 DefinitionManager.getDefinitions().stream()
                                  .map(def -> {
                                      ExtraDefinition extra = ExtraDefinition.get(def);
-                                     switch(context.getProperty("stock")) {
+                                     switch (context.getProperty("stock")) {
                                          case 0:
                                              return MutablePair.of("N/A".equals(extra.name) ?
                                                                    "Unknown" :
@@ -43,12 +43,12 @@ public class StockListProvider {
         List<MarkdownDocument.MarkdownLine> lines = new LinkedList<>();
         Character lastStartingChar = null;
         String lastFullName = null;
-        for(MutablePair<String, EntityRollingStockDefinition> definition : definitions) {
-            if(lastStartingChar == null || lastStartingChar != definition.getLeft().charAt(0)) {
+        for (MutablePair<String, EntityRollingStockDefinition> definition : definitions) {
+            if (lastStartingChar == null || lastStartingChar != definition.getLeft().charAt(0)) {
                 lastStartingChar = definition.getLeft().charAt(0);
                 lines.add(MarkdownDocument.MarkdownLine.create(new MarkdownTitle(lastStartingChar.toString(), 1)));
             }
-            if(context.getProperty("stock") != 0 && (lastFullName == null || !lastFullName.equals(
+            if (context.getProperty("stock") != 0 && (lastFullName == null || !lastFullName.equals(
                     definition.getLeft()))) {
                 lastFullName = definition.getLeft();
                 lines.add(MarkdownDocument.MarkdownLine.create(new MarkdownTitle(lastFullName, 2)));

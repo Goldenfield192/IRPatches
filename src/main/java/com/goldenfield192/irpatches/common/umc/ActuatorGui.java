@@ -73,7 +73,7 @@ public class ActuatorGui implements IScreen {
         @Override
         protected void handle() {
             TileRailBase railBase = this.getWorld().getBlockEntity(pos, TileRailBase.class);
-            if(railBase != null) {
+            if (railBase != null) {
                 ((ITileRailBaseAccessor) railBase).setCGFilter(this.filter);
             }
         }

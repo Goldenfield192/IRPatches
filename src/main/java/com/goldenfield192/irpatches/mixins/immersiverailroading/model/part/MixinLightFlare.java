@@ -45,7 +45,7 @@ public abstract class MixinLightFlare {
                 .extraLightDef.get(component.type.toString()
                                                  .replace("_X", "_" + component.id)
                                                  .replace("_POS_", "_" + component.pos + "_"));
-        if(light != null) {
+        if (light != null) {
             this.IRPatches$useTex = light.enableTex;
             this.IRPatch$disableOn = light.disableOn;
         }
@@ -53,14 +53,14 @@ public abstract class MixinLightFlare {
 
     @Inject(method = "postRender", at = @At("HEAD"), remap = false, cancellable = true)
     public void inject1(EntityMoveableRollingStock stock, RenderState state, CallbackInfo ci) {
-        if(!IRPatches$useTex || !IRPatch$isEnabled(stock)) {
+        if (!IRPatches$useTex || !IRPatch$isEnabled(stock)) {
             ci.cancel();
         }
     }
 
     @Inject(method = "effects", at = @At("HEAD"), remap = false, cancellable = true)
     public void inject2(EntityMoveableRollingStock stock, CallbackInfo ci) {
-        if(!IRPatch$isEnabled(stock)) {
+        if (!IRPatch$isEnabled(stock)) {
             this.removed(stock);
             ci.cancel();
         }
@@ -68,7 +68,7 @@ public abstract class MixinLightFlare {
 
     @Unique
     private boolean IRPatch$isEnabled(EntityMoveableRollingStock stock) {
-        if(IRPatch$disableOn == null) {
+        if (IRPatch$disableOn == null) {
             return true;
         }
         //When disableOn and speed corresponds then return false

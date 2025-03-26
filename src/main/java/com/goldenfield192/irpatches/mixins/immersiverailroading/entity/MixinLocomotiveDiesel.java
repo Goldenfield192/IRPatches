@@ -25,7 +25,7 @@ public abstract class MixinLocomotiveDiesel {
     @Inject(method = "getFluidFilter", at = @At("HEAD"), remap = false, cancellable = true)
     public void getFluidFilter(CallbackInfoReturnable<List<Fluid>> cir) {
         List<Pair<String, Integer>> overrides = ExtraDefinition.get(this.getDefinition()).burnables;
-        if(overrides == null) {
+        if (overrides == null) {
             cir.setReturnValue(BurnUtil.burnableFluids());
             return;
         }
@@ -38,7 +38,7 @@ public abstract class MixinLocomotiveDiesel {
     @Redirect(method = "onTick", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/util/BurnUtil;getBurnTime(Lcam72cam/mod/fluid/Fluid;)I"), remap = false)
     public int mixinGetBurnTime(Fluid fluid) {
         List<Pair<String, Integer>> overrides = ExtraDefinition.get(this.getDefinition()).burnables;
-        if(overrides != null && overrides.stream().anyMatch(pair -> pair.getLeft().equals(fluid.ident))) {
+        if (overrides != null && overrides.stream().anyMatch(pair -> pair.getLeft().equals(fluid.ident))) {
             return overrides.stream().filter(pair -> pair.getLeft().equals(fluid.ident)).findFirst().get().getRight();
         }
         return 0;

@@ -29,7 +29,7 @@ public class MarkdownCodeBlock {
      * @param firstLine The line contains beginning syntax
      */
     public static void parse(BufferReaderAdapter reader, MarkdownDocument document, String firstLine) {
-        if(firstLine.length() > 3) {
+        if (firstLine.length() > 3) {
             //Meaning it has language mark
             document.addLine(MarkdownDocument.MarkdownLine.create(new MarkdownStyledText(firstLine.substring(3)))
                                                           .isCodeBlockStart(true));
@@ -39,8 +39,8 @@ public class MarkdownCodeBlock {
                                                           .isCodeBlockStart(true));
         }
         String str;
-        while((str = reader.readLine()) != null) {
-            if(str.startsWith("```")) {
+        while ((str = reader.readLine()) != null) {
+            if (str.startsWith("```")) {
                 document.addLine(MarkdownDocument.MarkdownLine.create(new MarkdownStyledText("")).isCodeBlockEnd(true));
                 return;
             }
@@ -74,10 +74,10 @@ public class MarkdownCodeBlock {
         state.translate(-delta, 10, 0);
         height += 10;
 
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             MarkdownDocument.MarkdownLine line = iterator.next();
             offset = state.model_view().apply(Vec3d.ZERO);
-            if(line.codeBlockEnd) {
+            if (line.codeBlockEnd) {
                 //Draw footer line
                 GUIHelpers.drawRect((int) offset.x, (int) offset.y,
                                     document.getPageWidth(), (int) (5 * IRPConfig.ManualFontSize),
