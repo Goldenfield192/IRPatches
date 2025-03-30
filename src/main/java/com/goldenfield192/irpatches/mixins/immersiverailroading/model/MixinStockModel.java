@@ -89,6 +89,7 @@ public abstract class MixinStockModel {
 
         this.shell = provider.parse(ModelComponentType.SHELL);
         rocking.include(shell);
+        ci.cancel();
     }
 
     @Inject(method = "<init>", at = @At("TAIL"), remap = false)
