@@ -1,6 +1,7 @@
 package com.goldenfield192.irpatches.mixins.immersiverailroading.tile;
 
 import cam72cam.immersiverailroading.entity.EntityRollingStock;
+import cam72cam.immersiverailroading.items.nbt.RailSettings;
 import cam72cam.immersiverailroading.library.Augment;
 import cam72cam.immersiverailroading.library.SwitchState;
 import cam72cam.immersiverailroading.library.TrackItems;
@@ -28,20 +29,21 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Mixin(TileRailBase.class)
 public abstract class MixinTileRailBase extends BlockEntityTrackTickable
         implements IRedstoneProvider, ITileRailBaseAccessor {
-    @Shadow(remap = false)
-    private Augment augment;
-    @Shadow(remap = false)
-    private Collection<TileRail> tiles;
+    @Shadow(remap = false) private Augment augment;
+    @Shadow(remap = false) private Collection<TileRail> tiles;
+    @Shadow(remap = false) private int ticksExisted;
     @Unique
     private String IRPatch$filter;
 
@@ -88,6 +90,34 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
             stock.setControlPosition(s, value);
         }
         ci.cancel();
+    }
+
+    @Inject(method = "update", at = @At(value = "HEAD"), remap = false)
+    public void update1(CallbackInfo ci){
+        TileRailBase base = (TileRailBase)(Object)this;
+        
+        if(!this.getWorld().isClient && ticksExisted % 5 == 0 && base instanceof TileRail && base.getParentTile() != null){
+            RailSettings settings = base.getParentTile().info.settings;
+            if(!Objects.equals(settings.track, ((TileRail) base).info.settings.track) ||
+               !Objects.equals(settings.railBed, ((TileRail) base).info.settings.railBed) ||
+               !Objects.equals(settings.gauge, ((TileRail) base).info.settings.gauge)){
+                ((TileRail) base).info = ((TileRail) base).info.withSettings(b -> {
+                    b.track = settings.track;
+                    b.railBed = settings.railBed;
+                    b.gauge = settings.gauge;
+                });
+                ((TileRail) base).markAllDirty();
+            }
+        }
+    }
+
+    @Redirect(method = "onClick", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/tile/TileRailBase;getParentTile()Lcam72cam/immersiverailroading/tile/TileRail;"), remap = false)
+    public TileRail onClick0(TileRailBase instance){
+        TileRail tileRail = instance.getParentTile();
+        if(tileRail.getParentTile() != null){
+            tileRail = tileRail.getParentTile();
+        }
+        return tileRail;
     }
 
     @Override
