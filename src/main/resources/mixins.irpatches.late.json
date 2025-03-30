@@ -40,6 +40,7 @@
     "immersiverailroading.track.MixinBuilderIterator",
     "immersiverailroading.util.MixinPlacementInfo",
     "immersiverailroading.util.MixinRailInfo",
+    "immersiverailroading.util.MixinSpawnUtil",
     "umc.math.MixinVec3d",
     "umc.render.MixinParticle"
   ]
