@@ -22,9 +22,7 @@ public class MixinSteamChimney {
             remap = false)
     public void inject0(LocomotiveSteam stock, boolean isEndStroke, CallbackInfo ci,
                         @Local ModelComponent smoke, @Share("pos") LocalRef<Vec3d> vec3dLocalRef) {
-        double rotation = Math.toRadians(
-                (((IStockRollAccessor) stock).getFrontRoll() + ((IStockRollAccessor) stock).getRearRoll()) / 2);
-        Vec3d particlePos = stock.getModelMatrix().rotate(rotation, 1, 0, 0).apply(smoke.center);
+        Vec3d particlePos = stock.getModelMatrix().apply(smoke.center);
         vec3dLocalRef.set(particlePos);
     }
 

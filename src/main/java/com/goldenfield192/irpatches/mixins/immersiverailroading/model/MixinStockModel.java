@@ -63,7 +63,8 @@ public abstract class MixinStockModel {
 
     @Redirect(method = "postRender", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/model/part/SwaySimulator;getRollDegrees(Lcam72cam/immersiverailroading/entity/EntityMoveableRollingStock;F)D"), remap = false)
     public double redirect(SwaySimulator instance, EntityMoveableRollingStock stock, float partialTicks) {
-        return 0f;
+        IStockRollAccessor accessor = (IStockRollAccessor) stock;
+        return Math.toRadians((accessor.getFrontRoll() + accessor.getRearRoll()) / 2);
     }
 
     @Inject(method = "parseComponents", at = @At("HEAD"), remap = false, cancellable = true)
@@ -104,7 +105,7 @@ public abstract class MixinStockModel {
     public ModelState addTrackRoll(ModelState base) {
         return base.push(builder -> builder.add((ModelState.Animator) (stock, v) -> {
             IStockRollAccessor accessor = (IStockRollAccessor) stock;
-            return new Matrix4().rotate((accessor.getFrontRoll() + accessor.getRearRoll()) / 2, 1, 0, 0);
+            return new Matrix4().rotate(Math.toRadians((accessor.getFrontRoll() + accessor.getRearRoll()) / 2), 1, 0, 0);
         }));
     }
 }
