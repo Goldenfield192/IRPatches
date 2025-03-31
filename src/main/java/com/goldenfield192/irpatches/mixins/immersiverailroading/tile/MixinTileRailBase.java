@@ -94,19 +94,19 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
 
     @Inject(method = "update", at = @At(value = "HEAD"), remap = false)
     public void update1(CallbackInfo ci){
-        TileRailBase base = (TileRailBase)(Object)this;
+        TileRailBase self = (TileRailBase)(Object)this;
         
-        if(!this.getWorld().isClient && ticksExisted % 5 == 0 && base instanceof TileRail && base.getParentTile() != null){
-            RailSettings settings = base.getParentTile().info.settings;
-            if(!Objects.equals(settings.track, ((TileRail) base).info.settings.track) ||
-               !Objects.equals(settings.railBed, ((TileRail) base).info.settings.railBed) ||
-               !Objects.equals(settings.gauge, ((TileRail) base).info.settings.gauge)){
-                ((TileRail) base).info = ((TileRail) base).info.withSettings(b -> {
+        if(!this.getWorld().isClient && ticksExisted % 5 == 0 && self instanceof TileRail && self.getParentTile() != null){
+            RailSettings settings = self.getParentTile().info.settings;
+            if(!Objects.equals(settings.track, ((TileRail) self).info.settings.track) ||
+               !Objects.equals(settings.railBed, ((TileRail) self).info.settings.railBed) ||
+               !Objects.equals(settings.gauge, ((TileRail) self).info.settings.gauge)){
+                ((TileRail) self).info = ((TileRail) self).info.withSettings(b -> {
                     b.track = settings.track;
                     b.railBed = settings.railBed;
                     b.gauge = settings.gauge;
                 });
-                ((TileRail) base).markAllDirty();
+                ((TileRail) self).markAllDirty();
             }
         }
     }
