@@ -1,3 +1,8 @@
+## 1.3.1
+* Fix locomotive missing chuff sound
+* Stocks now roll when placing
+* Track exchanger now change all the segments on long tracks
+
 ## 1.3.0
 * Add stocks roll
 * Change track rolling center to then center of rails
@@ -23,17 +28,17 @@
 ## 1.2.1
 * Fix Track Blueprint GUI component overlapping issue
 * Fix Golden Spike issue with smooth Custom Curve
-* Change Golden Spike behaviour with Straight/Slope/Turn
+* Change Golden Spike behaviour with Straight/Slope/Turn, now it uses projection length
 
 ## 1.2.0
-* Split document part from IR
+* Add MarkDown-based document module
 
 ## 1.1.1
 * Add support for custom fuel type outside config
 
 ## 1.1.0
 * Add `left_first` to adjust valve gears
-* Add fuel filter for diesel
+* Add fuel filter for diesel locomotives
 
 ## 1.0.0
 * Translatable component label
