@@ -4,7 +4,7 @@ import cam72cam.immersiverailroading.entity.LocomotiveDiesel;
 import cam72cam.immersiverailroading.registry.LocomotiveDieselDefinition;
 import cam72cam.immersiverailroading.util.BurnUtil;
 import cam72cam.mod.fluid.Fluid;
-import com.goldenfield192.irpatches.common.umc.ExtraDefinition;
+import com.goldenfield192.irpatches.util.ExtraDefinition;
 import org.apache.commons.lang3.tuple.Pair;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

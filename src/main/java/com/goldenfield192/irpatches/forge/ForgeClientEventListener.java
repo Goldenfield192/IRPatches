@@ -1,7 +1,8 @@
-package com.goldenfield192.irpatches.common;
+package com.goldenfield192.irpatches.forge;
 
 import com.goldenfield192.irpatches.IRPatches;
-import com.goldenfield192.irpatches.common.umc.IRPConfig;
+import com.goldenfield192.irpatches.IRPConfig;
+import com.goldenfield192.irpatches.util.OnboardCamera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.client.event.EntityViewRenderEvent;

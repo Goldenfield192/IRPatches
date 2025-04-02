@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.common.umc;
+package com.goldenfield192.irpatches.gui;
 
 import cam72cam.immersiverailroading.tile.TileRailBase;
 import cam72cam.mod.gui.helpers.GUIHelpers;

@@ -8,7 +8,7 @@ import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.Light;
 import cam72cam.mod.render.opengl.RenderState;
-import com.goldenfield192.irpatches.common.umc.ExtraDefinition;
+import com.goldenfield192.irpatches.util.ExtraDefinition;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

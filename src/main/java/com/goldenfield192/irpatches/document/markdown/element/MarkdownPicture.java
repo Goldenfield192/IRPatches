@@ -4,7 +4,7 @@ import cam72cam.mod.gui.helpers.GUIHelpers;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.opengl.RenderState;
 import cam72cam.mod.resource.Identifier;
-import com.goldenfield192.irpatches.common.umc.IRPConfig;
+import com.goldenfield192.irpatches.IRPConfig;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

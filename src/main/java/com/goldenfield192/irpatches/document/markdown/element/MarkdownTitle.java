@@ -2,7 +2,7 @@ package com.goldenfield192.irpatches.document.markdown.element;
 
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.opengl.RenderState;
-import com.goldenfield192.irpatches.common.IRPGUIHelper;
+import com.goldenfield192.irpatches.gui.IRPGUIHelper;
 
 import static com.goldenfield192.irpatches.document.markdown.Colors.DEFAULT_TEXT_COLOR;
 

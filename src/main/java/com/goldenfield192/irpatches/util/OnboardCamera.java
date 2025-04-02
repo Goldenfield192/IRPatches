@@ -1,9 +1,9 @@
-package com.goldenfield192.irpatches.common;
+package com.goldenfield192.irpatches.util;
 
 import cam72cam.immersiverailroading.entity.EntityRollingStock;
 import cam72cam.mod.MinecraftClient;
 import cam72cam.mod.entity.Entity;
-import com.goldenfield192.irpatches.common.umc.IRPConfig;
+import com.goldenfield192.irpatches.IRPConfig;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 

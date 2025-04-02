@@ -2,7 +2,7 @@ package com.goldenfield192.irpatches.document.manual;
 
 import cam72cam.mod.event.ClientEvents;
 import cam72cam.mod.gui.helpers.GUIHelpers;
-import com.goldenfield192.irpatches.common.IRPGUIHelper;
+import com.goldenfield192.irpatches.gui.IRPGUIHelper;
 
 import static com.goldenfield192.irpatches.document.markdown.Colors.*;
 

@@ -4,8 +4,8 @@ import cam72cam.mod.gui.helpers.GUIHelpers;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.opengl.RenderState;
 import cam72cam.mod.text.TextColor;
-import com.goldenfield192.irpatches.common.IRPGUIHelper;
-import com.goldenfield192.irpatches.common.umc.IRPConfig;
+import com.goldenfield192.irpatches.gui.IRPGUIHelper;
+import com.goldenfield192.irpatches.IRPConfig;
 
 import java.util.*;
 import java.util.stream.Collectors;

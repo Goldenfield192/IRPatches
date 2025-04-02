@@ -1,7 +1,7 @@
 package com.goldenfield192.irpatches.document.markdown;
 
-import com.goldenfield192.irpatches.common.IRPGUIHelper;
-import com.goldenfield192.irpatches.common.umc.IRPConfig;
+import com.goldenfield192.irpatches.gui.IRPGUIHelper;
+import com.goldenfield192.irpatches.IRPConfig;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownElement;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownStyledText;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownTitle;

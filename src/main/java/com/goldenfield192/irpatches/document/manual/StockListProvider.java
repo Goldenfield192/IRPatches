@@ -3,7 +3,7 @@ package com.goldenfield192.irpatches.document.manual;
 import cam72cam.immersiverailroading.registry.DefinitionManager;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import cam72cam.mod.resource.Identifier;
-import com.goldenfield192.irpatches.common.umc.ExtraDefinition;
+import com.goldenfield192.irpatches.util.ExtraDefinition;
 import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownTitle;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownUrl;

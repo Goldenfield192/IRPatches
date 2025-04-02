@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.common;
+package com.goldenfield192.irpatches.gui;
 
 import cam72cam.mod.resource.Identifier;
 import net.minecraft.client.Minecraft;

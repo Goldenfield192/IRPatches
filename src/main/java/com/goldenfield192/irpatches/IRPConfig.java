@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.common.umc;
+package com.goldenfield192.irpatches;
 
 import cam72cam.mod.config.ConfigFile;
 

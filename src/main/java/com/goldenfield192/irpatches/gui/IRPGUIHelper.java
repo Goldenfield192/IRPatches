@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.common;
+package com.goldenfield192.irpatches.gui;
 
 import cam72cam.immersiverailroading.tile.TileRailBase;
 import cam72cam.mod.gui.GuiRegistry;
@@ -7,7 +7,6 @@ import cam72cam.mod.render.opengl.RenderState;
 import cam72cam.mod.resource.Identifier;
 import cam72cam.mod.util.With;
 import com.goldenfield192.irpatches.IRPatches;
-import com.goldenfield192.irpatches.common.umc.ActuatorGui;
 import com.goldenfield192.irpatches.document.ManualGui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

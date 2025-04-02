@@ -4,7 +4,7 @@ import cam72cam.immersiverailroading.library.ItemComponentType;
 import cam72cam.immersiverailroading.registry.DefinitionManager;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import cam72cam.mod.resource.Identifier;
-import com.goldenfield192.irpatches.common.umc.ExtraDefinition;
+import com.goldenfield192.irpatches.util.ExtraDefinition;
 import com.goldenfield192.irpatches.document.manual.element.MDStockModelRenderer;
 import com.goldenfield192.irpatches.document.markdown.DefaultPageBuilder;
 import com.goldenfield192.irpatches.document.markdown.IPageBuilder;
