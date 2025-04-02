@@ -85,6 +85,10 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
             return;
         }
         String[] cg = IRPatch$filter.split(",");
+        if(cg.length == 0){
+            //Fallback for actual door actuator
+            return;
+        }
         float value = (float) this.getWorld().getRedstone(this.getPos()) / 15.0F;
         for (String s : cg) {
             stock.setControlPosition(s, value);

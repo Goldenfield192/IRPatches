@@ -1,3 +1,6 @@
+## 1.3.2(IN DEV)
+* Revert Door Actuator changes, now it work like ordinary augment when control group is not specified
+
 ## 1.3.1
 * Fix locomotive missing chuff sound
 * Stocks now roll when placing
@@ -5,7 +8,7 @@
 
 ## 1.3.0
 * Add stocks roll
-* Change track rolling center to then center of rails
+* Change track rolling center to the center of rails
 * Fix headlight issues
 
 ## 1.2.5
