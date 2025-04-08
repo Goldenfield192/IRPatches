@@ -56,12 +56,11 @@ public abstract class MixinBuilderCubicCurve extends BuilderIterator {
                 int finalI = i;
                 IRailSettingsAccessor accessor = (IRailSettingsAccessor) info.settings;
                 RailSettings clone = getRailSetting(info.settings).with(b -> {
-                    ((IRailSettingsAccessor) b).setNearEnd(
-                            (accessor.getNearEndTilt() * finalI / splits)
-                                    + (accessor.getFarEndTilt() * (1 - (float) finalI / splits)));
-                    ((IRailSettingsAccessor) b).setFarEnd(
-                            (accessor.getNearEndTilt() * (finalI + 1) / splits)
-                                    + (accessor.getFarEndTilt() * (1 - (float) (finalI + 1) / splits)));
+                    IRailSettingsAccessor setting = (IRailSettingsAccessor) b;
+                    setting.setNearEnd((accessor.getNearEndTilt() * finalI / splits) +
+                                       (accessor.getFarEndTilt() * (1 - (float) finalI / splits)));
+                    setting.setFarEnd((accessor.getNearEndTilt() * (finalI + 1) / splits) +
+                                      (accessor.getFarEndTilt() * (1 - (float) (finalI + 1) / splits)));
                 });
                 RailInfo subInfo = new RailInfo(clone.with(b -> b.type = TrackItems.CUSTOM),
                                                 startPos, endPos, SwitchState.NONE, SwitchState.NONE, 0);
