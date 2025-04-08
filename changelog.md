@@ -1,5 +1,6 @@
-## 1.3.2(IN DEV)
+## 1.3.2
 * Revert Door Actuator changes, now it work like ordinary augment when control group is not specified
+* Fix a conflict with poizzy's build
 
 ## 1.3.1
 * Fix locomotive missing chuff sound
