@@ -53,7 +53,7 @@ public class OnboardCamera {
     }
 
     public static boolean handleScroll(double d) {
-        if (!MinecraftClient.isReady()) {
+        if (!MinecraftClient.isReady() || !IRPConfig.EnableAdvancedCamera) {
             return true;
         }
 
