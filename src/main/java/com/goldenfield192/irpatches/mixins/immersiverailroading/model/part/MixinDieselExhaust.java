@@ -24,7 +24,7 @@ public class MixinDieselExhaust {
                         @Local ModelComponent exhaust, @Local(ordinal = 0) Vec3d fakeMotion, @Share("pos") LocalRef<Vec3d> vec3dLocalRef) {
         double rotation = Math.toRadians(
                 (((IStockRollAccessor) stock).getFrontRoll() + ((IStockRollAccessor) stock).getRearRoll()) / 2);
-        Vec3d particlePos = stock.getModelMatrix().rotate(rotation, 1, 0, 0).apply(exhaust.center).subtract(fakeMotion);
+        Vec3d particlePos = stock.getModelMatrix().rotate(rotation, 1, 0, 0).apply(exhaust.center);
         vec3dLocalRef.set(particlePos);
     }
 
