@@ -12,14 +12,14 @@ public class MixinEntityRenderer {
     @ModifyConstant(method = "updateRenderer", constant = @Constant(floatValue = 4.0F))
     public float inject1(float constant) {
         return (IRPConfig.EnableAdvancedCamera && IRPConfig.OnboardCameraCollideWithBlock) ?
-               (float) OnboardCamera.distance :
+               (float) OnboardCamera.zoom :
                4f;
     }
 
     @ModifyConstant(method = "orientCamera", constant = @Constant(floatValue = 4.0F))
     public float inject2(float constant) {
         return (IRPConfig.EnableAdvancedCamera && IRPConfig.OnboardCameraCollideWithBlock) ?
-               (float) OnboardCamera.distance :
+               (float) OnboardCamera.zoom :
                4f;
     }
 }

@@ -1,3 +1,8 @@
+## 1.3.3(IN DEV)
+* Make advanced camera's key bindings configurable
+* Make track exchanger configurable between replace a single segment of a segmented track and replace the entire track
+* Advanced camera can be toggled off
+
 ## 1.3.2
 * Revert Door Actuator changes, now it work like ordinary augment when control group is not specified
 * Fix a conflict with poizzy's build

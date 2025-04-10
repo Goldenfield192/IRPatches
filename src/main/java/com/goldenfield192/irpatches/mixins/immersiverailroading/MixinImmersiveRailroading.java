@@ -4,8 +4,10 @@ import cam72cam.immersiverailroading.ImmersiveRailroading;
 import cam72cam.mod.ModEvent;
 import cam72cam.mod.config.ConfigFile;
 import cam72cam.mod.event.ClientEvents;
+import cam72cam.mod.input.Keyboard;
 import cam72cam.mod.net.Packet;
 import cam72cam.mod.net.PacketDirection;
+import com.goldenfield192.irpatches.IRPatches;
 import com.goldenfield192.irpatches.gui.IRPGUIHelper;
 import com.goldenfield192.irpatches.util.OnboardCamera;
 import com.goldenfield192.irpatches.gui.ActuatorGui;
@@ -46,6 +48,9 @@ public class MixinImmersiveRailroading {
         switch (event) {
             case CONSTRUCT:
                 IRPGUIHelper.register();
+                Keyboard.registerKey("zoomControlKey", Keyboard.KeyCode.LCONTROL, "key.categories." + IRPatches.MODID, () -> OnboardCamera.zoomDown = 2);
+                Keyboard.registerKey("fovControlKey", Keyboard.KeyCode.LMENU, "key.categories." + IRPatches.MODID, () -> OnboardCamera.fovDown = 2);
+
                 break;
             case SETUP:
                 ClientEvents.TICK.subscribe(ManualGui::onClientTick);

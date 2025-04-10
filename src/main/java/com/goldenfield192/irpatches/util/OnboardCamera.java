@@ -5,51 +5,63 @@ import cam72cam.mod.MinecraftClient;
 import cam72cam.mod.entity.Entity;
 import com.goldenfield192.irpatches.IRPConfig;
 import net.minecraft.client.Minecraft;
-import org.lwjgl.input.Keyboard;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class OnboardCamera {
     public static boolean enabled = false;
-    public static double distance;
+    public static double zoom;
     public static double fov;
 
-    private static double targetDistance = 4;
+    public static int zoomDown = 0;
+    public static int fovDown = 0;
+
+    private static double targetZoom = 4;
     private static double targetFov = 70;
 
-    private static double prevDistance = 0;
-//    private static double prevFov = 0;
+    private static double prevZoom = -1;
+    private static double prevFov = -1;
+
 
     public static void onClientTick() {
         if (!MinecraftClient.isReady()) {
             return;
         }
 
+        zoomDown = Math.max(0, zoomDown - 1);
+        fovDown = Math.max(0, fovDown - 1);
+
         Entity riding = MinecraftClient.getPlayer().getRiding();
         if (riding instanceof EntityRollingStock) {
             if (!enabled) {
                 enabled = true;
-                targetDistance = prevDistance <= 20 ?
-                                 20 :
-                                 prevDistance;
-                if (Minecraft.getMinecraft().gameSettings.thirdPersonView != 1) {
-                    distance = prevDistance <= 20 ?
-                               20 :
-                               prevDistance;
-                }
+                targetZoom = prevZoom == -1 ? 20 : prevZoom;
+                targetFov = prevFov == -1 ? Minecraft.getMinecraft().gameSettings.fovSetting : prevFov;
             }
         }
         if (!(riding instanceof EntityRollingStock)) {
-            prevDistance = distance;
-            targetDistance = 4;
+            if(enabled){
+                prevZoom = targetZoom;
+                prevFov = targetFov;
+            }
+
+            targetZoom = 4;
             targetFov = Minecraft.getMinecraft().gameSettings.fovSetting;
             enabled = false;
         }
 
-        if (Math.abs(targetDistance - distance) <= 0.001) {
-            distance = targetDistance;
+        if (Math.abs(targetZoom - zoom) <= 0.001) {
+            zoom = targetZoom;
         } else {
-            distance += Math.min((targetDistance - distance) * 0.1, 0.75);
+            zoom += Math.min((targetZoom - zoom) * 0.1, 2);
         }
-        fov = targetFov;
+
+        if (Math.abs(targetFov - fov) <= 0.001) {
+            fov = targetFov;
+        } else {
+            fov += Math.min((targetFov - fov) * 0.1, 0.75);
+        }
     }
 
     public static boolean handleScroll(double d) {
@@ -60,10 +72,11 @@ public class OnboardCamera {
         if (MinecraftClient.getPlayer().getRiding() instanceof EntityRollingStock
                 && enabled
                 && Minecraft.getMinecraft().gameSettings.thirdPersonView != 0) {
-            if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
-                targetDistance = Math.max(10, Math.min(IRPConfig.ThirdPersonMaxDistance, targetDistance - 1.5 * d));
+            if (zoomDown > 0) {
+                targetZoom = Math.max(10, Math.min(IRPConfig.ThirdPersonMaxDistance, targetZoom - 1.5 * d));
                 return false;
-            } else if (Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+            }
+            if (fovDown > 0) {
                 targetFov = Math.max(20, Math.min(90, targetFov - d));
                 return false;
             }
