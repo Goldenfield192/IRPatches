@@ -18,14 +18,15 @@ public class MixinItemRailUpdatePacket {
 
     @Inject(method = "handle", at = @At("HEAD"), remap = false)
     public void inject(CallbackInfo ci) {
-        //Server side check for MaxTrackLength(unnecessary?)
+        //Server side check for MaxTrackLength
         RailSettings.Mutable mutable = settings.mutable();
         if (mutable.length > IRPConfig.MaxTrackLength) {
             mutable.length = IRPConfig.MaxTrackLength;
         }
-        if (mutable.type == TrackItems.TURNTABLE) {
+        if (mutable.type == TrackItems.TURNTABLE || mutable.type == TrackItems.SWITCH) {
             ((IRailSettingsMutableAccessor) mutable).setFarEnd(0f);
             ((IRailSettingsMutableAccessor) mutable).setNearEnd(0f);
+            ((IRailSettingsMutableAccessor) mutable).setBumpiness(0f);
         }
         settings = mutable.immutable();
     }

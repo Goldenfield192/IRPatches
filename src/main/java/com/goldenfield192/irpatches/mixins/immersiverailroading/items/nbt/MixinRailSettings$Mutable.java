@@ -46,6 +46,8 @@ public class MixinRailSettings$Mutable implements IRailSettingsMutableAccessor {
     public float IRPatch$ctrl1Roll;
     @Unique
     public float IRPatch$ctrl2Roll;
+    @Unique
+    public float IRPatch$bumpiness;
 
     @Override
     public void setNearEnd(float degree) {
@@ -58,6 +60,11 @@ public class MixinRailSettings$Mutable implements IRailSettingsMutableAccessor {
     }
 
     @Override
+    public void setBumpiness(float factor) {
+        this.IRPatch$bumpiness = factor;
+    }
+
+    @Override
     public float getNearEndTilt() {
         return IRPatch$ctrl2Roll;
     }
@@ -67,16 +74,23 @@ public class MixinRailSettings$Mutable implements IRailSettingsMutableAccessor {
         return IRPatch$ctrl1Roll;
     }
 
+    @Override
+    public float getBumpiness() {
+        return IRPatch$bumpiness;
+    }
+
     @Inject(method = "<init>(Lcam72cam/immersiverailroading/items/nbt/RailSettings;)V", at = @At("TAIL"), remap = false)
     public void inject0(RailSettings settings, CallbackInfo ci) {
         this.setFarEnd(((IRailSettingsAccessor) settings).getFarEndTilt());
         this.setNearEnd(((IRailSettingsAccessor) settings).getNearEndTilt());
+        this.setBumpiness(((IRailSettingsAccessor) settings).getBumpiness());
     }
 
     @Inject(method = "<init>(Lcam72cam/mod/serialization/TagCompound;)V", at = @At("TAIL"), remap = false)
     public void inject1(TagCompound data, CallbackInfo ci) {
         this.setFarEnd(0);
         this.setNearEnd(0);
+        this.setBumpiness(0);
     }
 
     @Inject(method = "immutable", at = @At("HEAD"), remap = false, cancellable = true)
@@ -98,6 +112,7 @@ public class MixinRailSettings$Mutable implements IRailSettingsMutableAccessor {
         );
         settings.setNearEnd(this.IRPatch$ctrl2Roll);
         settings.setFarEnd(this.IRPatch$ctrl1Roll);
+        settings.setBumpiness(this.IRPatch$bumpiness);
         cir.setReturnValue((RailSettings) settings);
     }
 }

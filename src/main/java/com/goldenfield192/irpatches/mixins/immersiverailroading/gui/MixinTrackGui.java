@@ -50,6 +50,8 @@ public class MixinTrackGui {
     private Slider ctrl1RollSlider;
     @Unique
     private Slider ctrl2RollSlider;
+    @Unique
+    private Slider bumpinessSlider;
 
     @ModifyConstant(method = "init", constant = @Constant(intValue = 6), remap = false)
     private int inject1(int constant) {
@@ -84,6 +86,15 @@ public class MixinTrackGui {
                 ctrl2RollSlider.setText("Near end degrees: " + String.format("%.2f", accessor.getNearEndTilt()));
             }
         };
+        ytop += height;
+        this.bumpinessSlider = new Slider(screen, -150 + (GUIHelpers.getScreenWidth() / 2), ytop, "", -7.1, 7.1,
+                                          accessor.getBumpiness(), true) {
+            @Override
+            public void onSlider() {
+                accessor.setBumpiness((float) this.getValue());
+                bumpinessSlider.setText("Bumpiness range: : " + String.format("%.2f", accessor.getBumpiness()));
+            }
+        };
 
         this.typeSelector = new ListSelector<TrackItems>(screen, width, 100, height, settings.type,
                                                          Arrays.stream(TrackItems.values())
@@ -100,8 +111,15 @@ public class MixinTrackGui {
                 curvositySlider.setVisible(settings.type.hasCurvosity());
                 smoothingButton.setVisible(settings.type.hasSmoothing());
                 directionButton.setVisible(settings.type.hasDirection());
-                ctrl1RollSlider.setVisible(settings.type != TrackItems.TURNTABLE);
-                ctrl2RollSlider.setVisible(settings.type != TrackItems.TURNTABLE);
+
+                ctrl1RollSlider.setEnabled(true);
+                ctrl2RollSlider.setEnabled(true);
+                bumpinessSlider.setEnabled(true);
+                if(settings.type == TrackItems.TURNTABLE || settings.type == TrackItems.SWITCH){
+                    ctrl1RollSlider.setEnabled(false);
+                    ctrl2RollSlider.setEnabled(false);
+                    bumpinessSlider.setEnabled(false);
+                }
                 if (settings.type == TrackItems.TURNTABLE) {
                     lengthInput.setText("" + Math.min(Integer.parseInt(lengthInput.getText()),
                                                       BuilderTurnTable.maxLength(settings.gauge))); // revalidate
@@ -109,11 +127,15 @@ public class MixinTrackGui {
             }
         };
 
-        this.ctrl1RollSlider.setVisible(settings.type != TrackItems.TURNTABLE && settings.type != TrackItems.SWITCH);
-        this.ctrl2RollSlider.setVisible(settings.type != TrackItems.TURNTABLE && settings.type != TrackItems.SWITCH);
-
         this.ctrl1RollSlider.onSlider();
         this.ctrl2RollSlider.onSlider();
+        this.bumpinessSlider.onSlider();
+
+        if(settings.type == TrackItems.TURNTABLE || settings.type == TrackItems.SWITCH){
+            ctrl1RollSlider.setEnabled(false);
+            ctrl2RollSlider.setEnabled(false);
+            bumpinessSlider.setEnabled(false);
+        }
     }
 
     @ModifyConstant(method = "lambda$init$0", constant = @Constant(intValue = 1000), remap = false)

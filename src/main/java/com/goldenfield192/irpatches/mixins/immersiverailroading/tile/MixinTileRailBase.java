@@ -48,11 +48,9 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
     @Unique
     private String IRPatch$filter;
 
-    @Shadow(remap = false)
-    public abstract <T extends EntityRollingStock> T getStockNearBy(Class<T> type);
-
-    @Shadow(remap = false)
-    public abstract TagCompound getReplaced();
+    @Shadow(remap = false) public abstract <T extends EntityRollingStock> T getStockNearBy(Class<T> type);
+    @Shadow(remap = false) public abstract TagCompound getReplaced();
+    @Shadow(remap = false) public abstract TileRail getParentTile();
 
     @Inject(method = "onClick", at = @At("HEAD"), remap = false, cancellable = true)
     public void inject(Player player, Player.Hand hand, Facing facing, Vec3d hit, CallbackInfoReturnable<Boolean> cir) {

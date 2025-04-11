@@ -21,6 +21,8 @@ public class MixinRailSettings implements IRailSettingsAccessor {
     public float IRPatch$ctrl1Roll;
     @Unique
     public float IRPatch$ctrl2Roll;
+    @Unique
+    public float IRPatch$bumpiness;
 
     @Inject(method = "from", at = @At(value = "HEAD"), remap = false, cancellable = true)
     private static void from(ItemStack stack, CallbackInfoReturnable<RailSettings> cir) {
@@ -35,16 +37,25 @@ public class MixinRailSettings implements IRailSettingsAccessor {
                  InvocationTargetException e) {
             throw new RuntimeException(e);
         }
+
         if (tag != null) {
+            //set ctrl1
             if (tag.get("irp") != null && tag.get("irp").getFloat("ctrl1") != null) {
                 ((IRailSettingsAccessor) m).setFarEnd(tag.get("irp").getFloat("ctrl1"));
             } else {
                 ((IRailSettingsAccessor) m).setFarEnd(0);
             }
+            //set ctrl2
             if (tag.get("irp") != null && tag.get("irp").getFloat("ctrl2") != null) {
                 ((IRailSettingsAccessor) m).setNearEnd(tag.get("irp").getFloat("ctrl2"));
             } else {
                 ((IRailSettingsAccessor) m).setNearEnd(0);
+            }
+            //set bumpiness
+            if (tag.get("irp") != null && tag.get("irp").getFloat("bumpiness") != null) {
+                ((IRailSettingsAccessor) m).setBumpiness(tag.get("irp").getFloat("bumpiness"));
+            } else {
+                ((IRailSettingsAccessor) m).setBumpiness(0);
             }
         }
         cir.setReturnValue(m);
@@ -61,6 +72,11 @@ public class MixinRailSettings implements IRailSettingsAccessor {
     }
 
     @Override
+    public void setBumpiness(float factor) {
+        this.IRPatch$bumpiness = factor;
+    }
+
+    @Override
     public float getNearEndTilt() {
         return IRPatch$ctrl2Roll;
     }
@@ -70,12 +86,17 @@ public class MixinRailSettings implements IRailSettingsAccessor {
         return IRPatch$ctrl1Roll;
     }
 
+    @Override
+    public float getBumpiness() {
+        return IRPatch$bumpiness;
+    }
+
     @Inject(method = "write", at = @At(value = "INVOKE", target = "Lcam72cam/mod/item/ItemStack;setTagCompound(Lcam72cam/mod/serialization/TagCompound;)V"), remap = false)
     public void write(ItemStack stack, CallbackInfo ci, @Local TagCompound data) {
         TagCompound tag = new TagCompound();
         tag.setFloat("ctrl1", ((IRailSettingsAccessor) this).getFarEndTilt());
         tag.setFloat("ctrl2", ((IRailSettingsAccessor) this).getNearEndTilt());
+        tag.setFloat("bumpiness", ((IRailSettingsAccessor) this).getBumpiness());
         data.set("irp", tag);
     }
-
 }

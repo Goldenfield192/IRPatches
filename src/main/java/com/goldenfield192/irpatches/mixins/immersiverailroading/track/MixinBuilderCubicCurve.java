@@ -13,6 +13,7 @@ import com.goldenfield192.irpatches.accessor.IBuilderBaseAccessor;
 import com.goldenfield192.irpatches.accessor.IRailSettingsAccessor;
 import com.goldenfield192.irpatches.accessor.IVec3dAccessor;
 import com.llamalad7.mixinextras.sugar.Local;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -61,6 +62,7 @@ public abstract class MixinBuilderCubicCurve extends BuilderIterator {
                                        (accessor.getFarEndTilt() * (1 - (float) finalI / splits)));
                     setting.setFarEnd((accessor.getNearEndTilt() * (finalI + 1) / splits) +
                                       (accessor.getFarEndTilt() * (1 - (float) (finalI + 1) / splits)));
+                    setting.setBumpiness(accessor.getBumpiness());
                 });
                 RailInfo subInfo = new RailInfo(clone.with(b -> b.type = TrackItems.CUSTOM),
                                                 startPos, endPos, SwitchState.NONE, SwitchState.NONE, 0);
@@ -86,6 +88,15 @@ public abstract class MixinBuilderCubicCurve extends BuilderIterator {
                        @Local(ordinal = 0) List res, @Local(ordinal = 1) List points, @Local(ordinal = 0) int i) {
         PosStep step = (PosStep) res.get(res.size() - 1);
 
+//        int seed = new HashCodeBuilder(17, 37)
+//                .append(this.pos.x)
+//                .append(this.pos.y)
+//                .append(this.pos.z)
+//                .append(this.info.settings.gauge.value())
+//                .append(this.info.settings.length)
+//                .build();
+//        BumpGenerator generator = new BumpGenerator(seed, 3, 3);
+
         float roll;
         IRailSettingsAccessor settingsAccessor = (IRailSettingsAccessor) info.settings;
         if (points.size() == 1) {
@@ -96,8 +107,11 @@ public abstract class MixinBuilderCubicCurve extends BuilderIterator {
             roll = settingsAccessor.getNearEndTilt();
         } else {
             float percent = (i + 1f) / points.size();
-            float factor = (float) ((1.0 - Math.cos(Math.PI * percent)) / 2.0);
-            roll = settingsAccessor.getNearEndTilt() + (settingsAccessor.getFarEndTilt() - settingsAccessor.getNearEndTilt()) * factor;
+            float smoothingFactor = (float) ((1.0 - Math.cos(Math.PI * percent)) / 2.0);
+            roll = settingsAccessor.getNearEndTilt() + (settingsAccessor.getFarEndTilt() - settingsAccessor.getNearEndTilt()) * smoothingFactor;
+//            roll += (float) generator.evaluate(percent);
+//            ModCore.info(String.valueOf(percent));
+//            ModCore.info(String.valueOf(generator.evaluate(percent)));
         }
         ((IVec3dAccessor) step).setRoll(roll);
     }

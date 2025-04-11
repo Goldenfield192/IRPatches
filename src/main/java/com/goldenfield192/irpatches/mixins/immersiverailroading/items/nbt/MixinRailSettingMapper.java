@@ -19,6 +19,7 @@ public class MixinRailSettingMapper {
         TagCompound tag = new TagCompound();
         tag.setFloat("ctrl1", ((IRailSettingsAccessor) o).getFarEndTilt());
         tag.setFloat("ctrl2", ((IRailSettingsAccessor) o).getNearEndTilt());
+        tag.setFloat("bumpiness", ((IRailSettingsAccessor) o).getBumpiness());
         d.set("irp", tag);
     }
 
@@ -44,6 +45,11 @@ public class MixinRailSettingMapper {
             ((IRailSettingsAccessor) m).setNearEnd(d.get("irp").getFloat("ctrl2"));
         } else {
             ((IRailSettingsAccessor) m).setNearEnd(0);
+        }
+        if (d.get("irp") != null && d.get("irp").getFloat("bumpiness") != null) {
+            ((IRailSettingsAccessor) m).setBumpiness(d.get("irp").getFloat("bumpiness"));
+        } else {
+            ((IRailSettingsAccessor) m).setBumpiness(0);
         }
         cir.setReturnValue(m);
     }

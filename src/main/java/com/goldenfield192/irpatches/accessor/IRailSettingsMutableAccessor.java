@@ -7,7 +7,12 @@ public interface IRailSettingsMutableAccessor extends IRailSettingsAccessor {
     //Ctrl1
     void setFarEnd(float degree);
 
+    //Bumpiness
+    void setBumpiness(float factor);
+
     float getNearEndTilt();
 
     float getFarEndTilt();
+
+    float getBumpiness();
 }
