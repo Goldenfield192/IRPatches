@@ -1,7 +1,6 @@
 package com.goldenfield192.irpatches.mixins.immersiverailroading.tile;
 
 import cam72cam.immersiverailroading.entity.EntityRollingStock;
-import cam72cam.immersiverailroading.items.nbt.RailSettings;
 import cam72cam.immersiverailroading.library.Augment;
 import cam72cam.immersiverailroading.library.SwitchState;
 import cam72cam.immersiverailroading.library.TrackItems;
@@ -21,7 +20,6 @@ import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.math.Vec3i;
 import cam72cam.mod.serialization.TagCompound;
 import cam72cam.mod.util.Facing;
-import com.goldenfield192.irpatches.IRPConfig;
 import com.goldenfield192.irpatches.accessor.ITileRailBaseAccessor;
 import com.goldenfield192.irpatches.gui.IRPGUIHelper;
 import com.goldenfield192.irpatches.util.TrackRoll;
@@ -37,20 +35,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @Mixin(TileRailBase.class)
 public abstract class MixinTileRailBase extends BlockEntityTrackTickable
         implements IRedstoneProvider, ITileRailBaseAccessor {
     @Shadow(remap = false) private Augment augment;
     @Shadow(remap = false) private Collection<TileRail> tiles;
-    @Shadow(remap = false) private int ticksExisted;
     @Unique
     private String IRPatch$filter;
 
     @Shadow(remap = false) public abstract <T extends EntityRollingStock> T getStockNearBy(Class<T> type);
     @Shadow(remap = false) public abstract TagCompound getReplaced();
-    @Shadow(remap = false) public abstract TileRail getParentTile();
 
     @Inject(method = "onClick", at = @At("HEAD"), remap = false, cancellable = true)
     public void inject(Player player, Player.Hand hand, Facing facing, Vec3d hit, CallbackInfoReturnable<Boolean> cir) {
@@ -94,33 +89,33 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
 
     @Inject(method = "update", at = @At(value = "HEAD"), remap = false)
     public void update1(CallbackInfo ci){
-        TileRailBase self = (TileRailBase)(Object)this;
-        
-        if(IRPConfig.TrackExchangerChangeEntireTrack
-                && !this.getWorld().isClient
-                && ticksExisted % 5 == 0
-                && self instanceof TileRail
-                && self.getParentTile() != null){
-            RailSettings settings = self.getParentTile().info.settings;
-            if(!Objects.equals(settings.track, ((TileRail) self).info.settings.track) ||
-               !Objects.equals(settings.railBed, ((TileRail) self).info.settings.railBed) ||
-               !Objects.equals(settings.gauge, ((TileRail) self).info.settings.gauge)){
-                ((TileRail) self).info = ((TileRail) self).info.withSettings(b -> {
-                    b.track = settings.track;
-                    b.railBed = settings.railBed;
-                    b.gauge = settings.gauge;
-                });
-                ((TileRail) self).markAllDirty();
-            }
-        }
+//        TileRailBase self = (TileRailBase)(Object)this;
+//
+//        if(IRPConfig.TrackExchangerChangeEntireTrack
+//                && !this.getWorld().isClient
+//                && ticksExisted % 5 == 0
+//                && self instanceof TileRail
+//                && self.getParentTile() != null){
+//            RailSettings settings = self.getParentTile().info.settings;
+//            if(!Objects.equals(settings.track, ((TileRail) self).info.settings.track) ||
+//               !Objects.equals(settings.railBed, ((TileRail) self).info.settings.railBed) ||
+//               !Objects.equals(settings.gauge, ((TileRail) self).info.settings.gauge)){
+//                ((TileRail) self).info = ((TileRail) self).info.withSettings(b -> {
+//                    b.track = settings.track;
+//                    b.railBed = settings.railBed;
+//                    b.gauge = settings.gauge;
+//                });
+//                ((TileRail) self).markAllDirty();
+//            }
+//        }
     }
 
     @Redirect(method = "onClick", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/tile/TileRailBase;getParentTile()Lcam72cam/immersiverailroading/tile/TileRail;"), remap = false)
     public TileRail onClick0(TileRailBase instance){
         TileRail tileRail = instance.getParentTile();
-        if(IRPConfig.TrackExchangerChangeEntireTrack && tileRail.getParentTile() != null){
-            tileRail = tileRail.getParentTile();
-        }
+//        if(IRPConfig.TrackExchangerChangeEntireTrack && tileRail.getParentTile() != null){
+//            tileRail = tileRail.getParentTile();
+//        }
         return tileRail;
     }
 

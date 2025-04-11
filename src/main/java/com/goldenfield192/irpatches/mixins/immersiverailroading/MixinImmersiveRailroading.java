@@ -48,8 +48,8 @@ public class MixinImmersiveRailroading {
         switch (event) {
             case CONSTRUCT:
                 IRPGUIHelper.register();
-                Keyboard.registerKey("zoomControlKey", Keyboard.KeyCode.LCONTROL, "key.categories." + IRPatches.MODID, () -> OnboardCamera.zoomDown = 2);
-                Keyboard.registerKey("fovControlKey", Keyboard.KeyCode.LMENU, "key.categories." + IRPatches.MODID, () -> OnboardCamera.fovDown = 2);
+                Keyboard.registerKey("zoomControlKey", Keyboard.KeyCode.LCONTROL, /*"key.categories." +*/ IRPatches.MODID, () -> OnboardCamera.zoomDown = 2);
+                Keyboard.registerKey("fovControlKey", Keyboard.KeyCode.LMENU, /*"key.categories." +*/ IRPatches.MODID, () -> OnboardCamera.fovDown = 2);
 
                 break;
             case SETUP:
