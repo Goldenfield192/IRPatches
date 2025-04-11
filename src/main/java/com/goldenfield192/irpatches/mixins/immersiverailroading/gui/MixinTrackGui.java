@@ -74,7 +74,7 @@ public class MixinTrackGui {
             @Override
             public void onSlider() {
                 accessor.setFarEnd((float) this.getValue());
-                ctrl1RollSlider.setText("Far end degrees: " + String.format("%.2f", accessor.getFarEndTilt()));
+                ctrl1RollSlider.setText("Far end rolling degree: " + String.format("%.2f", accessor.getFarEndTilt()) + "°");
             }
         };
         ytop += height;
@@ -83,16 +83,16 @@ public class MixinTrackGui {
             @Override
             public void onSlider() {
                 accessor.setNearEnd((float) this.getValue());
-                ctrl2RollSlider.setText("Near end degrees: " + String.format("%.2f", accessor.getNearEndTilt()));
+                ctrl2RollSlider.setText("Near end rolling degree: " + String.format("%.2f", accessor.getNearEndTilt()) + "°");
             }
         };
         ytop += height;
-        this.bumpinessSlider = new Slider(screen, -150 + (GUIHelpers.getScreenWidth() / 2), ytop, "", -7.1, 7.1,
+        this.bumpinessSlider = new Slider(screen, -150 + (GUIHelpers.getScreenWidth() / 2), ytop, "", 0, 7.1,
                                           accessor.getBumpiness(), true) {
             @Override
             public void onSlider() {
                 accessor.setBumpiness((float) this.getValue());
-                bumpinessSlider.setText("Bumpiness range: : " + String.format("%.2f", accessor.getBumpiness()));
+                bumpinessSlider.setText("Bump amplitude: " + String.format("%.2f", accessor.getBumpiness()) + "°");
             }
         };
 

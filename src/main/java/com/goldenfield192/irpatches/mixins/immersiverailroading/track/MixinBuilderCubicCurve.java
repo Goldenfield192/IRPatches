@@ -12,6 +12,7 @@ import cam72cam.mod.world.World;
 import com.goldenfield192.irpatches.accessor.IBuilderBaseAccessor;
 import com.goldenfield192.irpatches.accessor.IRailSettingsAccessor;
 import com.goldenfield192.irpatches.accessor.IVec3dAccessor;
+import com.goldenfield192.irpatches.util.BumpGenerator;
 import com.llamalad7.mixinextras.sugar.Local;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.spongepowered.asm.mixin.Mixin;
@@ -87,15 +88,10 @@ public abstract class MixinBuilderCubicCurve extends BuilderIterator {
     public void inject(double stepSize, CallbackInfoReturnable<List> cir,
                        @Local(ordinal = 0) List res, @Local(ordinal = 1) List points, @Local(ordinal = 0) int i) {
         PosStep step = (PosStep) res.get(res.size() - 1);
-
-//        int seed = new HashCodeBuilder(17, 37)
-//                .append(this.pos.x)
-//                .append(this.pos.y)
-//                .append(this.pos.z)
-//                .append(this.info.settings.gauge.value())
-//                .append(this.info.settings.length)
-//                .build();
-//        BumpGenerator generator = new BumpGenerator(seed, 3, 3);
+        int actualLength = info.settings.length;
+        while (actualLength > 101 * 2 * 3.1415f / 4){
+            actualLength /= 2;
+        }
 
         float roll;
         IRailSettingsAccessor settingsAccessor = (IRailSettingsAccessor) info.settings;
@@ -109,9 +105,9 @@ public abstract class MixinBuilderCubicCurve extends BuilderIterator {
             float percent = (i + 1f) / points.size();
             float smoothingFactor = (float) ((1.0 - Math.cos(Math.PI * percent)) / 2.0);
             roll = settingsAccessor.getNearEndTilt() + (settingsAccessor.getFarEndTilt() - settingsAccessor.getNearEndTilt()) * smoothingFactor;
-//            roll += (float) generator.evaluate(percent);
-//            ModCore.info(String.valueOf(percent));
-//            ModCore.info(String.valueOf(generator.evaluate(percent)));
+            roll += (float) (settingsAccessor.getBumpiness()
+                    * BumpGenerator.evaluate(percent, actualLength / 5f)
+                    * Math.cos(percent * Math.PI));
         }
         ((IVec3dAccessor) step).setRoll(roll);
     }
