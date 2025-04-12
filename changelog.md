@@ -1,7 +1,9 @@
+## 1.3.4(IN DEV)
+* Fix independent throttle not working
+
 ## 1.3.3
 * Add real track bumpiness
 * Make advanced camera's key bindings configurable
-* Make track exchanger configurable between replace a single segment of a segmented track and replace the entire track
 * Advanced camera can be toggled off
 * Fix stock particle emitter offset
 * Fix [issue #1526](https://github.com/TeamOpenIndustry/ImmersiveRailroading/issues/1526)

@@ -8,6 +8,7 @@
   "mixins": [
     "immersiverailroading.MixinImmersiveRailroading",
     "immersiverailroading.entity.MixinEntityMoveableRollingStock",
+    "immersiverailroading.entity.MixinLocomotive",
     "immersiverailroading.entity.MixinLocomotiveDiesel",
     "immersiverailroading.entity.physics.MixinSimulationState",
     "immersiverailroading.gui.MixinPaintBrushPicker",
