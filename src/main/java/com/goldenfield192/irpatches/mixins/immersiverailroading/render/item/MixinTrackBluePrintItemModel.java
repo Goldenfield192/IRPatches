@@ -12,7 +12,7 @@ import cam72cam.mod.world.World;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
-import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.LeavesBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -30,7 +30,7 @@ public class MixinTrackBluePrintItemModel {
             remap = false)
     private static boolean mixinBlockCheck(World world, Vec3i pos, boolean flag) {
         return BlockUtil.canBeReplaced(world, pos, flag) &&
-                !(world.internal.getBlockState(pos.internal()).getBlock() instanceof BlockLeaves);
+                !(world.internal.getBlockState(pos.internal()).getBlock() instanceof LeavesBlock);
     }
 
     @ModifyArg(method = "renderMouseover", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/render/rail/RailRender;render(Lcam72cam/immersiverailroading/util/RailInfo;Lcam72cam/mod/world/World;Lcam72cam/mod/math/Vec3i;ZLcam72cam/mod/render/opengl/RenderState;)V"), index = 4, remap = false)

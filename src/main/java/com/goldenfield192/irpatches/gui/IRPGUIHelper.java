@@ -8,8 +8,10 @@ import cam72cam.mod.resource.Identifier;
 import cam72cam.mod.util.With;
 import com.goldenfield192.irpatches.IRPatches;
 import com.goldenfield192.irpatches.document.ManualGui;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
 import util.Matrix4;
 
 public class IRPGUIHelper {
@@ -18,7 +20,7 @@ public class IRPGUIHelper {
     public static final GuiRegistry.BlockGUI ACTUATOR = GuiRegistry.registerBlock(TileRailBase.class, ActuatorGui::new);
 
     public static int getTextWidth(String s) {
-        return Minecraft.getMinecraft().fontRenderer.getStringWidth(s);
+        return Minecraft.getInstance().font.width(s);
     }
 
     /**
@@ -32,8 +34,8 @@ public class IRPGUIHelper {
         RenderState state = new RenderState().color(1, 1, 1, 1).alpha_test(true);
         state.model_view().multiply(matrix);
         try (With ctx = RenderContext.apply(state)) {
-            GlStateManager.color(1, 1, 1, 0);
-            Minecraft.getMinecraft().fontRenderer.drawString(text, x, y, color);
+            RenderSystem.color4f(1, 1, 1, 0);
+            Minecraft.getInstance().font.draw(new MatrixStack(), text, x, y, color);
         }
     }
 

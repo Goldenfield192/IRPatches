@@ -4,6 +4,7 @@ import cam72cam.mod.MinecraftClient;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.Particle;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.PointOfView;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,7 +18,7 @@ public class MixinParticle {
     //So in that case we let particles face the camera
     @Inject(method = "lookAtPlayer", at = @At("HEAD"), remap = false, cancellable = true)
     public void lookAtPlayer0(Matrix4 mat, CallbackInfo ci) {
-        if (Minecraft.getMinecraft().gameSettings.thirdPersonView != 0) {//Not in first-person view
+        if (Minecraft.getInstance().getEntityRenderDispatcher().options.getCameraType() != PointOfView.FIRST_PERSON) {//Not in first-person view
             Vec3d vec3d = MinecraftClient.getPlayer().getLookVector();
             double x = vec3d.x;
             double y = vec3d.y;

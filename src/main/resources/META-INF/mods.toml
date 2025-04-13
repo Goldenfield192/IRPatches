@@ -1,7 +1,8 @@
 modLoader="javafml"
-loaderVersion="[28,)"
+loaderVersion="[36,)"
+license="${mod_license}"
 
 [[mods]]
 modId="irpatches"
-version="${file.jarVersion}"
-displayName="Immersive Railroading P"
+version="${mod_version}"
+displayName="Immersive Railroading Patches"

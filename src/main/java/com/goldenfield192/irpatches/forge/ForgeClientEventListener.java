@@ -3,18 +3,19 @@ package com.goldenfield192.irpatches.forge;
 import com.goldenfield192.irpatches.IRPatches;
 import com.goldenfield192.irpatches.IRPConfig;
 import com.goldenfield192.irpatches.util.OnboardCamera;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.settings.PointOfView;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
 
-@Mod.EventBusSubscriber(modid = IRPatches.MODID, value = Side.CLIENT)
+@Mod.EventBusSubscriber(modid = IRPatches.MODID, value = Dist.CLIENT)
 public class ForgeClientEventListener {
     @SubscribeEvent
     public static void setOnboardFOV(EntityViewRenderEvent.FOVModifier event) {
-        if (IRPConfig.EnableAdvancedCamera && Minecraft.getMinecraft().gameSettings.thirdPersonView != 0) {
+        if (IRPConfig.EnableAdvancedCamera && Minecraft.getInstance().getEntityRenderDispatcher().options.getCameraType() != PointOfView.FIRST_PERSON) {
             event.setFOV((float) OnboardCamera.fov);
         }
     }
@@ -25,10 +26,10 @@ public class ForgeClientEventListener {
         if (!IRPConfig.EnableAdvancedCamera || IRPConfig.OnboardCameraCollideWithBlock) {
             return;
         }
-        if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 1) {//back
-            GlStateManager.translate(0, 0, -(OnboardCamera.zoom - 4));
-        } else if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 2) {//front
-            GlStateManager.translate(0, 0, (OnboardCamera.zoom - 4));
+        if (Minecraft.getInstance().getEntityRenderDispatcher().options.getCameraType() == PointOfView.THIRD_PERSON_BACK) {//back
+            RenderSystem.translated(0, 0, -(OnboardCamera.zoom - 4));
+        } else if (Minecraft.getInstance().getEntityRenderDispatcher().options.getCameraType() == PointOfView.THIRD_PERSON_FRONT) {//front
+            RenderSystem.translated(0, 0, (OnboardCamera.zoom - 4));
         }
     }
 }

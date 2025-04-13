@@ -5,10 +5,11 @@ import cam72cam.mod.MinecraftClient;
 import cam72cam.mod.entity.Entity;
 import com.goldenfield192.irpatches.IRPConfig;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.client.settings.PointOfView;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class OnboardCamera {
     public static boolean enabled = false;
     public static double zoom;
@@ -37,7 +38,7 @@ public class OnboardCamera {
             if (!enabled) {
                 enabled = true;
                 targetZoom = prevZoom == -1 ? 20 : prevZoom;
-                targetFov = prevFov == -1 ? Minecraft.getMinecraft().gameSettings.fovSetting : prevFov;
+                targetFov = prevFov == -1 ? Minecraft.getInstance().getEntityRenderDispatcher().options.fov : prevFov;
             }
         }
         if (!(riding instanceof EntityRollingStock)) {
@@ -47,7 +48,7 @@ public class OnboardCamera {
             }
 
             targetZoom = 4;
-            targetFov = Minecraft.getMinecraft().gameSettings.fovSetting;
+            targetFov = Minecraft.getInstance().getEntityRenderDispatcher().options.fov;
             enabled = false;
         }
 
@@ -71,7 +72,7 @@ public class OnboardCamera {
 
         if (MinecraftClient.getPlayer().getRiding() instanceof EntityRollingStock
                 && enabled
-                && Minecraft.getMinecraft().gameSettings.thirdPersonView != 0) {
+                && Minecraft.getInstance().getEntityRenderDispatcher().options.getCameraType() != PointOfView.FIRST_PERSON) {
             if (zoomDown > 0) {
                 targetZoom = Math.max(10, Math.min(IRPConfig.ThirdPersonMaxDistance, targetZoom - 1.5 * d));
                 return false;

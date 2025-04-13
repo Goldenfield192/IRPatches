@@ -1,42 +1,47 @@
 package com.goldenfield192.irpatches;
 
-import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
-import zone.rong.mixinbooter.IEarlyMixinLoader;
+import com.llamalad7.mixinextras.MixinExtrasBootstrap;
+import org.objectweb.asm.tree.ClassNode;
+import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
+import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
-import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
-public class IRPEarlyMixinLoader implements IFMLLoadingPlugin, IEarlyMixinLoader {
+public class IRPEarlyMixinLoader implements IMixinConfigPlugin {
     @Override
-    public List<String> getMixinConfigs() {
-        return Collections.singletonList("mixins.irpatches.early.json");
+    public void onLoad(String s) {
+        MixinExtrasBootstrap.init();
     }
 
     @Override
-    public String[] getASMTransformerClass() {
-        return new String[0];
+    public String getRefMapperConfig() {
+        return "";
     }
 
     @Override
-    public String getModContainerClass() {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public String getSetupClass() {
-        return null;
+    public boolean shouldApplyMixin(String s, String s1) {
+        return false;
     }
 
     @Override
-    public void injectData(Map<String, Object> data) {
+    public void acceptTargets(Set<String> set, Set<String> set1) {
 
     }
 
     @Override
-    public String getAccessTransformerClass() {
-        return null;
+    public List<String> getMixins() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public void preApply(String s, ClassNode classNode, String s1, IMixinInfo iMixinInfo) {
+
+    }
+
+    @Override
+    public void postApply(String s, ClassNode classNode, String s1, IMixinInfo iMixinInfo) {
+
     }
 }

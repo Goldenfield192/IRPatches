@@ -20,7 +20,7 @@ public class MixinEntityMoveableRollingStock
     private float rearRoll;
 
     @Inject(method = "onTick", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/entity/EntityMoveableRollingStock;setPosition(Lcam72cam/mod/math/Vec3d;)V"), remap = false)
-    public void inject0(CallbackInfo ci, @Local TickPos currentPos) {
+    public void inject0(CallbackInfo ci, @Local(ordinal = 0) TickPos currentPos) {
         this.frontRoll = ((IStockRollAccessor) currentPos).getFrontRoll();
         this.rearRoll = ((IStockRollAccessor) currentPos).getRearRoll();
     }

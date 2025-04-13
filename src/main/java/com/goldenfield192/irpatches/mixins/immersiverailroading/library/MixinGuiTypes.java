@@ -21,10 +21,9 @@ public class MixinGuiTypes {
     @Mutable
     public static GuiRegistry.GUI CONFIG;
 
-    @Inject(method = "register", at = @At("HEAD"), remap = false)
+    @Inject(method = "register", at = @At("TAIL"), remap = false)
     private static void init(CallbackInfo ci) {
         CONFIG = GuiRegistry.register(new Identifier(ImmersiveRailroading.MODID, "config"),
-                                      () -> new ConfigGui(Config.class, ConfigGraphics.class, ConfigSound.class,
-                                                          ConfigPermissions.class, IRPConfig.class));
+                                      () -> new ConfigGui(Config.class, ConfigGraphics.class, ConfigSound.class, ConfigPermissions.class, IRPConfig.class));
     }
 }

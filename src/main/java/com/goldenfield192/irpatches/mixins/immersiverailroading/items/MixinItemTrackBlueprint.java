@@ -4,7 +4,7 @@ import cam72cam.immersiverailroading.items.ItemTrackBlueprint;
 import cam72cam.immersiverailroading.util.BlockUtil;
 import cam72cam.mod.math.Vec3i;
 import cam72cam.mod.world.World;
-import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.LeavesBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -21,6 +21,6 @@ public class MixinItemTrackBlueprint {
             remap = false)
     public boolean mixinBlockCheck(World world, Vec3i pos, boolean flag) {
         return BlockUtil.canBeReplaced(world, pos, flag)
-                && !(world.internal.getBlockState(pos.internal()).getBlock() instanceof BlockLeaves);
+                && !(world.internal.getBlockState(pos.internal()).getBlock() instanceof LeavesBlock);
     }
 }
