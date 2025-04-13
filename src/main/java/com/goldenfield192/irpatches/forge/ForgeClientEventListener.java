@@ -3,13 +3,16 @@ package com.goldenfield192.irpatches.forge;
 import com.goldenfield192.irpatches.IRPatches;
 import com.goldenfield192.irpatches.IRPConfig;
 import com.goldenfield192.irpatches.util.OnboardCamera;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.settings.PointOfView;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 @Mod.EventBusSubscriber(modid = IRPatches.MODID, value = Dist.CLIENT)
 public class ForgeClientEventListener {
@@ -26,10 +29,15 @@ public class ForgeClientEventListener {
         if (!IRPConfig.EnableAdvancedCamera || IRPConfig.OnboardCameraCollideWithBlock) {
             return;
         }
-        if (Minecraft.getInstance().getEntityRenderDispatcher().options.getCameraType() == PointOfView.THIRD_PERSON_BACK) {//back
-            RenderSystem.translated(0, 0, -(OnboardCamera.zoom - 4));
-        } else if (Minecraft.getInstance().getEntityRenderDispatcher().options.getCameraType() == PointOfView.THIRD_PERSON_FRONT) {//front
-            RenderSystem.translated(0, 0, (OnboardCamera.zoom - 4));
+        Method move;
+        try {
+            move = ActiveRenderInfo.class.getDeclaredMethod("move", double.class, double.class, double.class);
+            move.setAccessible(true);
+            if (Minecraft.getInstance().getEntityRenderDispatcher().options.getCameraType() != PointOfView.FIRST_PERSON) {
+                move.invoke(Minecraft.getInstance().gameRenderer.getMainCamera(), -(OnboardCamera.zoom - 4), 0, 0);
+            }
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
         }
     }
 }
