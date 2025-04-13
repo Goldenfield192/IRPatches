@@ -36,6 +36,7 @@ public class MarkdownUrl extends MarkdownClickableElement {
     public Identifier destination;
 
     //1.16 compat
+    //TODO Need research
     private boolean isLink = false;
 
     public MarkdownUrl(String text, String destination) {
@@ -142,10 +143,10 @@ public class MarkdownUrl extends MarkdownClickableElement {
     //TODO Translation file
     @Override
     public void renderTooltip(Identifier id, int bottomBound) {
-        if (MarkdownPageManager.getPageName(id) != null) {
-            renderTooltip("Open page: " + MarkdownPageManager.getPageName(destination), bottomBound);
-        } else if (isLink || this.destination.getDomain().equals("https")) {
+         if (isLink || this.destination.getDomain().equals("https")) {
             renderTooltip("Click to send this website to your dialog!", bottomBound);
+        } else if (MarkdownPageManager.getPageName(id) != null) {
+            renderTooltip("Open page: " + MarkdownPageManager.getPageName(destination), bottomBound);
         } else {
             //What should we do?
         }
