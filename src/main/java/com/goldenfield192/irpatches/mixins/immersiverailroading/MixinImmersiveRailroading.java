@@ -24,8 +24,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinImmersiveRailroading {
     @Inject(method = "lambda$clientEvent$4", at = @At(value = "INVOKE_ASSIGN", target = "Lcam72cam/mod/entity/Player;getRiding()Lcam72cam/mod/entity/Entity;"), remap = false, cancellable = true)
     private static void mixinMouseGui(ClientEvents.MouseGuiEvent evt, CallbackInfoReturnable<Boolean> cir) {
-        ManualHoverRenderer.updateMousePosition(evt);
-
         if (ManualGui.onClick(evt)) {
             cir.setReturnValue(true);
         }
@@ -53,6 +51,7 @@ public class MixinImmersiveRailroading {
 
                 break;
             case SETUP:
+                ClientEvents.TICK.subscribe(ManualHoverRenderer::updateMousePosition);
                 ClientEvents.TICK.subscribe(ManualGui::onClientTick);
                 ClientEvents.TICK.subscribe(OnboardCamera::onClientTick);
                 break;

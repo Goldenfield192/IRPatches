@@ -76,7 +76,7 @@ public class ManualGui implements IScreen {
             instance.content.onScroll(event);
         }
 
-        if (event.action == ClientEvents.MouseAction.RELEASE) {
+        if (event.action == ClientEvents.MouseAction.RELEASE && event.button == 0/* left button */) {
             if (prevPageButton.contains(event.x, event.y)) {
                 if (historyPageStack.size() > 1) {
                     futurePageStack.push(historyPageStack.pop());

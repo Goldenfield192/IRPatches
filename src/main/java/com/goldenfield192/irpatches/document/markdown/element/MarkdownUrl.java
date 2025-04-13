@@ -11,6 +11,7 @@ import com.goldenfield192.irpatches.IRPConfig;
 import com.goldenfield192.irpatches.document.ManualGui;
 import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
 import com.goldenfield192.irpatches.document.markdown.MarkdownPageManager;
+import net.minecraft.util.ResourceLocationException;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -32,10 +33,19 @@ public class MarkdownUrl extends MarkdownClickableElement {
     //text may be empty, while url mustn't be empty
     public static final Pattern MARKDOWN_URL_PATTERN = Pattern.compile("\\[(?<text>.*?)]\\((?<url>\\S+?)\\)");
 
-    public final Identifier destination;
+    public Identifier destination;
+
+    //1.16 compat
+    private boolean isLink = false;
 
     public MarkdownUrl(String text, String destination) {
-        this(text, new Identifier(destination));
+        this.text = text;
+        try {
+            this.destination = new Identifier(destination);
+        } catch (ResourceLocationException e){
+            this.isLink = true;
+            this.text = destination;
+        }
     }
 
     public MarkdownUrl(String text, Identifier destination) {
@@ -115,7 +125,7 @@ public class MarkdownUrl extends MarkdownClickableElement {
     public void click(MarkdownDocument document) {
         if (MarkdownPageManager.validate(this.destination)) {
             ManualGui.pushContent(this.destination);
-        } else if (this.destination.getDomain().equals("https")) {
+        } else if (isLink || this.destination.getDomain().equals("https")) {
             MinecraftClient.getPlayer().sendMessage(PlayerMessage.url(this.destination.toString()));
         } else {
             //What should we do?
@@ -134,7 +144,7 @@ public class MarkdownUrl extends MarkdownClickableElement {
     public void renderTooltip(Identifier id, int bottomBound) {
         if (MarkdownPageManager.getPageName(id) != null) {
             renderTooltip("Open page: " + MarkdownPageManager.getPageName(destination), bottomBound);
-        } else if (this.destination.getDomain().equals("https")) {
+        } else if (isLink || this.destination.getDomain().equals("https")) {
             renderTooltip("Click to send this website to your dialog!", bottomBound);
         } else {
             //What should we do?

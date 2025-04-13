@@ -1,8 +1,8 @@
 package com.goldenfield192.irpatches.document.manual;
 
-import cam72cam.mod.event.ClientEvents;
 import cam72cam.mod.gui.helpers.GUIHelpers;
 import com.goldenfield192.irpatches.gui.IRPGUIHelper;
+import net.minecraft.client.Minecraft;
 
 import static com.goldenfield192.irpatches.document.markdown.Colors.*;
 
@@ -43,8 +43,9 @@ public class ManualHoverRenderer {
     /**
      * Update mouse's position on every move
      */
-    public static void updateMousePosition(ClientEvents.MouseGuiEvent evt) {
-        mouseX = evt.x;
-        mouseY = evt.y;
+    public static void updateMousePosition() {
+        double scaleFactor = Minecraft.getInstance().getWindow().getGuiScale();
+        mouseX = (int) (Minecraft.getInstance().mouseHandler.xpos() / scaleFactor);
+        mouseY = (int) (Minecraft.getInstance().mouseHandler.ypos() / scaleFactor);
     }
 }
