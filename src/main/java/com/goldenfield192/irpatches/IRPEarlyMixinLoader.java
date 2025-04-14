@@ -17,7 +17,7 @@ public class IRPEarlyMixinLoader implements IMixinConfigPlugin {
 
     @Override
     public String getRefMapperConfig() {
-        return "";
+        return "mixins.irpatches.refmap.json";
     }
 
     @Override
