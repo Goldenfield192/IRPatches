@@ -1,4 +1,4 @@
-## 1.3.4(IN DEV)
+## 1.3.4
 * Fix independent throttle not working
 
 ## 1.3.3
