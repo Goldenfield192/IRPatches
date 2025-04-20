@@ -1,3 +1,6 @@
+## 1.3.5
+* Fix server crash
+
 ## 1.3.4
 * Fix independent throttle not working
 
