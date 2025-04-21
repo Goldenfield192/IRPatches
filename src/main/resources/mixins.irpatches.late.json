@@ -19,6 +19,7 @@
     "immersiverailroading.items.nbt.MixinRailSettings",
     "immersiverailroading.items.nbt.MixinRailSettings$Mutable",
     "immersiverailroading.library.MixinGuiTypes",
+    "immersiverailroading.model.MixinFreightModel",
     "immersiverailroading.model.MixinLocomotiveModel",
     "immersiverailroading.model.MixinStockModel",
     "immersiverailroading.model.part.MixinControl",
