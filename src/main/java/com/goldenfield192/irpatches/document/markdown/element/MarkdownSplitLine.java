@@ -10,9 +10,9 @@ import static com.goldenfield192.irpatches.document.markdown.Colors.SPLIT_LINE_C
 /**
  * Element class representing a split line
  *
- * @see MarkdownElement
+ * @see AbstractMarkdownElement
  */
-public class MarkdownSplitLine extends MarkdownElement {
+public class MarkdownSplitLine extends AbstractMarkdownElement {
     private static final char[] ALLOWED_CHARS_FOR_SPLIT = new char[]{'*', '-', '_'};
 
     public static boolean validate(String str) {
@@ -39,8 +39,8 @@ public class MarkdownSplitLine extends MarkdownElement {
     }
 
     @Override
-    public MarkdownElement[] split(int splitPos) {
-        return new MarkdownElement[0];
+    public AbstractMarkdownElement[] split(int splitPos) {
+        return new AbstractMarkdownElement[0];
     }
 
     @Override

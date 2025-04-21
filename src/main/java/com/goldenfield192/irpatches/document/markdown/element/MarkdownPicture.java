@@ -13,9 +13,9 @@ import java.io.IOException;
 /**
  * Element class representing a picture
  *
- * @see MarkdownElement
+ * @see AbstractMarkdownElement
  */
-public class MarkdownPicture extends MarkdownElement {
+public class MarkdownPicture extends AbstractMarkdownElement {
     public final Identifier picture;
 
     public final double ratio;
@@ -37,8 +37,8 @@ public class MarkdownPicture extends MarkdownElement {
     }
 
     @Override
-    public MarkdownElement[] split(int splitPos) {
-        return new MarkdownElement[0];
+    public AbstractMarkdownElement[] split(int splitPos) {
+        return new AbstractMarkdownElement[0];
     }
 
     @Override

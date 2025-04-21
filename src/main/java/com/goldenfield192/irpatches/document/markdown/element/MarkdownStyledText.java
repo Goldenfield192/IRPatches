@@ -16,7 +16,7 @@ import static com.goldenfield192.irpatches.document.markdown.Colors.DEFAULT_TEXT
 /**
  * Element class representing a String with styles
  */
-public class MarkdownStyledText extends MarkdownElement {
+public class MarkdownStyledText extends AbstractMarkdownElement {
     public static final Map<String, Set<MarkdownTextStyle>> MARKER_STYLES;
     public static final List<String> MARKER_PARSE_PRIORITY = Arrays.asList("***", "++", "**", "~~", "*", "`");
 
@@ -64,18 +64,18 @@ public class MarkdownStyledText extends MarkdownElement {
     }
 
     @Override
-    public MarkdownElement[] split(int splitPos) {
+    public AbstractMarkdownElement[] split(int splitPos) {
         int i = splitPos;
         while (this.text.charAt(i) == ' ') {
             i++;
             if (i == this.text.length()) {//Reaching end, which means chars after splitPos are all spaces
-                return new MarkdownElement[]{
+                return new AbstractMarkdownElement[]{
                         new MarkdownStyledText(this.text.substring(0, splitPos), this.styles),
                         //Just return empty String
                         new MarkdownStyledText("", this.styles)};
             }
         }
-        return new MarkdownElement[]{
+        return new AbstractMarkdownElement[]{
                 new MarkdownStyledText(this.text.substring(0, splitPos), this.styles),
                 new MarkdownStyledText(this.text.substring(i), this.styles)};
     }

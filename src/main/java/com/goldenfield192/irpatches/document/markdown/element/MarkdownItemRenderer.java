@@ -50,8 +50,8 @@ public class MarkdownItemRenderer extends MarkdownClickableElement {
     }
 
     @Override
-    public MarkdownElement[] split(int splitPos) {
-        return new MarkdownElement[0];
+    public AbstractMarkdownElement[] split(int splitPos) {
+        return new AbstractMarkdownElement[0];
     }
 
     @Override

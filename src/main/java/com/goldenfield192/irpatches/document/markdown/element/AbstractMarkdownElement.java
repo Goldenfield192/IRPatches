@@ -2,8 +2,6 @@ package com.goldenfield192.irpatches.document.markdown.element;
 
 import cam72cam.mod.render.opengl.RenderState;
 
-import java.util.HashMap;
-
 /**
  * Abstract element class
  *
@@ -13,10 +11,8 @@ import java.util.HashMap;
  * @see MarkdownSplitLine
  * @see MarkdownClickableElement
  */
-public abstract class MarkdownElement {
+public abstract class AbstractMarkdownElement {
     public String text;
-
-    public HashMap<String, Object> extra = new HashMap<>();
 
     /**
      * Apply this element to Renderable string
@@ -26,7 +22,7 @@ public abstract class MarkdownElement {
     /**
      * Split this element into two smaller ones
      */
-    public abstract MarkdownElement[] split(int splitPos);
+    public abstract AbstractMarkdownElement[] split(int splitPos);
 
     /**
      * Render the element and return its height

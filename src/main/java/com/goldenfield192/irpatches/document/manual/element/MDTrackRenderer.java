@@ -7,11 +7,11 @@ import cam72cam.mod.render.StandardModel;
 import cam72cam.mod.render.obj.OBJRender;
 import cam72cam.mod.render.opengl.RenderState;
 import com.goldenfield192.irpatches.IRPConfig;
-import com.goldenfield192.irpatches.document.markdown.element.MarkdownElement;
+import com.goldenfield192.irpatches.document.markdown.element.AbstractMarkdownElement;
 
 import static cam72cam.immersiverailroading.library.Gauge.STANDARD;
 
-public class MDTrackRenderer extends MarkdownElement {
+public class MDTrackRenderer extends AbstractMarkdownElement {
     private final StandardModel model;
 
     public MDTrackRenderer(String trackID) {
@@ -40,8 +40,8 @@ public class MDTrackRenderer extends MarkdownElement {
     }
 
     @Override
-    public MarkdownElement[] split(int splitPos) {
-        return new MarkdownElement[0];
+    public AbstractMarkdownElement[] split(int splitPos) {
+        return new AbstractMarkdownElement[0];
     }
 
     @Override

@@ -26,7 +26,7 @@ import static com.goldenfield192.irpatches.document.markdown.Colors.DEFAULT_TEXT
  * Also parses Markdown format url
  *
  * @see MarkdownClickableElement
- * @see MarkdownElement
+ * @see AbstractMarkdownElement
  */
 public class MarkdownUrl extends MarkdownClickableElement {
     //text may be empty, while url mustn't be empty
@@ -64,8 +64,8 @@ public class MarkdownUrl extends MarkdownClickableElement {
      * @param input Raw String needed to be parsed
      * @return The parsed element, or null if it can't be parsed
      */
-    public static List<MarkdownElement> splitLineByUrl(MarkdownStyledText input) {
-        List<MarkdownElement> urls = new ArrayList<>();
+    public static List<AbstractMarkdownElement> splitLineByUrl(MarkdownStyledText input) {
+        List<AbstractMarkdownElement> urls = new ArrayList<>();
 
         Matcher matcher = MARKDOWN_URL_PATTERN.matcher(input.text);
         int prev = 0;
@@ -88,17 +88,17 @@ public class MarkdownUrl extends MarkdownClickableElement {
     }
 
     @Override
-    public MarkdownElement[] split(int splitPos) {
+    public AbstractMarkdownElement[] split(int splitPos) {
         int i = splitPos;
         while (this.text.charAt(i) == ' ') {
             i++;
             if (i == this.text.length()) {//rest are all space
-                return new MarkdownElement[]{
+                return new AbstractMarkdownElement[]{
                         new MarkdownUrl(this.text.substring(0, splitPos), this.destination),
                         new MarkdownUrl("", this.destination)};
             }
         }
-        return new MarkdownElement[]{
+        return new AbstractMarkdownElement[]{
                 new MarkdownUrl(this.text.substring(0, splitPos), this.destination),
                 new MarkdownUrl(this.text.substring(i), this.destination)};
     }

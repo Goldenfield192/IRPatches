@@ -1,6 +1,5 @@
 package com.goldenfield192.irpatches.document.markdown.element;
 
-import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.opengl.RenderState;
 import com.goldenfield192.irpatches.gui.IRPGUIHelper;
 
@@ -21,9 +20,9 @@ import static com.goldenfield192.irpatches.document.markdown.Colors.DEFAULT_TEXT
  * <p>
  * CANNOT CONTAIN URL
  *
- * @see MarkdownElement
+ * @see AbstractMarkdownElement
  */
-public class MarkdownTitle extends MarkdownElement {
+public class MarkdownTitle extends AbstractMarkdownElement {
     //Store reciprocals to avoid division
     public static final double LEVEL1 = 1 / 1.8;
     public static final double LEVEL2 = 1 / 1.5;
@@ -62,25 +61,24 @@ public class MarkdownTitle extends MarkdownElement {
     }
 
     @Override
-    public MarkdownElement[] split(int splitPos) {
+    public AbstractMarkdownElement[] split(int splitPos) {
         int i = splitPos;
         while (this.text.charAt(i) == ' ') {
             i++;
             if (i == this.text.length()) {//Reaching end, which means chars after splitPos are all spaces
-                return new MarkdownElement[]{
+                return new AbstractMarkdownElement[]{
                         new MarkdownTitle(this.text.substring(0, splitPos), this.level),
                         //Just return empty string
                         new MarkdownTitle("", this.level)};
             }
         }
-        return new MarkdownElement[]{
+        return new AbstractMarkdownElement[]{
                 new MarkdownTitle(this.text.substring(0, splitPos), this.level),
                 new MarkdownTitle(this.text.substring(i), this.level)};
     }
 
     @Override
     public int render(RenderState state, int pageWidth) {
-        Vec3d offset = state.model_view().apply(Vec3d.ZERO);
         String str = this.apply();
         if (this.level == 1) {
             //Scale matrix

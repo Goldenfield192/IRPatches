@@ -4,12 +4,12 @@ import cam72cam.immersiverailroading.library.ItemComponentType;
 import cam72cam.immersiverailroading.registry.DefinitionManager;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import cam72cam.mod.resource.Identifier;
+import com.goldenfield192.irpatches.document.markdown.element.AbstractMarkdownElement;
 import com.goldenfield192.irpatches.util.ExtraDefinition;
 import com.goldenfield192.irpatches.document.manual.element.MDStockModelRenderer;
 import com.goldenfield192.irpatches.document.markdown.DefaultPageBuilder;
 import com.goldenfield192.irpatches.document.markdown.IPageBuilder;
 import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
-import com.goldenfield192.irpatches.document.markdown.element.MarkdownElement;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownStyledText;
 import com.goldenfield192.irpatches.document.markdown.element.MarkdownUrl;
 
@@ -47,7 +47,7 @@ public class StockDescriptionPageBuilder implements IPageBuilder {
             char[] c = replace.toCharArray();
             c[0] = Character.toUpperCase(c[0]);
             String uppercase = new String(c);
-            List<MarkdownElement> elements = new ArrayList<>(16);
+            List<AbstractMarkdownElement> elements = new ArrayList<>(16);
             elements.add(new MarkdownStyledText(integer.toString()));
             elements.add(new MarkdownStyledText(" * "));
             elements.add(new MarkdownUrl(uppercase, new Identifier("iritem", def.defID + '@' + orig)));

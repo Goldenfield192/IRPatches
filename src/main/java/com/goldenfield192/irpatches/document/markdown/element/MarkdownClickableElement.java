@@ -12,7 +12,7 @@ import java.awt.geom.Rectangle2D;
  *
  * @see MarkdownUrl
  */
-public abstract class MarkdownClickableElement extends MarkdownElement {
+public abstract class MarkdownClickableElement extends AbstractMarkdownElement {
     public Rectangle2D section;
 
     /**

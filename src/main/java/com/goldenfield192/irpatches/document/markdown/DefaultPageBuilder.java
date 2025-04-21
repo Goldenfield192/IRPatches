@@ -42,9 +42,9 @@ public class DefaultPageBuilder implements IPageBuilder {
      * Internal method to parse a raw String markdown line into MarkdownStyledText and MarkdownUrl
      *
      * @param input Raw markdown line
-     * @return Parsed MarkdownElement line
+     * @return Parsed AbstractMarkdownElement line
      */
-    public static List<MarkdownElement> parse(String input) {
+    public static List<AbstractMarkdownElement> parse(String input) {
         List<Set<MarkdownStyledText.MarkdownTextStyle>> stateMap = new ArrayList<>(input.length());
         Deque<Set<MarkdownStyledText.MarkdownTextStyle>> styleStack = new ArrayDeque<>();
         int currentPos = 0;
@@ -125,8 +125,8 @@ public class DefaultPageBuilder implements IPageBuilder {
      * @param stateMap List representing style of the chars
      * @return The split line
      */
-    private static List<MarkdownElement> mergeElements(String input, List<Set<MarkdownStyledText.MarkdownTextStyle>> stateMap) {
-        List<MarkdownElement> elements = new ArrayList<>();
+    private static List<AbstractMarkdownElement> mergeElements(String input, List<Set<MarkdownStyledText.MarkdownTextStyle>> stateMap) {
+        List<AbstractMarkdownElement> elements = new ArrayList<>();
         if (stateMap.isEmpty()) {
             return elements;
         }
@@ -156,12 +156,12 @@ public class DefaultPageBuilder implements IPageBuilder {
      * @param styles Styles that should be applied
      * @return The parsed text and url line
      */
-    private static List<MarkdownElement> createElement(String input, int start, int end, Set<MarkdownStyledText.MarkdownTextStyle> styles) {
+    private static List<AbstractMarkdownElement> createElement(String input, int start, int end, Set<MarkdownStyledText.MarkdownTextStyle> styles) {
         return MarkdownUrl.splitLineByUrl(new MarkdownStyledText(input.substring(start, end), styles));
     }
 
     //For some weird edge cases I wrote this, in order not to throw an IndexOutOfBoundException
-    private static List<MarkdownElement> createElement(String input, int start, Set<MarkdownStyledText.MarkdownTextStyle> styles) {
+    private static List<AbstractMarkdownElement> createElement(String input, int start, Set<MarkdownStyledText.MarkdownTextStyle> styles) {
         return MarkdownUrl.splitLineByUrl(new MarkdownStyledText(input.substring(start), styles));
     }
 
