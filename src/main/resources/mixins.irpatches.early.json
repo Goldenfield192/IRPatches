@@ -7,11 +7,11 @@
   "compatibilityLevel": "JAVA_8",
   "plugin": "com.goldenfield192.irpatches.IRPEarlyMixinLoader",
   "mixins": [
-    "MixinEntity"
+    "MixinEntity",
+    "MixinLivingEntity"
   ],
   "client": [
     "MixinActiveRenderInfo",
-    "MixinLivingEntity",
     "MixinMinecraft"
   ]
 }

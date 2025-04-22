@@ -20,7 +20,7 @@ public class IRPLateMixinLoader implements IMixinConfigPlugin {
 
     @Override
     public String getRefMapperConfig() {
-        return "";
+        return "mixins.irp.late.json";
     }
 
     @Override

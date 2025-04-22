@@ -31,6 +31,7 @@ java {
 }
 
 configurations {
+    shade
     implementation.extendsFrom shadow
 }
 
@@ -147,7 +148,6 @@ dependencies {
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    shadow(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
     // Example mod dependency with JEI - using fg.deobf() ensures the dependency is remapped to your development mappings
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
@@ -165,7 +165,8 @@ dependencies {
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    shadow(implementation("io.github.llamalad7:mixinextras-common:0.4.1"))
+    annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1")
+    shade(implementation("io.github.llamalad7:mixinextras-common:0.4.1"))
 
     implementation fg.deobf("cam72cam.immersiverailroading:ImmersiveRailroading:1.16.5-forge-1.10.0")
     implementation fg.deobf("cam72cam.universalmodcore:UniversalModCore:1.16.5-forge-1.2.1")
@@ -173,10 +174,13 @@ dependencies {
 }
 
 shadowJar {
-    configurations = [project.configurations.shadow]
-    relocate("com.llamalad7.mixinextras", "com.goldenfield192.com.llamalad7.mixinextras")
+    configurations = [project.configurations.shade]
+    relocate("com.llamalad7.mixinextras", "com.goldenfield192.relocate.com.llamalad7.mixinextras")
     mergeServiceFiles() // Very important!
+    finalizedBy 'reobfShadowJar'
 }
+
+assemble.dependsOn shadowJar
 
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.
@@ -217,4 +221,8 @@ tasks.named('jar', Jar).configure {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+reobf {
+    shadowJar {}
 }

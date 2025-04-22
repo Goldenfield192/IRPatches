@@ -3,7 +3,6 @@
   "minVersion": "0.8",
   "package": "com.goldenfield192.irpatches.mixins",
   "compatibilityLevel": "JAVA_8",
-  "refmap": "mixins.irpatches.refmap.late.json",
   "plugin": "com.goldenfield192.irpatches.IRPLateMixinLoader",
   "mixins": [
     "immersiverailroading.MixinImmersiveRailroading",
