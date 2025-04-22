@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.document.markdown.element;
+package com.goldenfield192.irpatches.document.core.element;
 
 import cam72cam.immersiverailroading.IRItems;
 import cam72cam.immersiverailroading.items.ItemRollingStock;
@@ -10,7 +10,7 @@ import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.opengl.RenderState;
 import cam72cam.mod.resource.Identifier;
 import com.goldenfield192.irpatches.IRPConfig;
-import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
+import com.goldenfield192.irpatches.document.core.MarkdownDocument;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -50,8 +50,8 @@ public class MarkdownItemRenderer extends MarkdownClickableElement {
     }
 
     @Override
-    public MarkdownElement[] split(int splitPos) {
-        return new MarkdownElement[0];
+    public AbstractMarkdownElement[] split(int splitPos) {
+        return new AbstractMarkdownElement[0];
     }
 
     @Override

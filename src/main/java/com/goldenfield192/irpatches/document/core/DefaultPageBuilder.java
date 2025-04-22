@@ -1,16 +1,16 @@
-package com.goldenfield192.irpatches.document.markdown;
+package com.goldenfield192.irpatches.document.core;
 
 import cam72cam.mod.resource.Identifier;
 import com.goldenfield192.irpatches.document.manual.GaugeProvider;
 import com.goldenfield192.irpatches.document.manual.StockListProvider;
 import com.goldenfield192.irpatches.document.manual.TrackProvider;
-import com.goldenfield192.irpatches.document.markdown.element.*;
+import com.goldenfield192.irpatches.document.core.element.*;
 
 import java.util.*;
 import java.util.function.BiFunction;
 
-import static com.goldenfield192.irpatches.document.markdown.element.MarkdownStyledText.MARKER_PARSE_PRIORITY;
-import static com.goldenfield192.irpatches.document.markdown.element.MarkdownStyledText.MARKER_STYLES;
+import static com.goldenfield192.irpatches.document.core.element.MarkdownStyledText.MARKER_PARSE_PRIORITY;
+import static com.goldenfield192.irpatches.document.core.element.MarkdownStyledText.MARKER_STYLES;
 
 /**
  * Load Markdown from existing file
@@ -39,12 +39,12 @@ public class DefaultPageBuilder implements IPageBuilder {
     }
 
     /**
-     * Internal method to parse a raw String markdown line into MarkdownStyledText and MarkdownUrl
+     * Internal method to parse a raw String MarkDown line into MarkdownStyledText and MarkdownUrl
      *
-     * @param input Raw markdown line
-     * @return Parsed MarkdownElement line
+     * @param input Raw MarkDown line
+     * @return Parsed AbstractMarkdownElement line
      */
-    public static List<MarkdownElement> parse(String input) {
+    public static List<AbstractMarkdownElement> parse(String input) {
         List<Set<MarkdownStyledText.MarkdownTextStyle>> stateMap = new ArrayList<>(input.length());
         Deque<Set<MarkdownStyledText.MarkdownTextStyle>> styleStack = new ArrayDeque<>();
         int currentPos = 0;
@@ -125,8 +125,8 @@ public class DefaultPageBuilder implements IPageBuilder {
      * @param stateMap List representing style of the chars
      * @return The split line
      */
-    private static List<MarkdownElement> mergeElements(String input, List<Set<MarkdownStyledText.MarkdownTextStyle>> stateMap) {
-        List<MarkdownElement> elements = new ArrayList<>();
+    private static List<AbstractMarkdownElement> mergeElements(String input, List<Set<MarkdownStyledText.MarkdownTextStyle>> stateMap) {
+        List<AbstractMarkdownElement> elements = new ArrayList<>();
         if (stateMap.isEmpty()) {
             return elements;
         }
@@ -156,12 +156,12 @@ public class DefaultPageBuilder implements IPageBuilder {
      * @param styles Styles that should be applied
      * @return The parsed text and url line
      */
-    private static List<MarkdownElement> createElement(String input, int start, int end, Set<MarkdownStyledText.MarkdownTextStyle> styles) {
+    private static List<AbstractMarkdownElement> createElement(String input, int start, int end, Set<MarkdownStyledText.MarkdownTextStyle> styles) {
         return MarkdownUrl.splitLineByUrl(new MarkdownStyledText(input.substring(start, end), styles));
     }
 
     //For some weird edge cases I wrote this, in order not to throw an IndexOutOfBoundException
-    private static List<MarkdownElement> createElement(String input, int start, Set<MarkdownStyledText.MarkdownTextStyle> styles) {
+    private static List<AbstractMarkdownElement> createElement(String input, int start, Set<MarkdownStyledText.MarkdownTextStyle> styles) {
         return MarkdownUrl.splitLineByUrl(new MarkdownStyledText(input.substring(start), styles));
     }
 
@@ -196,7 +196,7 @@ public class DefaultPageBuilder implements IPageBuilder {
     /**
      * Builds a MarkdownDocument from the given resource identifier
      *
-     * @param id The identifier containing markdown content
+     * @param id The identifier containing MarkDown content
      * @return Built MarkdownDocument instance
      */
     @Override

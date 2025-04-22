@@ -16,7 +16,6 @@ import net.minecraft.block.LeavesBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 /**
  * Prevent leaves being replaced by track blueprint.
@@ -33,17 +32,17 @@ public class MixinTrackBluePrintItemModel {
                 !(world.internal.getBlockState(pos.internal()).getBlock() instanceof LeavesBlock);
     }
 
-    @ModifyArg(method = "renderMouseover", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/render/rail/RailRender;render(Lcam72cam/immersiverailroading/util/RailInfo;Lcam72cam/mod/world/World;Lcam72cam/mod/math/Vec3i;ZLcam72cam/mod/render/opengl/RenderState;)V"), index = 4, remap = false)
-    private static RenderState modArgs(RenderState state, @Share("state")LocalRef<RenderState> stateLocalRef){
-        stateLocalRef.set(state);
-        return state;
-    }
-
-    //TODO
-    @Inject(method = "renderMouseover", at = @At("TAIL"), remap = false)
-    private static void inject(Player player, ItemStack stack, Vec3i pos, Vec3d vec, RenderState state,
-                               float partialTicks, CallbackInfo ci, @Local(ordinal = 2) Vec3d offset, @Share("state") LocalRef<RenderState> stateLocalRef){
-        if(stateLocalRef.get() == null) return;
-//        GlobalRender.drawText("Test", stateLocalRef.get(), new Vec3d(0,0,0), 0.2f, 0);
-    }
+//    @ModifyArg(method = "renderMouseover", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/render/rail/RailRender;render(Lcam72cam/immersiverailroading/util/RailInfo;Lcam72cam/mod/world/World;Lcam72cam/mod/math/Vec3i;ZLcam72cam/mod/render/opengl/RenderState;)V"), index = 4, remap = false)
+//    private static RenderState modArgs(RenderState state, @Share("state")LocalRef<RenderState> stateLocalRef){
+//        stateLocalRef.set(state);
+//        return state;
+//    }
+//
+//    //TODO
+//    @Inject(method = "renderMouseover", at = @At("TAIL"), remap = false)
+//    private static void inject(Player player, ItemStack stack, Vec3i pos, Vec3d vec, RenderState state,
+//                               float partialTicks, CallbackInfo ci, @Local(ordinal = 2) Vec3d offset, @Share("state") LocalRef<RenderState> stateLocalRef){
+//        if(stateLocalRef.get() == null) return;
+//        GlobalRender.drawText("Test", state, new Vec3d(0, 0, 0), 0.2f, 0);
+//    }
 }

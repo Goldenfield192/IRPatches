@@ -4,9 +4,9 @@ import cam72cam.immersiverailroading.registry.DefinitionManager;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import cam72cam.mod.resource.Identifier;
 import com.goldenfield192.irpatches.util.ExtraDefinition;
-import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
-import com.goldenfield192.irpatches.document.markdown.element.MarkdownTitle;
-import com.goldenfield192.irpatches.document.markdown.element.MarkdownUrl;
+import com.goldenfield192.irpatches.document.core.MarkdownDocument;
+import com.goldenfield192.irpatches.document.core.element.MarkdownTitle;
+import com.goldenfield192.irpatches.document.core.element.MarkdownUrl;
 import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.util.Comparator;

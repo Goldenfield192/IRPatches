@@ -23,9 +23,7 @@ public class ExtraDefinition {
     public static void loadExtraStockProperties(String defID, DataBlock data) {
         ExtraDefinition def = new ExtraDefinition();
         DataBlock properties = data.getBlock("properties");
-        def.leftFirstMultiplier = properties.getValue("left_first").asBoolean(true) ?
-                                  1 :
-                                  -1;
+        def.leftFirstMultiplier = properties.getValue("left_first").asBoolean(true) ? 1 : -1;
 
         List<DataBlock.Value> list = properties.getValues("fuel");
         if (list != null) {

@@ -1,18 +1,18 @@
-package com.goldenfield192.irpatches.document.markdown.element;
+package com.goldenfield192.irpatches.document.core.element;
 
 import cam72cam.mod.gui.helpers.GUIHelpers;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.opengl.RenderState;
 import com.goldenfield192.irpatches.gui.IRPGUIHelper;
 import com.goldenfield192.irpatches.IRPConfig;
-import com.goldenfield192.irpatches.document.markdown.BufferReaderAdapter;
-import com.goldenfield192.irpatches.document.markdown.DefaultPageBuilder;
-import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
+import com.goldenfield192.irpatches.document.core.BufferReaderAdapter;
+import com.goldenfield192.irpatches.document.core.DefaultPageBuilder;
+import com.goldenfield192.irpatches.document.core.MarkdownDocument;
 
 import java.util.Iterator;
 
-import static com.goldenfield192.irpatches.document.markdown.Colors.CODE_BACKGROUND_COLOR;
-import static com.goldenfield192.irpatches.document.markdown.Colors.DEFAULT_TEXT_COLOR;
+import static com.goldenfield192.irpatches.document.core.Colors.CODE_BACKGROUND_COLOR;
+import static com.goldenfield192.irpatches.document.core.Colors.DEFAULT_TEXT_COLOR;
 
 /**
  * Proxy class to simplify DefaultPageBuilder's build logic and MarkdownDocument's render logic

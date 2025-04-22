@@ -18,13 +18,14 @@ plugins {
 
 apply plugin: 'org.spongepowered.mixin'
 
-group = mod_group_id
-version = mod_version
+
+version = '1.3.5'
+group = 'com.goldenfield192.irpatches' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'IRPatches'
 
 base {
     archivesName = mod_id
 }
-
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(8)
 }

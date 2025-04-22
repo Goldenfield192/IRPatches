@@ -6,14 +6,14 @@ import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.obj.OBJRender;
 import cam72cam.mod.render.opengl.RenderState;
 import com.goldenfield192.irpatches.IRPConfig;
-import com.goldenfield192.irpatches.document.markdown.element.MarkdownElement;
+import com.goldenfield192.irpatches.document.core.element.AbstractMarkdownElement;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MDStockModelRenderer extends MarkdownElement {
+public class MDStockModelRenderer extends AbstractMarkdownElement {
     public static final double SIN30 = Math.sin(Math.toRadians(30));
     public static final double COS30 = Math.cos(Math.toRadians(30));
     public final StockModel<?, ?> model;
@@ -44,8 +44,8 @@ public class MDStockModelRenderer extends MarkdownElement {
     }
 
     @Override
-    public MarkdownElement[] split(int splitPos) {
-        return new MarkdownElement[0];
+    public AbstractMarkdownElement[] split(int splitPos) {
+        return new AbstractMarkdownElement[0];
     }
 
     @Override

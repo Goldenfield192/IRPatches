@@ -74,7 +74,7 @@ public class MixinTrackGui {
             @Override
             public void onSlider() {
                 accessor.setFarEnd((float) this.getValue());
-                ctrl1RollSlider.setText("Far end rolling degree: " + String.format("%.2f", accessor.getFarEndTilt()) + "°");
+                ctrl1RollSlider.setText("Far end rolling: " + String.format("%.2f", accessor.getFarEndTilt()) + "°");
             }
         };
         ytop += height;
@@ -83,7 +83,7 @@ public class MixinTrackGui {
             @Override
             public void onSlider() {
                 accessor.setNearEnd((float) this.getValue());
-                ctrl2RollSlider.setText("Near end rolling degree: " + String.format("%.2f", accessor.getNearEndTilt()) + "°");
+                ctrl2RollSlider.setText("Near end rolling: " + String.format("%.2f", accessor.getNearEndTilt()) + "°");
             }
         };
         ytop += height;

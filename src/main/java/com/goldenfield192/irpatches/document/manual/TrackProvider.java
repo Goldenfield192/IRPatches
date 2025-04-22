@@ -2,8 +2,8 @@ package com.goldenfield192.irpatches.document.manual;
 
 import cam72cam.immersiverailroading.registry.DefinitionManager;
 import cam72cam.mod.resource.Identifier;
-import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
-import com.goldenfield192.irpatches.document.markdown.element.MarkdownUrl;
+import com.goldenfield192.irpatches.document.core.MarkdownDocument;
+import com.goldenfield192.irpatches.document.core.element.MarkdownUrl;
 
 import java.util.List;
 import java.util.stream.Collectors;

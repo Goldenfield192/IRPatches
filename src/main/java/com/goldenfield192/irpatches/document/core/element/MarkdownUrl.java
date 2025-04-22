@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.document.markdown.element;
+package com.goldenfield192.irpatches.document.core.element;
 
 import cam72cam.mod.MinecraftClient;
 import cam72cam.mod.math.Vec3d;
@@ -9,8 +9,8 @@ import cam72cam.mod.text.TextColor;
 import com.goldenfield192.irpatches.gui.IRPGUIHelper;
 import com.goldenfield192.irpatches.IRPConfig;
 import com.goldenfield192.irpatches.document.ManualGui;
-import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
-import com.goldenfield192.irpatches.document.markdown.MarkdownPageManager;
+import com.goldenfield192.irpatches.document.core.MarkdownDocument;
+import com.goldenfield192.irpatches.document.core.MarkdownPageManager;
 import net.minecraft.util.ResourceLocationException;
 
 import java.awt.*;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.goldenfield192.irpatches.document.markdown.Colors.DEFAULT_TEXT_COLOR;
+import static com.goldenfield192.irpatches.document.core.Colors.DEFAULT_TEXT_COLOR;
 
 /**
  * Element class representing a url, which is clickable
@@ -27,7 +27,7 @@ import static com.goldenfield192.irpatches.document.markdown.Colors.DEFAULT_TEXT
  * Also parses Markdown format url
  *
  * @see MarkdownClickableElement
- * @see MarkdownElement
+ * @see AbstractMarkdownElement
  */
 public class MarkdownUrl extends MarkdownClickableElement {
     //text may be empty, while url mustn't be empty
@@ -75,8 +75,8 @@ public class MarkdownUrl extends MarkdownClickableElement {
      * @param input Raw String needed to be parsed
      * @return The parsed element, or null if it can't be parsed
      */
-    public static List<MarkdownElement> splitLineByUrl(MarkdownStyledText input) {
-        List<MarkdownElement> urls = new ArrayList<>();
+    public static List<AbstractMarkdownElement> splitLineByUrl(MarkdownStyledText input) {
+        List<AbstractMarkdownElement> urls = new ArrayList<>();
 
         Matcher matcher = MARKDOWN_URL_PATTERN.matcher(input.text);
         int prev = 0;
@@ -99,17 +99,17 @@ public class MarkdownUrl extends MarkdownClickableElement {
     }
 
     @Override
-    public MarkdownElement[] split(int splitPos) {
+    public AbstractMarkdownElement[] split(int splitPos) {
         int i = splitPos;
         while (this.text.charAt(i) == ' ') {
             i++;
             if (i == this.text.length()) {//rest are all space
-                return new MarkdownElement[]{
+                return new AbstractMarkdownElement[]{
                         new MarkdownUrl(this.text.substring(0, splitPos), this.destination),
                         new MarkdownUrl("", this.destination)};
             }
         }
-        return new MarkdownElement[]{
+        return new AbstractMarkdownElement[]{
                 new MarkdownUrl(this.text.substring(0, splitPos), this.destination),
                 new MarkdownUrl(this.text.substring(i), this.destination)};
     }

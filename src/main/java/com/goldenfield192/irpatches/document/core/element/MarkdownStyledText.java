@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.document.markdown.element;
+package com.goldenfield192.irpatches.document.core.element;
 
 import cam72cam.mod.gui.helpers.GUIHelpers;
 import cam72cam.mod.math.Vec3d;
@@ -10,13 +10,13 @@ import com.goldenfield192.irpatches.IRPConfig;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.goldenfield192.irpatches.document.markdown.Colors.CODE_BACKGROUND_COLOR;
-import static com.goldenfield192.irpatches.document.markdown.Colors.DEFAULT_TEXT_COLOR;
+import static com.goldenfield192.irpatches.document.core.Colors.CODE_BACKGROUND_COLOR;
+import static com.goldenfield192.irpatches.document.core.Colors.DEFAULT_TEXT_COLOR;
 
 /**
  * Element class representing a String with styles
  */
-public class MarkdownStyledText extends MarkdownElement {
+public class MarkdownStyledText extends AbstractMarkdownElement {
     public static final Map<String, Set<MarkdownTextStyle>> MARKER_STYLES;
     public static final List<String> MARKER_PARSE_PRIORITY = Arrays.asList("***", "++", "**", "~~", "*", "`");
 
@@ -64,18 +64,18 @@ public class MarkdownStyledText extends MarkdownElement {
     }
 
     @Override
-    public MarkdownElement[] split(int splitPos) {
+    public AbstractMarkdownElement[] split(int splitPos) {
         int i = splitPos;
         while (this.text.charAt(i) == ' ') {
             i++;
             if (i == this.text.length()) {//Reaching end, which means chars after splitPos are all spaces
-                return new MarkdownElement[]{
+                return new AbstractMarkdownElement[]{
                         new MarkdownStyledText(this.text.substring(0, splitPos), this.styles),
                         //Just return empty String
                         new MarkdownStyledText("", this.styles)};
             }
         }
-        return new MarkdownElement[]{
+        return new AbstractMarkdownElement[]{
                 new MarkdownStyledText(this.text.substring(0, splitPos), this.styles),
                 new MarkdownStyledText(this.text.substring(i), this.styles)};
     }

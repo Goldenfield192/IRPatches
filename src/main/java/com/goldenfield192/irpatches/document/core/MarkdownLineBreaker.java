@@ -1,16 +1,16 @@
-package com.goldenfield192.irpatches.document.markdown;
+package com.goldenfield192.irpatches.document.core;
 
+import com.goldenfield192.irpatches.document.core.element.AbstractMarkdownElement;
 import com.goldenfield192.irpatches.gui.IRPGUIHelper;
 import com.goldenfield192.irpatches.IRPConfig;
-import com.goldenfield192.irpatches.document.markdown.element.MarkdownElement;
-import com.goldenfield192.irpatches.document.markdown.element.MarkdownStyledText;
-import com.goldenfield192.irpatches.document.markdown.element.MarkdownTitle;
+import com.goldenfield192.irpatches.document.core.element.MarkdownStyledText;
+import com.goldenfield192.irpatches.document.core.element.MarkdownTitle;
 
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.goldenfield192.irpatches.document.markdown.MarkdownDocument.MarkdownLine.LIST_PREFIX_WIDTH;
+import static com.goldenfield192.irpatches.document.core.MarkdownDocument.MarkdownLine.LIST_PREFIX_WIDTH;
 
 /**
  * Helper class to break a MarkdownDocument's originalLines into its brokenLines
@@ -52,7 +52,7 @@ public class MarkdownLineBreaker {
                 continue;
             }
 
-            List<List<MarkdownElement>> lines;
+            List<List<AbstractMarkdownElement>> lines;
             if (markdownLine.unorderedList) {
                 lines = breakLine(markdownLine, screenWidth - LIST_PREFIX_WIDTH, true);
                 lines.get(0).add(0, new MarkdownStyledText("• "));
@@ -81,14 +81,14 @@ public class MarkdownLineBreaker {
      * @param preferSpace Whether the line prefer to break on spaces first or break letters
      * @return The broken raw lines representing in list
      */
-    private static List<List<MarkdownElement>> breakLine(MarkdownDocument.MarkdownLine line, int screenWidth, boolean preferSpace) {
-        List<List<MarkdownElement>> lines = new LinkedList<>();
-        Deque<MarkdownElement> processingDeque = new LinkedList<>(line.getElements());
-        List<MarkdownElement> currentLine = new LinkedList<>();
+    private static List<List<AbstractMarkdownElement>> breakLine(MarkdownDocument.MarkdownLine line, int screenWidth, boolean preferSpace) {
+        List<List<AbstractMarkdownElement>> lines = new LinkedList<>();
+        Deque<AbstractMarkdownElement> processingDeque = new LinkedList<>(line.getElements());
+        List<AbstractMarkdownElement> currentLine = new LinkedList<>();
         int currentLineWidth = 0;
 
         while (!processingDeque.isEmpty()) {
-            MarkdownElement element = processingDeque.poll();
+            AbstractMarkdownElement element = processingDeque.poll();
             //Bold text is wider; Titles are wider too
             double multiplier = (element instanceof MarkdownStyledText && ((MarkdownStyledText) element).hasBold()) ?
                                 1.4 :
@@ -135,17 +135,17 @@ public class MarkdownLineBreaker {
      * @param multiplier  Element's width multiplier, e.g. bold text is wider than ordinary text
      * @param preferSpace Whether the line prefer to break on spaces first or break letters
      */
-    private static void handleOversizeElement(MarkdownElement element, int screenWidth,
-                                              Deque<MarkdownElement> queue, List<List<MarkdownElement>> lines,
+    private static void handleOversizeElement(AbstractMarkdownElement element, int screenWidth,
+                                              Deque<AbstractMarkdownElement> queue, List<List<AbstractMarkdownElement>> lines,
                                               double multiplier, boolean preferSpace) {
         int splitPos = findOptimalPosOrSpace(element.text, screenWidth, multiplier);
         if (!preferSpace || splitPos == -1) {
             //Very long string without spacing or don't want, use default method
             splitPos = findOptimalPos(element.text, screenWidth, multiplier);
         }
-        MarkdownElement[] splitElements = element.split(splitPos);
+        AbstractMarkdownElement[] splitElements = element.split(splitPos);
 
-        List<MarkdownElement> newLine = new LinkedList<>();
+        List<AbstractMarkdownElement> newLine = new LinkedList<>();
         newLine.add(splitElements[0]);
         lines.add(newLine);
 
@@ -164,8 +164,8 @@ public class MarkdownLineBreaker {
      * @param multiplier   Element's width multiplier, e.g. bold text is wider than ordinary text
      * @param preferSpace  Whether the line prefer to break on spaces first or break letters
      */
-    private static void processLineBreak(MarkdownElement element, Deque<MarkdownElement> queue,
-                                         List<MarkdownElement> currentLine, List<List<MarkdownElement>> lines,
+    private static void processLineBreak(AbstractMarkdownElement element, Deque<AbstractMarkdownElement> queue,
+                                         List<AbstractMarkdownElement> currentLine, List<List<AbstractMarkdownElement>> lines,
                                          int currentWidth, int screenWidth, double multiplier, boolean preferSpace) {
         int splitPos;
         if (preferSpace) {
@@ -175,7 +175,7 @@ public class MarkdownLineBreaker {
         }
         if (splitPos != -1) {
             //We should break it
-            MarkdownElement[] splitElements = element.split(splitPos);
+            AbstractMarkdownElement[] splitElements = element.split(splitPos);
 
             currentLine.add(splitElements[0]);
             lines.add(currentLine);

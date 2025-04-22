@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.document.markdown;
+package com.goldenfield192.irpatches.document.core;
 
 import cam72cam.mod.event.ClientEvents;
 import cam72cam.mod.gui.helpers.GUIHelpers;
@@ -8,14 +8,14 @@ import cam72cam.mod.resource.Identifier;
 import com.goldenfield192.irpatches.gui.IRPGUIHelper;
 import com.goldenfield192.irpatches.IRPConfig;
 import com.goldenfield192.irpatches.document.manual.ManualHoverRenderer;
-import com.goldenfield192.irpatches.document.markdown.element.*;
+import com.goldenfield192.irpatches.document.core.element.*;
 
 import javax.annotation.Nonnull;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.goldenfield192.irpatches.document.markdown.Colors.TIPS_BAR_COLOR;
+import static com.goldenfield192.irpatches.document.core.Colors.TIPS_BAR_COLOR;
 
 /**
  * Storage class to store Markdown file's content
@@ -116,7 +116,7 @@ public class MarkdownDocument {
             //Should we translate the matrix to next line manually?
             boolean shouldStartANewLine = false;
 
-            for (MarkdownElement element : line.elements) {
+            for (AbstractMarkdownElement element : line.elements) {
                 //Show current matrix result
                 offset = state.model_view().apply(Vec3d.ZERO);
 
@@ -166,15 +166,15 @@ public class MarkdownDocument {
     }
 
     //Overloads
-    public MarkdownDocument addLine(MarkdownElement line) {
+    public MarkdownDocument addLine(AbstractMarkdownElement line) {
         return this.addLine(Collections.singletonList(line));
     }
 
-    public MarkdownDocument addLine(MarkdownElement... line) {
+    public MarkdownDocument addLine(AbstractMarkdownElement... line) {
         return this.addLine(Arrays.stream(line).collect(Collectors.toList()));
     }
 
-    public MarkdownDocument addLine(List<MarkdownElement> line) {
+    public MarkdownDocument addLine(List<AbstractMarkdownElement> line) {
         return this.addLine(new MarkdownLine(line));
     }
 
@@ -283,7 +283,7 @@ public class MarkdownDocument {
     public static class MarkdownLine {
         //For those need to indent by 2 * x spaces
         public static final int LIST_PREFIX_WIDTH = IRPGUIHelper.getTextWidth("  ");
-        private final List<MarkdownElement> elements;
+        private final List<AbstractMarkdownElement> elements;
         //Store interline state to control rendering
         public boolean unorderedList = false;
         public boolean codeBlockStart = false;
@@ -291,15 +291,15 @@ public class MarkdownDocument {
         public boolean tipStart = false;
         public boolean tipEnd = false;
 
-        private MarkdownLine(List<MarkdownElement> elements) {
+        private MarkdownLine(List<AbstractMarkdownElement> elements) {
             this.elements = elements;
         }
 
-        public static MarkdownLine create(MarkdownElement element) {
+        public static MarkdownLine create(AbstractMarkdownElement element) {
             return create(Collections.singletonList(element));
         }
 
-        public static MarkdownLine create(List<MarkdownElement> line) {
+        public static MarkdownLine create(List<AbstractMarkdownElement> line) {
             return new MarkdownLine(line);
         }
 
@@ -330,7 +330,7 @@ public class MarkdownDocument {
         }
 
         //Get the line's content for rendering
-        public List<MarkdownElement> getElements() {
+        public List<AbstractMarkdownElement> getElements() {
             return elements;
         }
     }

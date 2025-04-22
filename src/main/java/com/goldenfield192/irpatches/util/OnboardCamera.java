@@ -9,7 +9,6 @@ import net.minecraft.client.settings.PointOfView;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class OnboardCamera {
     public static boolean enabled = false;
     public static double zoom;

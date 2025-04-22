@@ -1,4 +1,10 @@
-## 1.3.4(IN DEV)
+## 1.3.6(IN DEV)
+* Fix CargoItem not rolling
+
+## 1.3.5
+* Fix server crash
+
+## 1.3.4
 * Fix independent throttle not working
 
 ## 1.3.3
