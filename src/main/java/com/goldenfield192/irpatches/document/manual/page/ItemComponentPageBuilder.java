@@ -5,11 +5,11 @@ import cam72cam.immersiverailroading.items.ItemRollingStockComponent;
 import cam72cam.immersiverailroading.library.CraftingType;
 import cam72cam.mod.item.ItemStack;
 import cam72cam.mod.resource.Identifier;
-import com.goldenfield192.irpatches.document.markdown.IPageBuilder;
-import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
-import com.goldenfield192.irpatches.document.markdown.element.MarkdownItemRenderer;
-import com.goldenfield192.irpatches.document.markdown.element.MarkdownStyledText;
-import com.goldenfield192.irpatches.document.markdown.element.MarkdownUrl;
+import com.goldenfield192.irpatches.document.core.IPageBuilder;
+import com.goldenfield192.irpatches.document.core.MarkdownDocument;
+import com.goldenfield192.irpatches.document.core.element.MarkdownItemRenderer;
+import com.goldenfield192.irpatches.document.core.element.MarkdownStyledText;
+import com.goldenfield192.irpatches.document.core.element.MarkdownUrl;
 
 import java.util.ArrayList;
 import java.util.List;

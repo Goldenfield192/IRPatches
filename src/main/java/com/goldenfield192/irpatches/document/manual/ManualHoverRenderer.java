@@ -4,7 +4,7 @@ import cam72cam.mod.event.ClientEvents;
 import cam72cam.mod.gui.helpers.GUIHelpers;
 import com.goldenfield192.irpatches.gui.IRPGUIHelper;
 
-import static com.goldenfield192.irpatches.document.markdown.Colors.*;
+import static com.goldenfield192.irpatches.document.core.Colors.*;
 
 /**
  * Render hover tooltips for manual

@@ -7,7 +7,7 @@ import cam72cam.mod.render.StandardModel;
 import cam72cam.mod.render.obj.OBJRender;
 import cam72cam.mod.render.opengl.RenderState;
 import com.goldenfield192.irpatches.IRPConfig;
-import com.goldenfield192.irpatches.document.markdown.element.AbstractMarkdownElement;
+import com.goldenfield192.irpatches.document.core.element.AbstractMarkdownElement;
 
 import static cam72cam.immersiverailroading.library.Gauge.STANDARD;
 

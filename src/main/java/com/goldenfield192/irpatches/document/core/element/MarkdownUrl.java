@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.document.markdown.element;
+package com.goldenfield192.irpatches.document.core.element;
 
 import cam72cam.mod.MinecraftClient;
 import cam72cam.mod.math.Vec3d;
@@ -9,8 +9,8 @@ import cam72cam.mod.text.TextColor;
 import com.goldenfield192.irpatches.gui.IRPGUIHelper;
 import com.goldenfield192.irpatches.IRPConfig;
 import com.goldenfield192.irpatches.document.ManualGui;
-import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
-import com.goldenfield192.irpatches.document.markdown.MarkdownPageManager;
+import com.goldenfield192.irpatches.document.core.MarkdownDocument;
+import com.goldenfield192.irpatches.document.core.MarkdownPageManager;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.goldenfield192.irpatches.document.markdown.Colors.DEFAULT_TEXT_COLOR;
+import static com.goldenfield192.irpatches.document.core.Colors.DEFAULT_TEXT_COLOR;
 
 /**
  * Element class representing a url, which is clickable

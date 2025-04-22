@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.document.markdown;
+package com.goldenfield192.irpatches.document.core;
 
 import cam72cam.mod.resource.Identifier;
 

@@ -1,16 +1,16 @@
-package com.goldenfield192.irpatches.document.markdown;
+package com.goldenfield192.irpatches.document.core;
 
-import com.goldenfield192.irpatches.document.markdown.element.AbstractMarkdownElement;
+import com.goldenfield192.irpatches.document.core.element.AbstractMarkdownElement;
 import com.goldenfield192.irpatches.gui.IRPGUIHelper;
 import com.goldenfield192.irpatches.IRPConfig;
-import com.goldenfield192.irpatches.document.markdown.element.MarkdownStyledText;
-import com.goldenfield192.irpatches.document.markdown.element.MarkdownTitle;
+import com.goldenfield192.irpatches.document.core.element.MarkdownStyledText;
+import com.goldenfield192.irpatches.document.core.element.MarkdownTitle;
 
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.goldenfield192.irpatches.document.markdown.MarkdownDocument.MarkdownLine.LIST_PREFIX_WIDTH;
+import static com.goldenfield192.irpatches.document.core.MarkdownDocument.MarkdownLine.LIST_PREFIX_WIDTH;
 
 /**
  * Helper class to break a MarkdownDocument's originalLines into its brokenLines

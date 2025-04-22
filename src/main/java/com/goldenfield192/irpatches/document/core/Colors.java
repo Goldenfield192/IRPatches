@@ -1,7 +1,7 @@
-package com.goldenfield192.irpatches.document.markdown;
+package com.goldenfield192.irpatches.document.core;
 
 /**
- * Color constants used by markdown renderer
+ * Color constants used by core renderer
  */
 public class Colors {
     public static final int BUTTON_DISABLED_COLOR = 0xFFCCCCCC;

@@ -9,16 +9,16 @@ import cam72cam.mod.render.opengl.RenderState;
 import cam72cam.mod.resource.Identifier;
 import com.goldenfield192.irpatches.forge.ClippedRenderer;
 import com.goldenfield192.irpatches.IRPConfig;
-import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
-import com.goldenfield192.irpatches.document.markdown.MarkdownPageManager;
-import com.goldenfield192.irpatches.document.markdown.element.MarkdownUrl;
+import com.goldenfield192.irpatches.document.core.MarkdownDocument;
+import com.goldenfield192.irpatches.document.core.MarkdownPageManager;
+import com.goldenfield192.irpatches.document.core.element.MarkdownUrl;
 import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.Stack;
 
-import static com.goldenfield192.irpatches.document.markdown.Colors.BUTTON_DISABLED_COLOR;
+import static com.goldenfield192.irpatches.document.core.Colors.BUTTON_DISABLED_COLOR;
 
 public class ManualGui implements IScreen {
     //                                        page     page's mainOffset

@@ -1,9 +1,9 @@
-package com.goldenfield192.irpatches.document.markdown.element;
+package com.goldenfield192.irpatches.document.core.element;
 
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.resource.Identifier;
 import com.goldenfield192.irpatches.document.manual.ManualHoverRenderer;
-import com.goldenfield192.irpatches.document.markdown.MarkdownDocument;
+import com.goldenfield192.irpatches.document.core.MarkdownDocument;
 
 import java.awt.geom.Rectangle2D;
 

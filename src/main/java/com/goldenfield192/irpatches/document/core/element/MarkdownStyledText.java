@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.document.markdown.element;
+package com.goldenfield192.irpatches.document.core.element;
 
 import cam72cam.mod.gui.helpers.GUIHelpers;
 import cam72cam.mod.math.Vec3d;
@@ -10,8 +10,8 @@ import com.goldenfield192.irpatches.IRPConfig;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.goldenfield192.irpatches.document.markdown.Colors.CODE_BACKGROUND_COLOR;
-import static com.goldenfield192.irpatches.document.markdown.Colors.DEFAULT_TEXT_COLOR;
+import static com.goldenfield192.irpatches.document.core.Colors.CODE_BACKGROUND_COLOR;
+import static com.goldenfield192.irpatches.document.core.Colors.DEFAULT_TEXT_COLOR;
 
 /**
  * Element class representing a String with styles

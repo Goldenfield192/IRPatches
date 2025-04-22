@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.document.markdown;
+package com.goldenfield192.irpatches.document.core;
 
 import cam72cam.mod.event.ClientEvents;
 import cam72cam.mod.gui.helpers.GUIHelpers;
@@ -8,14 +8,14 @@ import cam72cam.mod.resource.Identifier;
 import com.goldenfield192.irpatches.gui.IRPGUIHelper;
 import com.goldenfield192.irpatches.IRPConfig;
 import com.goldenfield192.irpatches.document.manual.ManualHoverRenderer;
-import com.goldenfield192.irpatches.document.markdown.element.*;
+import com.goldenfield192.irpatches.document.core.element.*;
 
 import javax.annotation.Nonnull;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.goldenfield192.irpatches.document.markdown.Colors.TIPS_BAR_COLOR;
+import static com.goldenfield192.irpatches.document.core.Colors.TIPS_BAR_COLOR;
 
 /**
  * Storage class to store Markdown file's content

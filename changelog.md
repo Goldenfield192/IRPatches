@@ -1,4 +1,5 @@
 ## 1.3.6(IN DEV)
+* Fix CargoItem not rolling
 
 ## 1.3.5
 * Fix server crash
