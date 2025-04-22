@@ -39,9 +39,9 @@ public class DefaultPageBuilder implements IPageBuilder {
     }
 
     /**
-     * Internal method to parse a raw String core line into MarkdownStyledText and MarkdownUrl
+     * Internal method to parse a raw String MarkDown line into MarkdownStyledText and MarkdownUrl
      *
-     * @param input Raw core line
+     * @param input Raw MarkDown line
      * @return Parsed AbstractMarkdownElement line
      */
     public static List<AbstractMarkdownElement> parse(String input) {
@@ -196,7 +196,7 @@ public class DefaultPageBuilder implements IPageBuilder {
     /**
      * Builds a MarkdownDocument from the given resource identifier
      *
-     * @param id The identifier containing core content
+     * @param id The identifier containing MarkDown content
      * @return Built MarkdownDocument instance
      */
     @Override
