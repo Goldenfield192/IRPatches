@@ -13,9 +13,12 @@ import net.minecraft.client.renderer.GlStateManager;
 import util.Matrix4;
 
 public class IRPGUIHelper {
-    public static final GuiRegistry.GUI MANUAL = GuiRegistry.register(new Identifier(IRPatches.MODID, "MANUAL"),
-                                                                      ManualGui::new);
-    public static final GuiRegistry.BlockGUI ACTUATOR = GuiRegistry.registerBlock(TileRailBase.class, ActuatorGui::new);
+    public static final GuiRegistry.GUI MANUAL =
+            GuiRegistry.register(new Identifier(IRPatches.MODID, "MANUAL"), ManualGui::new);
+    public static final GuiRegistry.BlockGUI ACTUATOR =
+            GuiRegistry.registerBlock(TileRailBase.class, ActuatorGui::new);
+    public static final GuiRegistry.GUI IRP_TRACK_BLUEPRINT =
+            GuiRegistry.register(new Identifier(IRPatches.MODID, "track_blueprint"), IRPTrackGUI::new);
 
     public static int getTextWidth(String s) {
         return Minecraft.getMinecraft().fontRenderer.getStringWidth(s);

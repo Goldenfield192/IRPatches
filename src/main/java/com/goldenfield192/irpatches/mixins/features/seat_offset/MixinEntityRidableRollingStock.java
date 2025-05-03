@@ -1,4 +1,4 @@
-package com.goldenfield192.irpatches.mixins.features.seatoffset;
+package com.goldenfield192.irpatches.mixins.features.seat_offset;
 
 import cam72cam.immersiverailroading.entity.EntityBuildableRollingStock;
 import cam72cam.immersiverailroading.entity.EntityRidableRollingStock;

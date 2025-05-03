@@ -6,7 +6,7 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "features.seatoffset.MixinEntityRidableRollingStock",
+    "features.seat_offset.MixinEntityRidableRollingStock",
     "immersiverailroading.MixinImmersiveRailroading",
     "immersiverailroading.entity.MixinEntityMoveableRollingStock",
     "immersiverailroading.entity.MixinLocomotive",

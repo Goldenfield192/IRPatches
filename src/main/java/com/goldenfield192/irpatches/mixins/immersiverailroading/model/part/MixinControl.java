@@ -73,10 +73,6 @@ public abstract class MixinControl<T extends EntityMoveableRollingStock> extends
                    matcher.group(1).replaceAll("\\^", " ") :
                    null;
         }).filter(Objects::nonNull).findFirst().orElse(null);
-
-        if (tex_variant != null) {
-            System.out.println("TV: " + tex_variant);
-        }
     }
 
     @Inject(method = "postRender", at = @At(value = "INVOKE"

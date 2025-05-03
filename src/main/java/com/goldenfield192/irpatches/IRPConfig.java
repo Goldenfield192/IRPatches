@@ -30,4 +30,7 @@ public class IRPConfig {
 
     @ConfigFile.Comment("Does onboard camera collide with blocks?")
     public static boolean OnboardCameraCollideWithBlock = true;
+
+    @ConfigFile.Comment("Should track be fixed to near tracks?")
+    public static boolean EnableFixedTrackPlacement = false;
 }
