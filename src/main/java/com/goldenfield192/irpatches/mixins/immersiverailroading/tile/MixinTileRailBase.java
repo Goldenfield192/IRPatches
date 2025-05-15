@@ -75,7 +75,7 @@ public abstract class MixinTileRailBase extends BlockEntityTrackTickable
             ci.cancel();
             return;
         }
-        if(IRPatch$filter.isEmpty()){
+        if(IRPatch$filter == null || IRPatch$filter.isEmpty()){
             //Fallback for actual door actuator
             return;
         }

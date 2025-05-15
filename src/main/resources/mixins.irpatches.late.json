@@ -14,6 +14,7 @@
     "immersiverailroading.entity.physics.MixinSimulationState",
     "immersiverailroading.gui.MixinPaintBrushPicker",
     "immersiverailroading.gui.MixinTrackGui",
+    "immersiverailroading.items.MixinItemLargeWrench",
     "immersiverailroading.items.MixinItemManual",
     "immersiverailroading.items.MixinItemTrackBlueprint",
     "immersiverailroading.items.nbt.MixinRailSettingMapper",
