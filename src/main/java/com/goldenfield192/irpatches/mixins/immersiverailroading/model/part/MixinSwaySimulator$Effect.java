@@ -22,7 +22,7 @@ public class MixinSwaySimulator$Effect {
     @Inject(method = "getRollDegrees", at = @At("HEAD"), remap = false, cancellable = true)
     public void inject0(float partialTicks, CallbackInfoReturnable<Double> cir) {
         IStockRollAccessor accessor = (IStockRollAccessor) this.stock;
-        double track = (accessor.getRearRoll() + accessor.getFrontRoll()) / 2d;
+        double track = accessor.getAverageRollDegrees();
         if (Math.abs(this.stock.getCurrentSpeed().metric() * this.stock.gauge.scale()) >= 4.0) {
             double sway = Math.cos(Math.toRadians(
                     ((float) this.stock.getTickCount() + partialTicks) * 13.0F)) * this.swayMagnitude / 5.0 * this.stock.getDefinition()

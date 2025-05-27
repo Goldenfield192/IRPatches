@@ -46,8 +46,8 @@ public class MixinTrackFollower {
     public void inject0(CallbackInfoReturnable<Matrix4> cir) {
         //TODO Frame wheel and steam
         float offsetRoll = (front ?
-                            ((IStockRollAccessor) stock).getFrontRoll() :
-                            ((IStockRollAccessor) stock).getRearRoll());
+                            ((IStockRollAccessor) stock).getFrontRollDegrees() :
+                            ((IStockRollAccessor) stock).getRearRollDegrees());
         roll = offsetRoll;
         matrix.rotate(Math.toRadians(roll), 1, 0, 0);
     }

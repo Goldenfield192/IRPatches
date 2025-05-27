@@ -30,8 +30,7 @@ public abstract class MixinEntityRidableRollingStock
     @Inject(method = "getSeatPosition", at = @At("HEAD"), remap = false)
     public void injectSeat(UUID passenger, CallbackInfoReturnable<Vec3d> cir, @Share("mat")LocalRef<Matrix4> matrix4LocalRef){
         Matrix4 matrix4 = new Matrix4();
-        IStockRollAccessor accessor = (IStockRollAccessor) this;
-        matrix4.rotate(Math.toRadians(accessor.getFrontRoll() + accessor.getRearRoll()/ 2), 0, 0, -1);
+        matrix4.rotate(((IStockRollAccessor)this).getAverageRollRadians(), 0, 0, -1);
         matrix4LocalRef.set(matrix4);
     }
 

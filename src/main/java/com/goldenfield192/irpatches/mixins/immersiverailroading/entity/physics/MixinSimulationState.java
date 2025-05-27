@@ -33,14 +33,14 @@ public class MixinSimulationState implements IStockRollAccessor {
 
     @Inject(method = "<init>(Lcam72cam/immersiverailroading/entity/EntityCoupleableRollingStock;)V", at = @At("TAIL"), remap = false)
     public void injectConstructor0(EntityCoupleableRollingStock stock, CallbackInfo ci) {
-        rollFront = ((IStockRollAccessor) stock).getFrontRoll();
-        rollRear = ((IStockRollAccessor) stock).getRearRoll();
+        rollFront = ((IStockRollAccessor) stock).getFrontRollDegrees();
+        rollRear = ((IStockRollAccessor) stock).getRearRollDegrees();
     }
 
     @Inject(method = "<init>(Lcam72cam/immersiverailroading/entity/physics/SimulationState;)V", at = @At("TAIL"), remap = false)
     public void injectConstructor1(SimulationState prev, CallbackInfo ci) {
-        rollFront = ((IStockRollAccessor) prev).getFrontRoll();
-        rollRear = ((IStockRollAccessor) prev).getRearRoll();
+        rollFront = ((IStockRollAccessor) prev).getFrontRollDegrees();
+        rollRear = ((IStockRollAccessor) prev).getRearRollDegrees();
     }
 
     @Inject(method = "moveAlongTrack", at = @At(value = "INVOKE_ASSIGN", target = "Lcam72cam/immersiverailroading/thirdparty/trackapi/ITrack;getNextPosition(Lcam72cam/mod/math/Vec3d;Lcam72cam/mod/math/Vec3d;)Lcam72cam/mod/math/Vec3d;", ordinal = 1), remap = false)
@@ -71,22 +71,22 @@ public class MixinSimulationState implements IStockRollAccessor {
 
 
     @Override
-    public float getFrontRoll() {
+    public float getFrontRollDegrees() {
         return rollFront;
     }
 
     @Override
-    public void setFrontRoll(float val) {
+    public void setFrontRollDegrees(float val) {
         this.rollFront = val;
     }
 
     @Override
-    public float getRearRoll() {
+    public float getRearRollDegrees() {
         return rollRear;
     }
 
     @Override
-    public void setRearRoll(float val) {
+    public void setRearRollDegrees(float val) {
         this.rollRear = val;
     }
 }

@@ -14,7 +14,6 @@ public class MixinFreightModel {
     @Inject(method = "postRender(Lcam72cam/immersiverailroading/entity/Freight;Lcam72cam/mod/render/opengl/RenderState;F)V",
             at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/model/part/CargoItems;postRender(Lcam72cam/immersiverailroading/entity/Freight;Lcam72cam/mod/render/opengl/RenderState;)V"), remap = false)
     public void inject(Freight stock, RenderState state, float partialTicks, CallbackInfo ci){
-        IStockRollAccessor accessor = (IStockRollAccessor)stock;
-        state.rotate((accessor.getFrontRoll() + accessor.getRearRoll())/2, 1, 0, 0);
+        state.rotate(((IStockRollAccessor)stock).getAverageRollDegrees(), 1, 0, 0);
     }
 }

@@ -111,8 +111,7 @@ public abstract class MixinStockModel {
     @Unique
     public ModelState addTrackRoll(ModelState base) {
         return base.push(builder -> builder.add((ModelState.Animator) (stock, v) -> {
-            IStockRollAccessor accessor = (IStockRollAccessor) stock;
-            return new Matrix4().rotate(Math.toRadians((accessor.getFrontRoll() + accessor.getRearRoll()) / 2), 1, 0, 0);
+            return new Matrix4().rotate(((IStockRollAccessor) stock).getAverageRollRadians(), 1, 0, 0);
         }));
     }
 }

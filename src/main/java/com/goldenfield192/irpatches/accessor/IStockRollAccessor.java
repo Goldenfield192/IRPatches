@@ -1,11 +1,19 @@
 package com.goldenfield192.irpatches.accessor;
 
 public interface IStockRollAccessor {
-    float getFrontRoll();
+    float getFrontRollDegrees();
 
-    void setFrontRoll(float val);
+    void setFrontRollDegrees(float val);
 
-    float getRearRoll();
+    float getRearRollDegrees();
 
-    void setRearRoll(float val);
+    void setRearRollDegrees(float val);
+
+    default float getAverageRollDegrees(){
+        return (getFrontRollDegrees() + getRearRollDegrees()) / 2f;
+    }
+
+    default float getAverageRollRadians(){
+        return (float) Math.toRadians(getAverageRollDegrees());
+    }
 }

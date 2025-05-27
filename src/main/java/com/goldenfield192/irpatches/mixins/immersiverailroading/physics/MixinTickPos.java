@@ -69,19 +69,19 @@ public abstract class MixinTickPos implements IStockRollAccessor {
                 skewAngle(current.rotationPitch, next.rotationPitch, ratio),
                 current.isOffTrack
         );
-        accessor.setFrontRoll(
-                skewAngle(((IStockRollAccessor) current).getFrontRoll(), ((IStockRollAccessor) next).getFrontRoll(),
+        accessor.setFrontRollDegrees(
+                skewAngle(((IStockRollAccessor) current).getFrontRollDegrees(), ((IStockRollAccessor) next).getFrontRollDegrees(),
                           ratio));
-        accessor.setRearRoll(
-                skewAngle(((IStockRollAccessor) current).getRearRoll(), ((IStockRollAccessor) next).getRearRoll(),
+        accessor.setRearRollDegrees(
+                skewAngle(((IStockRollAccessor) current).getRearRollDegrees(), ((IStockRollAccessor) next).getRearRollDegrees(),
                           ratio));
         cir.setReturnValue((TickPos) accessor);
     }
 
     @Inject(method = "<init>(Lcam72cam/immersiverailroading/entity/physics/SimulationState;)V", at = @At("TAIL"), remap = false)
     public void injectConstructor0(SimulationState state, CallbackInfo ci) {
-        this.frontRoll = ((IStockRollAccessor) state).getFrontRoll();
-        this.rearRoll = ((IStockRollAccessor) state).getRearRoll();
+        this.frontRoll = ((IStockRollAccessor) state).getFrontRollDegrees();
+        this.rearRoll = ((IStockRollAccessor) state).getRearRollDegrees();
     }
 
     @Inject(method = "toTag", at = @At("RETURN"), remap = false)
@@ -106,28 +106,28 @@ public abstract class MixinTickPos implements IStockRollAccessor {
         IStockRollAccessor tickPos = (IStockRollAccessor) new TickPos(this.tickID, this.speed, this.position,
                                                                       this.frontYaw, this.rearYaw, this.rotationYaw,
                                                                       this.rotationPitch, this.isOffTrack);
-        tickPos.setFrontRoll(this.frontRoll);
-        tickPos.setRearRoll(this.rearRoll);
+        tickPos.setFrontRollDegrees(this.frontRoll);
+        tickPos.setRearRollDegrees(this.rearRoll);
         cir.setReturnValue((TickPos) tickPos);
     }
 
     @Override
-    public float getFrontRoll() {
+    public float getFrontRollDegrees() {
         return frontRoll;
     }
 
     @Override
-    public void setFrontRoll(float val) {
+    public void setFrontRollDegrees(float val) {
         this.frontRoll = val;
     }
 
     @Override
-    public float getRearRoll() {
+    public float getRearRollDegrees() {
         return rearRoll;
     }
 
     @Override
-    public void setRearRoll(float val) {
+    public void setRearRollDegrees(float val) {
         this.rearRoll = val;
     }
 }

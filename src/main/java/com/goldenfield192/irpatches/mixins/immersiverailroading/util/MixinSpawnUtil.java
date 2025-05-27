@@ -57,14 +57,14 @@ public class MixinSpawnUtil {
             boolean frontDirection = frontAccessor.getDirectionAlong(front, stockDirection);
             float rollFront = frontAccessor.getNextRoll(front, VecUtil.fromWrongYaw(distance, moveable.getFrontYaw()));
             rollFront *= frontDirection ? -1 : 1;
-            ((IStockRollAccessor)moveable).setFrontRoll(rollFront);
+            ((IStockRollAccessor)moveable).setFrontRollDegrees(rollFront);
         }
 
         if (rearAccessor != null) {
             boolean rearDirection = rearAccessor.getDirectionAlong(rear, stockDirection);
             float rollRear = rearAccessor.getNextRoll(rear, VecUtil.fromWrongYaw(distance, moveable.getRearYaw()));
             rollRear *= rearDirection ? -1 : 1;
-            ((IStockRollAccessor)moveable).setRearRoll(rollRear);
+            ((IStockRollAccessor)moveable).setRearRollDegrees(rollRear);
         }
     }
 }

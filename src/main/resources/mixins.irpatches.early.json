@@ -9,6 +9,7 @@
   ],
   "client": [
     "MixinEntityRenderer",
-    "MixinMinecraft"
+    "MixinMinecraft",
+    "MixinRenderPlayer"
   ]
 }
