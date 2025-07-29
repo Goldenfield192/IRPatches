@@ -47,20 +47,32 @@ public class MixinRailBuilderRender {
         if(cached == null) {
             ExtraTrackDefinition.ExtraTrackModel extraModel = ((ITrackModelAccessor) surface).getExtra();
             cached = new HashSet<>();
-            Random random = new Random(info.uniqueID.hashCode());
-            int[] ints = new int[renderData.size()];
-            for (int i = 0; i < renderData.size(); i++) {
-                Pair<Integer, TrackModel> pair = extraModel.getModelForNumber(random.nextInt(extraModel.getTotalNumber()));
-                ints[i] = pair.getLeft();
-            }
-            for (Map.Entry<Integer, TrackModel> entry : extraModel.getRefer().entrySet()) {
-                OBJRender.Builder builder = entry.getValue().binder().builder();
+            if(!extraModel.isOrdered()){
+                Random random = new Random(info.uniqueID.hashCode());
+                int[] ints = new int[renderData.size()];
                 for (int i = 0; i < renderData.size(); i++) {
-                    if (entry.getKey() == ints[i]) {
-                        applyMatrix(renderData.get(i), entry.getValue(), builder, info);
-                    }
+                    Pair<Integer, TrackModel> pair = extraModel.getModelForRandom(random.nextInt(extraModel.getSummedWeight()));
+                    ints[i] = pair.getLeft();
                 }
-                cached.add(builder.build());
+                for (int i = 0; i < extraModel.getRefer().size(); i++) {
+                    OBJRender.Builder builder = extraModel.getRefer().get(i).binder().builder();
+                    for (int j = 0; j < renderData.size(); j++) {
+                        if (i == ints[j]) {
+                            applyModelTransAndDraw(renderData.get(j), extraModel.getRefer().get(i), builder, info);
+                        }
+                    }
+                    cached.add(builder.build());
+                }
+            } else {
+                for (int i = 0; i < extraModel.getRefer().size(); i++) {
+                    OBJRender.Builder builder = extraModel.getRefer().get(i).binder().builder();
+                    for (int j = 0; j < renderData.size(); j++) {
+                        if (i == extraModel.getOrderedIndex(j)) {
+                            applyModelTransAndDraw(renderData.get(j), extraModel.getRefer().get(i), builder, info);
+                        }
+                    }
+                    cached.add(builder.build());
+                }
             }
             multiTrackCache.put(info.uniqueID, cached);
         }
@@ -77,7 +89,8 @@ public class MixinRailBuilderRender {
     }
 
     @Unique
-    private static void applyMatrix(BuilderBase.VecYawPitch piece, TrackModel model, OBJRender.Builder builder, RailInfo info){
+    private static void applyModelTransAndDraw(BuilderBase.VecYawPitch piece, TrackModel model,
+                                               OBJRender.Builder builder, RailInfo info){
         Matrix4 m = new Matrix4();
         m.translate(piece.x, piece.y, piece.z);
         m.rotate(Math.toRadians(piece.getYaw()), 0, 1, 0);
