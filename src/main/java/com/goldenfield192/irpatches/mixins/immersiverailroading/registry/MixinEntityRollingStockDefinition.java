@@ -2,7 +2,7 @@ package com.goldenfield192.irpatches.mixins.immersiverailroading.registry;
 
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import cam72cam.immersiverailroading.util.DataBlock;
-import com.goldenfield192.irpatches.util.ExtraDefinition;
+import com.goldenfield192.irpatches.util.ExtraStockDefinition;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -39,6 +39,6 @@ public class MixinEntityRollingStockDefinition {
             at = @At(value = "TAIL"),
             remap = false)
     public void mixinLoadData(DataBlock data, CallbackInfo ci) {
-        ExtraDefinition.loadExtraStockProperties(this.defID, data);
+        ExtraStockDefinition.load(this.defID, data);
     }
 }

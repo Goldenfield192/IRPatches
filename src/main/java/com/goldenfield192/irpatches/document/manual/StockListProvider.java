@@ -3,7 +3,7 @@ package com.goldenfield192.irpatches.document.manual;
 import cam72cam.immersiverailroading.registry.DefinitionManager;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import cam72cam.mod.resource.Identifier;
-import com.goldenfield192.irpatches.util.ExtraDefinition;
+import com.goldenfield192.irpatches.util.ExtraStockDefinition;
 import com.goldenfield192.irpatches.document.core.MarkdownDocument;
 import com.goldenfield192.irpatches.document.core.element.MarkdownTitle;
 import com.goldenfield192.irpatches.document.core.element.MarkdownUrl;
@@ -21,7 +21,7 @@ public class StockListProvider {
         List<MutablePair<String, EntityRollingStockDefinition>> definitions =
                 DefinitionManager.getDefinitions().stream()
                                  .map(def -> {
-                                     ExtraDefinition extra = ExtraDefinition.get(def);
+                                     ExtraStockDefinition extra = ExtraStockDefinition.get(def);
                                      switch (context.getProperty("stock")) {
                                          case 0:
                                              return MutablePair.of("N/A".equals(extra.name) ?
@@ -54,7 +54,7 @@ public class StockListProvider {
                 lines.add(MarkdownDocument.MarkdownLine.create(new MarkdownTitle(lastFullName, 2)));
             }
             lines.add(MarkdownDocument.MarkdownLine.create(
-                    new MarkdownUrl(ExtraDefinition.get(definition.getRight()).name,
+                    new MarkdownUrl(ExtraStockDefinition.get(definition.getRight()).name,
                                     new Identifier("irstock", definition.getRight().defID))));
         }
         return lines;

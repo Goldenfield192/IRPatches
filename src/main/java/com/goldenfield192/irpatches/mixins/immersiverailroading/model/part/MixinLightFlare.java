@@ -8,7 +8,7 @@ import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.Light;
 import cam72cam.mod.render.opengl.RenderState;
-import com.goldenfield192.irpatches.util.ExtraDefinition;
+import com.goldenfield192.irpatches.util.ExtraStockDefinition;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -41,7 +41,7 @@ public abstract class MixinLightFlare {
 
     @Inject(method = "<init>", at = @At("TAIL"), remap = false, locals = LocalCapture.CAPTURE_FAILSOFT)
     public void injectConstructor(EntityRollingStockDefinition def, ModelState state, ModelComponent component, CallbackInfo ci, Matcher rgbValues, EntityRollingStockDefinition.LightDefinition config, ModelState mystate) {
-        ExtraDefinition.LightDefinition light = ExtraDefinition.get(def)
+        ExtraStockDefinition.LightDefinition light = ExtraStockDefinition.get(def)
                 .extraLightDef.get(component.type.toString()
                                                  .replace("_X", "_" + component.id)
                                                  .replace("_POS_", "_" + component.pos + "_"));

@@ -6,6 +6,9 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "features.random_rail.MixinRailBuilderRender",
+    "features.random_rail.MixinTrackDefinition",
+    "features.random_rail.MixinTrackModel",
     "features.seatoffset.MixinEntityRidableRollingStock",
     "immersiverailroading.MixinImmersiveRailroading",
     "immersiverailroading.entity.MixinEntityMoveableRollingStock",

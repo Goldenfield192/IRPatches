@@ -95,9 +95,9 @@ dependencies {
     }
 
     compile "curse.maven:ImmersiveEngineering-231951:2974106"
-//    compile files('D:\\cache\\.gradle\\caches\\modules-2\\files-2.1\\cam72cam.immersiverailroading\\ImmersiveRailroading\\1.12.2-forge-1.10.0-d0a7dd0\\cce5feabc9f5fb3f8a9a55bc235ab6fb93ca797a\\IRTest.jar')
+    compile files('D:\\cache\\.gradle\\caches\\modules-2\\files-2.1\\cam72cam.immersiverailroading\\ImmersiveRailroading\\1.12.2-forge-1.10.0\\68736f0436fb0c23f07c0d5b7954d524e371a0a1\\IRTest.jar')
     compile 'cam72cam.universalmodcore:UniversalModCore:1.12.2-forge-1.2.1-43860b4'
-    compile 'cam72cam.immersiverailroading:ImmersiveRailroading:1.12.2-forge-1.10.0'
+//    compile 'cam72cam.immersiverailroading:ImmersiveRailroading:1.12.2-forge-1.10.0'
     compile 'trackapi:TrackAPI:1.12.2-forge-1.2'
 }
 

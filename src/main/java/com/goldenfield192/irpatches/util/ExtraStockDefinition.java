@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ExtraDefinition {
-    private static final HashMap<String, ExtraDefinition> extraDef = new HashMap<>();
+public class ExtraStockDefinition {
+    private static final HashMap<String, ExtraStockDefinition> extraDef = new HashMap<>();
     public final HashMap<String, LightDefinition> extraLightDef = new HashMap<>();
     public String name;
     public String modelerName;
@@ -20,8 +20,8 @@ public class ExtraDefinition {
     public List<Pair<String, Integer>> burnables;
     public Identifier description;
 
-    public static void loadExtraStockProperties(String defID, DataBlock data) {
-        ExtraDefinition def = new ExtraDefinition();
+    public static void load(String defID, DataBlock data) {
+        ExtraStockDefinition def = new ExtraStockDefinition();
         DataBlock properties = data.getBlock("properties");
         def.leftFirstMultiplier = properties.getValue("left_first").asBoolean(true) ? 1 : -1;
 
@@ -61,11 +61,11 @@ public class ExtraDefinition {
         extraDef.put(defID, def);
     }
 
-    public static ExtraDefinition get(EntityRollingStockDefinition definition) {
+    public static ExtraStockDefinition get(EntityRollingStockDefinition definition) {
         return get(definition.defID);
     }
 
-    public static ExtraDefinition get(String defID) {
+    public static ExtraStockDefinition get(String defID) {
         return extraDef.get(defID);
     }
 

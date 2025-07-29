@@ -11,7 +11,7 @@ public class BufferedImageRenderer {
     public static Identifier getTextureIdentifier(BufferedImage image) {
         ResourceLocation location =
                 Minecraft.getMinecraft().getTextureManager()
-                         .getDynamicTextureLocation("test", new DynamicTexture(image));
+                         .getDynamicTextureLocation("getFirst", new DynamicTexture(image));
         return new Identifier(location);
     }
 }

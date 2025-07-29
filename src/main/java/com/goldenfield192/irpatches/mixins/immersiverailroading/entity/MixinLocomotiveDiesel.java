@@ -5,7 +5,7 @@ import cam72cam.immersiverailroading.entity.LocomotiveDiesel;
 import cam72cam.immersiverailroading.registry.LocomotiveDieselDefinition;
 import cam72cam.immersiverailroading.util.BurnUtil;
 import cam72cam.mod.fluid.Fluid;
-import com.goldenfield192.irpatches.util.ExtraDefinition;
+import com.goldenfield192.irpatches.util.ExtraStockDefinition;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import org.apache.commons.lang3.tuple.Pair;
@@ -28,7 +28,7 @@ public abstract class MixinLocomotiveDiesel extends Locomotive {
 
     @Inject(method = "getFluidFilter", at = @At("HEAD"), remap = false, cancellable = true)
     public void getFluidFilter(CallbackInfoReturnable<List<Fluid>> cir) {
-        List<Pair<String, Integer>> overrides = ExtraDefinition.get(this.getDefinition()).burnables;
+        List<Pair<String, Integer>> overrides = ExtraStockDefinition.get(this.getDefinition()).burnables;
         if (overrides == null) {
             cir.setReturnValue(BurnUtil.burnableFluids());
             return;
@@ -41,7 +41,7 @@ public abstract class MixinLocomotiveDiesel extends Locomotive {
 
     @Redirect(method = "onTick", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/util/BurnUtil;getBurnTime(Lcam72cam/mod/fluid/Fluid;)I"), remap = false)
     public int mixinGetBurnTime(Fluid fluid) {
-        List<Pair<String, Integer>> overrides = ExtraDefinition.get(this.getDefinition()).burnables;
+        List<Pair<String, Integer>> overrides = ExtraStockDefinition.get(this.getDefinition()).burnables;
         if (overrides != null && overrides.stream().anyMatch(pair -> pair.getLeft().equals(fluid.ident))) {
             return overrides.stream().filter(pair -> pair.getLeft().equals(fluid.ident)).findFirst().get().getRight();
         }

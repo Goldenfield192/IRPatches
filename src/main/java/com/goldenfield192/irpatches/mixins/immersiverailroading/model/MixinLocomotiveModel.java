@@ -11,7 +11,7 @@ import cam72cam.immersiverailroading.model.part.WheelSet;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import cam72cam.immersiverailroading.registry.LocomotiveDefinition;
 import com.goldenfield192.irpatches.util.DrivingAssemblyLoader;
-import com.goldenfield192.irpatches.util.ExtraDefinition;
+import com.goldenfield192.irpatches.util.ExtraStockDefinition;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -35,7 +35,7 @@ public class MixinLocomotiveModel extends StockModel {
             at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/model/part/DrivingAssembly;get(Lcam72cam/immersiverailroading/library/ValveGearConfig;Lcam72cam/immersiverailroading/model/components/ComponentProvider;Lcam72cam/immersiverailroading/model/ModelState;Lcam72cam/immersiverailroading/library/ModelComponentType$ModelPosition;F[Lcam72cam/immersiverailroading/model/part/WheelSet;)Lcam72cam/immersiverailroading/model/part/DrivingAssembly;", ordinal = 0),
             remap = false)
     public DrivingAssembly mixinDrivingWheelsFrontInit(ValveGearConfig type, ComponentProvider localProvider, ModelState state, ModelComponentType.ModelPosition pos, float angle, WheelSet[] backup, ComponentProvider provider, LocomotiveDefinition def) {
-        int multiplier = ExtraDefinition.get(def).leftFirstMultiplier;
+        int multiplier = ExtraStockDefinition.get(def).leftFirstMultiplier;
         try {
             return DrivingAssemblyLoader.get(type, localProvider, addRoll(this.frontLocomotive),
                                              ModelComponentType.ModelPosition.FRONT, 0, multiplier, new WheelSet[0]);
@@ -48,7 +48,7 @@ public class MixinLocomotiveModel extends StockModel {
             at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/model/part/DrivingAssembly;get(Lcam72cam/immersiverailroading/library/ValveGearConfig;Lcam72cam/immersiverailroading/model/components/ComponentProvider;Lcam72cam/immersiverailroading/model/ModelState;Lcam72cam/immersiverailroading/library/ModelComponentType$ModelPosition;F[Lcam72cam/immersiverailroading/model/part/WheelSet;)Lcam72cam/immersiverailroading/model/part/DrivingAssembly;", ordinal = 1),
             remap = false)
     public DrivingAssembly mixinDrivingWheelsRearInit(ValveGearConfig type, ComponentProvider localProvider, ModelState state, ModelComponentType.ModelPosition pos, float angle, WheelSet[] backup, ComponentProvider provider, LocomotiveDefinition def) {
-        int multiplier = ExtraDefinition.get(def).leftFirstMultiplier;
+        int multiplier = ExtraStockDefinition.get(def).leftFirstMultiplier;
         try {
             return DrivingAssemblyLoader.get(type, localProvider, addRoll(this.rearLocomotive),
                                              ModelComponentType.ModelPosition.REAR, 45.0F, multiplier, new WheelSet[0]);

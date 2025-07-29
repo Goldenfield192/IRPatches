@@ -5,7 +5,7 @@ import cam72cam.immersiverailroading.registry.DefinitionManager;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import cam72cam.mod.resource.Identifier;
 import com.goldenfield192.irpatches.document.core.element.AbstractMarkdownElement;
-import com.goldenfield192.irpatches.util.ExtraDefinition;
+import com.goldenfield192.irpatches.util.ExtraStockDefinition;
 import com.goldenfield192.irpatches.document.manual.element.MDStockModelRenderer;
 import com.goldenfield192.irpatches.document.core.DefaultPageBuilder;
 import com.goldenfield192.irpatches.document.core.IPageBuilder;
@@ -25,7 +25,7 @@ public class StockDescriptionPageBuilder implements IPageBuilder {
     public MarkdownDocument build(Identifier id) {
         MarkdownDocument document = new MarkdownDocument(id);
         EntityRollingStockDefinition def = DefinitionManager.getDefinition(id.getPath());
-        ExtraDefinition extra = ExtraDefinition.get(def);
+        ExtraStockDefinition extra = ExtraStockDefinition.get(def);
 
         if (extra.description != null && extra.description.canLoad()) {
             return DefaultPageBuilder.INSTANCE.build(extra.description);

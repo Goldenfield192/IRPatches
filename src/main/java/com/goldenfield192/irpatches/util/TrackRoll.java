@@ -3,11 +3,14 @@ package com.goldenfield192.irpatches.util;
 import cam72cam.immersiverailroading.ImmersiveRailroading;
 import cam72cam.immersiverailroading.library.TrackItems;
 import cam72cam.immersiverailroading.tile.TileRail;
+import cam72cam.immersiverailroading.track.BuilderBase;
 import cam72cam.immersiverailroading.track.IIterableTrack;
 import cam72cam.immersiverailroading.track.PosStep;
+import cam72cam.immersiverailroading.util.RailInfo;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.world.World;
 import com.goldenfield192.irpatches.accessor.IVec3dAccessor;
+import util.Matrix4;
 
 import java.util.List;
 
@@ -83,5 +86,14 @@ public class TrackRoll {
         } else {
             return 0;
         }
+    }
+
+    public static void applyRollToMatrix(Matrix4 m, RailInfo info, BuilderBase.VecYawPitch piece){
+        double radians = Math.toRadians(((IVec3dAccessor) piece).getRoll());
+        double sin = Math.sin(radians);
+        double cos = Math.cos(radians);
+        double target = info.settings.gauge.scale() * info.getTrackHeight() * sin;
+        m.rotate(radians, 0, 0, 1);
+        m.translate(target * cos, -target * sin, 0);
     }
 }

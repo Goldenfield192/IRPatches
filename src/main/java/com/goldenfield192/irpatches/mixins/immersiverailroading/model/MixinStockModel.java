@@ -11,7 +11,7 @@ import cam72cam.immersiverailroading.model.part.*;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import com.goldenfield192.irpatches.accessor.IStockRollAccessor;
 import com.goldenfield192.irpatches.util.DrivingAssemblyLoader;
-import com.goldenfield192.irpatches.util.ExtraDefinition;
+import com.goldenfield192.irpatches.util.ExtraStockDefinition;
 import com.llamalad7.mixinextras.sugar.Local;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -53,7 +53,7 @@ public abstract class MixinStockModel {
     //Conflicts with poizzy's build, use @Redirect instead
 //    @Inject(method = "parseComponents", at = @At(value = "INVOKE_ASSIGN", target = "Lcam72cam/immersiverailroading/model/ModelState;include(Lcam72cam/immersiverailroading/model/components/ModelComponent;)V"), remap = false, cancellable = true)
 //    public void mixinParseComponents(ComponentProvider provider, EntityRollingStockDefinition def, CallbackInfo ci) {
-//        int multiplier = ExtraDefinition.get(def).leftFirstMultiplier;
+//        int multiplier = ExtraStockDefinition.get(def).leftFirstMultiplier;
 //
 //        this.frame = new Frame(provider, rocking, rocking, def.defID);
 //
@@ -83,7 +83,7 @@ public abstract class MixinStockModel {
 
     @Redirect(method = "parseComponents", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/model/part/DrivingAssembly;get(Lcam72cam/immersiverailroading/library/ValveGearConfig;Lcam72cam/immersiverailroading/model/components/ComponentProvider;Lcam72cam/immersiverailroading/model/ModelState;F[Lcam72cam/immersiverailroading/model/part/WheelSet;)Lcam72cam/immersiverailroading/model/part/DrivingAssembly;"), remap = false)
     public DrivingAssembly redirect1(ValveGearConfig type, ComponentProvider provider, ModelState state, float angleOffset, WheelSet[] backups, @Local(ordinal = 0) EntityRollingStockDefinition def){
-        int multiplier = ExtraDefinition.get(def).leftFirstMultiplier;
+        int multiplier = ExtraStockDefinition.get(def).leftFirstMultiplier;
         try {
             return DrivingAssemblyLoader.get(def.getValveGear(), provider, rocking, null, 0, multiplier,
                                                       frame != null ?
