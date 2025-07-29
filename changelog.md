@@ -1,5 +1,9 @@
 ## 1.3.6(IN DEV)
+* Add random track
 * Fix CargoItem not rolling
+* Cut down track gui description text length
+* Players on seats will move now based on stock roll
+* Door actuator will behave properly if filter not specified
 
 ## 1.3.5
 * Fix server crash

@@ -57,7 +57,7 @@ public class MixinRailBuilderRender {
                 OBJRender.Builder builder = entry.getValue().binder().builder();
                 for (int i = 0; i < renderData.size(); i++) {
                     if (entry.getKey() == ints[i]) {
-                        applyMatrix(renderData.get(i), surface, builder, info);
+                        applyMatrix(renderData.get(i), entry.getValue(), builder, info);
                     }
                 }
                 cached.add(builder.build());

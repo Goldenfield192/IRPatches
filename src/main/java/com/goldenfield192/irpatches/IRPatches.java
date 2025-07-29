@@ -2,7 +2,7 @@ package com.goldenfield192.irpatches;
 
 @net.minecraftforge.fml.common.Mod(modid = IRPatches.MODID,
         name = "IR Patches",
-        version = "1.1,1",
+        version = "1.3.6",
         acceptedMinecraftVersions = "[1.12,1.13)",
         useMetadata = true)
 public class IRPatches {
