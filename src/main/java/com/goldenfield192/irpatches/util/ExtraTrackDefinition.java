@@ -28,28 +28,28 @@ public class ExtraTrackDefinition {
         def.model = new ArrayList<>();
         multiTracks.forEach((s, dataBlock1) -> {
             ExtraTrackModel model1 = new ExtraTrackModel();
-            if(dataBlock1.getValues("order") != null){
-                List<String> orderList = dataBlock1.getValues("order").stream()
-                                                   .map(DataBlock.Value::asString)
-                                                   .collect(Collectors.toList());
+//            if(dataBlock1.getValues("order") != null){
+//                List<String> orderList = dataBlock1.getValues("order").stream()
+//                                                   .map(DataBlock.Value::asString)
+//                                                   .collect(Collectors.toList());
                 //Parse order
-                Map<String, Integer> refers = new HashMap<>();
-                for (Map.Entry<String, DataBlock.Value> entry : dataBlock1.getValueMap().entrySet()) {
-                    try {
-                        model1.addTrack(new TrackModel(s, entry.getValue().asIdentifier(), model_gauge_m, spacing), 1);
-                        refers.put(entry.getKey(), model1.getRefer().size() - 1);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                int[] map = new int[orderList.size()];
-                for(int i = 0; i < orderList.size(); i++){
-                    String str = orderList.get(i);
-                    map[i] = refers.get(str);
-                }
+//                Map<String, Integer> refers = new HashMap<>();
+//                for (Map.Entry<String, DataBlock.Value> entry : dataBlock1.getValueMap().entrySet()) {
+//                    try {
+//                        model1.addTrack(new TrackModel(s, entry.getValue().asIdentifier(), model_gauge_m, spacing), 1);
+//                        refers.put(entry.getKey(), model1.getRefer().size() - 1);
+//                    } catch (Exception e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
+//                int[] map = new int[orderList.size()];
+//                for(int i = 0; i < orderList.size(); i++){
+//                    String str = orderList.get(i);
+//                    map[i] = refers.get(str);
+//                }
 
-                model1.setOrder(map);
-            } else {
+//                model1.setOrder(map);
+//            } else {
                 //Otherwise it is random
                 for (Map.Entry<String, DataBlock.Value> entry : dataBlock1.getValueMap().entrySet()) {
                     try {
@@ -59,7 +59,7 @@ public class ExtraTrackDefinition {
                         throw new RuntimeException(e);
                     }
                 }
-            }
+//            }
             def.model.add(model1);
         });
         extraDef.put(defID, def);

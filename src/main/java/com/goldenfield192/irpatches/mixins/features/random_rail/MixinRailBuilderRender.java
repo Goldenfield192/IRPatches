@@ -64,15 +64,15 @@ public class MixinRailBuilderRender {
                     cached.add(builder.build());
                 }
             } else {
-                for (int i = 0; i < extraModel.getRefer().size(); i++) {
-                    OBJRender.Builder builder = extraModel.getRefer().get(i).binder().builder();
-                    for (int j = 0; j < renderData.size(); j++) {
-                        if (i == extraModel.getOrderedIndex(j)) {
-                            applyModelTransAndDraw(renderData.get(j), extraModel.getRefer().get(i), builder, info);
-                        }
-                    }
-                    cached.add(builder.build());
-                }
+//                for (int i = 0; i < extraModel.getRefer().size(); i++) {
+//                    OBJRender.Builder builder = extraModel.getRefer().get(i).binder().builder();
+//                    for (int j = 0; j < renderData.size(); j++) {
+//                        if (i == extraModel.getOrderedIndex(j)) {
+//                            applyModelTransAndDraw(renderData.get(j), extraModel.getRefer().get(i), builder, info);
+//                        }
+//                    }
+//                    cached.add(builder.build());
+//                }
             }
             multiTrackCache.put(info.uniqueID, cached);
         }
