@@ -8,7 +8,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import trackapi.lib.Gauges;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ExtraTrackDefinition {
     private static final HashMap<String, ExtraTrackDefinition> extraDef = new HashMap<>();
@@ -28,6 +27,7 @@ public class ExtraTrackDefinition {
         def.model = new ArrayList<>();
         multiTracks.forEach((s, dataBlock1) -> {
             ExtraTrackModel model1 = new ExtraTrackModel();
+            //TODO figure out why order doesn't work
 //            if(dataBlock1.getValues("order") != null){
 //                List<String> orderList = dataBlock1.getValues("order").stream()
 //                                                   .map(DataBlock.Value::asString)

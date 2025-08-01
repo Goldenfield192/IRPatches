@@ -9,6 +9,8 @@
     "features.random_rail.MixinRailBuilderRender",
     "features.random_rail.MixinTrackDefinition",
     "features.random_rail.MixinTrackModel",
+    "features.rs_turntable.MixinItemLargeWrench",
+    "features.rs_turntable.MixinTileRailBase",
     "features.seatoffset.MixinEntityRidableRollingStock",
     "immersiverailroading.MixinImmersiveRailroading",
     "immersiverailroading.entity.MixinEntityMoveableRollingStock",

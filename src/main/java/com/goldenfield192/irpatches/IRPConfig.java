@@ -30,4 +30,7 @@ public class IRPConfig {
 
     @ConfigFile.Comment("Does onboard camera collide with blocks?")
     public static boolean OnboardCameraCollideWithBlock = true;
+
+    @ConfigFile.Comment("IR default turntable")
+    public static boolean LegacyTurnTable = true;
 }
