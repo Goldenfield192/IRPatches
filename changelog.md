@@ -1,4 +1,8 @@
-## 1.3.6(IN DEV)
+## 1.3.7(IN DEV)
+* Make turntable redstone controlled
+* Add transfer table
+
+## 1.3.6
 * Add random track
 * Fix CargoItem not rolling
 * Cut down track gui description text length

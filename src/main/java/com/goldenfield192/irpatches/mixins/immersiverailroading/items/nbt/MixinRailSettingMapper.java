@@ -17,9 +17,12 @@ public class MixinRailSettingMapper {
     @Inject(method = "lambda$apply$0", at = @At("RETURN"), remap = false)
     private static void lambda0(String fieldName, TagCompound d, RailSettings o, CallbackInfo ci) {
         TagCompound tag = new TagCompound();
-        tag.setFloat("ctrl1", ((IRailSettingsAccessor) o).getFarEndTilt());
-        tag.setFloat("ctrl2", ((IRailSettingsAccessor) o).getNearEndTilt());
-        tag.setFloat("bumpiness", ((IRailSettingsAccessor) o).getBumpiness());
+        IRailSettingsAccessor accessor = (IRailSettingsAccessor) o;
+        tag.setFloat("ctrl1", accessor.getFarEndTilt());
+        tag.setFloat("ctrl2", accessor.getNearEndTilt());
+        tag.setFloat("bumpiness", accessor.getBumpiness());
+        tag.setInteger("transferNum", accessor.getTransferTableEntryNum());
+        tag.setInteger("transferDist", accessor.getTransferTableEntryDistance());
         d.set("irp", tag);
     }
 
@@ -35,21 +38,50 @@ public class MixinRailSettingMapper {
                  InvocationTargetException e) {
             throw new RuntimeException(e);
         }
+        
+        TagCompound irp = d.get("irp");
+        IRailSettingsAccessor accessor = (IRailSettingsAccessor) m;
+        if (irp != null) {
+            Float ctrl1 = irp.getFloat("ctrl1");
+            if (ctrl1 != null) {
+                accessor.setFarEnd(ctrl1);
+            } else {
+                accessor.setFarEnd(0);
+            }
 
-        if (d.get("irp") != null && d.get("irp").getFloat("ctrl1") != null) {
-            ((IRailSettingsAccessor) m).setFarEnd(d.get("irp").getFloat("ctrl1"));
+            Float ctrl2 = irp.getFloat("ctrl2");
+            if (ctrl2 != null) {
+                accessor.setNearEnd(ctrl2);
+            } else {
+                accessor.setNearEnd(0);
+            }
+
+            Float bumpiness = irp.getFloat("bumpiness");
+            if (bumpiness != null) {
+                accessor.setBumpiness(bumpiness);
+            } else {
+                accessor.setBumpiness(0);
+            }
+
+            Integer transferNum = irp.getInteger("transferNum");
+            if (transferNum != null) {
+                accessor.setTransferTableEntryNum(transferNum);
+            } else {
+                accessor.setTransferTableEntryNum(1);
+            }
+
+            Integer transferDist = irp.getInteger("transferDist");
+            if (transferDist != null) {
+                accessor.setTransferTableEntryDistance(transferDist);
+            } else {
+                accessor.setTransferTableEntryDistance(0);
+            }
         } else {
-            ((IRailSettingsAccessor) m).setFarEnd(0);
-        }
-        if (d.get("irp") != null && d.get("irp").getFloat("ctrl2") != null) {
-            ((IRailSettingsAccessor) m).setNearEnd(d.get("irp").getFloat("ctrl2"));
-        } else {
-            ((IRailSettingsAccessor) m).setNearEnd(0);
-        }
-        if (d.get("irp") != null && d.get("irp").getFloat("bumpiness") != null) {
-            ((IRailSettingsAccessor) m).setBumpiness(d.get("irp").getFloat("bumpiness"));
-        } else {
-            ((IRailSettingsAccessor) m).setBumpiness(0);
+            accessor.setFarEnd(0);
+            accessor.setNearEnd(0);
+            accessor.setBumpiness(0);
+            accessor.setTransferTableEntryNum(1);
+            accessor.setTransferTableEntryDistance(0);
         }
         cir.setReturnValue(m);
     }

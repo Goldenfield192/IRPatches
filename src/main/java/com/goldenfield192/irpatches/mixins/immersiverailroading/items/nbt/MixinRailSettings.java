@@ -24,6 +24,11 @@ public class MixinRailSettings implements IRailSettingsAccessor {
     @Unique
     public float IRPatch$bumpiness;
 
+    @Unique
+    public int IRPatch$transferTableEntryNum;
+    @Unique
+    public int IRPatch$transferTableEntryDist;
+
     @Inject(method = "from", at = @At(value = "HEAD"), remap = false, cancellable = true)
     private static void from(ItemStack stack, CallbackInfoReturnable<RailSettings> cir) {
         Constructor<RailSettings.Mutable> constructor;
@@ -39,23 +44,49 @@ public class MixinRailSettings implements IRailSettingsAccessor {
         }
 
         if (tag != null) {
-            //set ctrl1
-            if (tag.get("irp") != null && tag.get("irp").getFloat("ctrl1") != null) {
-                ((IRailSettingsAccessor) m).setFarEnd(tag.get("irp").getFloat("ctrl1"));
+            TagCompound irp = tag.get("irp");
+            IRailSettingsAccessor accessor = (IRailSettingsAccessor) m;
+            if (irp != null) {
+                Float ctrl1 = irp.getFloat("ctrl1");
+                if (ctrl1 != null) {
+                    accessor.setFarEnd(ctrl1);
+                } else {
+                    accessor.setFarEnd(0);
+                }
+
+                Float ctrl2 = irp.getFloat("ctrl2");
+                if (ctrl2 != null) {
+                    accessor.setNearEnd(ctrl2);
+                } else {
+                    accessor.setNearEnd(0);
+                }
+
+                Float bumpiness = irp.getFloat("bumpiness");
+                if (bumpiness != null) {
+                    accessor.setBumpiness(bumpiness);
+                } else {
+                    accessor.setBumpiness(0);
+                }
+
+                Integer transferNum = irp.getInteger("transferNum");
+                if (transferNum != null) {
+                    accessor.setTransferTableEntryNum(transferNum);
+                } else {
+                    accessor.setTransferTableEntryNum(1);
+                }
+
+                Integer transferDist = irp.getInteger("transferDist");
+                if (transferDist != null) {
+                    accessor.setTransferTableEntryDistance(transferDist);
+                } else {
+                    accessor.setTransferTableEntryDistance(0);
+                }
             } else {
-                ((IRailSettingsAccessor) m).setFarEnd(0);
-            }
-            //set ctrl2
-            if (tag.get("irp") != null && tag.get("irp").getFloat("ctrl2") != null) {
-                ((IRailSettingsAccessor) m).setNearEnd(tag.get("irp").getFloat("ctrl2"));
-            } else {
-                ((IRailSettingsAccessor) m).setNearEnd(0);
-            }
-            //set bumpiness
-            if (tag.get("irp") != null && tag.get("irp").getFloat("bumpiness") != null) {
-                ((IRailSettingsAccessor) m).setBumpiness(tag.get("irp").getFloat("bumpiness"));
-            } else {
-                ((IRailSettingsAccessor) m).setBumpiness(0);
+                accessor.setFarEnd(0);
+                accessor.setNearEnd(0);
+                accessor.setBumpiness(0);
+                accessor.setTransferTableEntryNum(1);
+                accessor.setTransferTableEntryDistance(0);
             }
         }
         cir.setReturnValue(m);
@@ -77,6 +108,16 @@ public class MixinRailSettings implements IRailSettingsAccessor {
     }
 
     @Override
+    public void setTransferTableEntryNum(int num) {
+        this.IRPatch$transferTableEntryNum = num;
+    }
+
+    @Override
+    public void setTransferTableEntryDistance(int distance) {
+        this.IRPatch$transferTableEntryDist = distance;
+    }
+
+    @Override
     public float getNearEndTilt() {
         return IRPatch$ctrl2Roll;
     }
@@ -91,12 +132,24 @@ public class MixinRailSettings implements IRailSettingsAccessor {
         return IRPatch$bumpiness;
     }
 
+    @Override
+    public int getTransferTableEntryNum() {
+        return IRPatch$transferTableEntryNum;
+    }
+
+    @Override
+    public int getTransferTableEntryDistance() {
+        return IRPatch$transferTableEntryDist;
+    }
+
     @Inject(method = "write", at = @At(value = "INVOKE", target = "Lcam72cam/mod/item/ItemStack;setTagCompound(Lcam72cam/mod/serialization/TagCompound;)V"), remap = false)
     public void write(ItemStack stack, CallbackInfo ci, @Local TagCompound data) {
         TagCompound tag = new TagCompound();
         tag.setFloat("ctrl1", ((IRailSettingsAccessor) this).getFarEndTilt());
         tag.setFloat("ctrl2", ((IRailSettingsAccessor) this).getNearEndTilt());
         tag.setFloat("bumpiness", ((IRailSettingsAccessor) this).getBumpiness());
+        tag.setInteger("transferNum", ((IRailSettingsAccessor) this).getTransferTableEntryNum());
+        tag.setInteger("transferDist", ((IRailSettingsAccessor) this).getTransferTableEntryDistance());
         data.set("irp", tag);
     }
 }

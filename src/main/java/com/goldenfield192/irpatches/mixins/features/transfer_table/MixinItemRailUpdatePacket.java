@@ -1,0 +1,30 @@
+package com.goldenfield192.irpatches.mixins.features.transfer_table;
+
+import cam72cam.immersiverailroading.items.nbt.RailSettings;
+import cam72cam.immersiverailroading.library.TrackItems;
+import cam72cam.immersiverailroading.net.ItemRailUpdatePacket;
+import com.goldenfield192.irpatches.IRPConfig;
+import com.goldenfield192.irpatches.accessor.IRailSettingsMutableAccessor;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Mixin(ItemRailUpdatePacket.class)
+public class MixinItemRailUpdatePacket {
+    @Shadow(remap = false)
+    private RailSettings settings;
+
+    @Inject(method = "handle", at = @At("HEAD"), remap = false)
+    public void inject(CallbackInfo ci) {
+        //Server side check for MaxTrackLength
+        RailSettings.Mutable mutable = settings.mutable();
+        if (mutable.type == TrackItems.valueOf("TRANSFER_TABLE")) {
+            ((IRailSettingsMutableAccessor) mutable).setFarEnd(0f);
+            ((IRailSettingsMutableAccessor) mutable).setNearEnd(0f);
+            ((IRailSettingsMutableAccessor) mutable).setBumpiness(0f);
+        }
+        settings = mutable.immutable();
+    }
+}

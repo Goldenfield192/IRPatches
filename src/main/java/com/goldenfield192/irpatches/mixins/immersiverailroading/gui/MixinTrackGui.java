@@ -53,6 +53,12 @@ public class MixinTrackGui {
     @Unique
     private Slider bumpinessSlider;
 
+    //As they only exist in transfer table they can overlap with others
+    @Unique
+    private Slider transferTableEntryNum;
+    @Unique
+    private Slider transferTableEntrySpacing;
+
     @ModifyConstant(method = "init", constant = @Constant(intValue = 6), remap = false)
     private int inject1(int constant) {
         return constant - 1;
@@ -69,7 +75,7 @@ public class MixinTrackGui {
 
         ytop = -GUIHelpers.getScreenHeight() / 4;
         IRailSettingsAccessor accessor = (IRailSettingsMutableAccessor) settings;
-        this.ctrl1RollSlider = new Slider(screen, -150 + (GUIHelpers.getScreenWidth() / 2), ytop, "", -14.2, 14.2,
+        this.ctrl1RollSlider = new Slider(screen, -150 - xtop, ytop, "", -14.2, 14.2,
                                           accessor.getFarEndTilt(), true) {
             @Override
             public void onSlider() {
@@ -78,7 +84,7 @@ public class MixinTrackGui {
             }
         };
         ytop += height;
-        this.ctrl2RollSlider = new Slider(screen, -150 + (GUIHelpers.getScreenWidth() / 2), ytop, "", -14.2, 14.2,
+        this.ctrl2RollSlider = new Slider(screen, -150 - xtop, ytop, "", -14.2, 14.2,
                                           accessor.getNearEndTilt(), true) {
             @Override
             public void onSlider() {
@@ -87,7 +93,7 @@ public class MixinTrackGui {
             }
         };
         ytop += height;
-        this.bumpinessSlider = new Slider(screen, -150 + (GUIHelpers.getScreenWidth() / 2), ytop, "", 0, 7.1,
+        this.bumpinessSlider = new Slider(screen, -150 - xtop, ytop, "", 0, 7.1,
                                           accessor.getBumpiness(), true) {
             @Override
             public void onSlider() {
@@ -95,6 +101,26 @@ public class MixinTrackGui {
                 bumpinessSlider.setText("Bump amplitude: " + String.format("%.2f", accessor.getBumpiness()) + "°");
             }
         };
+        ytop += 3 * height;
+
+        this.transferTableEntryNum = new Slider(screen, 25+xtop, ytop, "", 1, 15, accessor.getTransferTableEntryNum(), false) {
+            @Override
+            public void onSlider() {
+                accessor.setTransferTableEntryNum((int) this.getValue());
+                transferTableEntryNum.setText("Transfer table entry: " + (int) transferTableEntryNum.getValue());
+            }
+        };
+        transferTableEntryNum.onSlider();
+        ytop += height;
+
+        this.transferTableEntrySpacing = new Slider(screen, 25+xtop, ytop, "", 1, 15, accessor.getTransferTableEntryDistance(), false) {
+            @Override
+            public void onSlider() {
+                accessor.setTransferTableEntryDistance((int) this.getValue());
+                transferTableEntrySpacing.setText("Distance between 2 entry: " + (int) transferTableEntrySpacing.getValue());
+            }
+        };
+        transferTableEntrySpacing.onSlider();
 
         this.typeSelector = new ListSelector<TrackItems>(screen, width, 100, height, settings.type,
                                                          Arrays.stream(TrackItems.values())
@@ -112,15 +138,20 @@ public class MixinTrackGui {
                 smoothingButton.setVisible(settings.type.hasSmoothing());
                 directionButton.setVisible(settings.type.hasDirection());
 
+                transferTableEntryNum.setVisible(settings.type == TrackItems.valueOf("TRANSFER_TABLE"));
+                transferTableEntrySpacing.setVisible(settings.type == TrackItems.valueOf("TRANSFER_TABLE"));
+
                 ctrl1RollSlider.setEnabled(true);
                 ctrl2RollSlider.setEnabled(true);
                 bumpinessSlider.setEnabled(true);
-                if(settings.type == TrackItems.TURNTABLE || settings.type == TrackItems.SWITCH){
+                if(settings.type == TrackItems.TURNTABLE
+                        || settings.type == TrackItems.SWITCH
+                        || settings.type == TrackItems.valueOf("TRANSFER_TABLE")){
                     ctrl1RollSlider.setEnabled(false);
                     ctrl2RollSlider.setEnabled(false);
                     bumpinessSlider.setEnabled(false);
                 }
-                if (settings.type == TrackItems.TURNTABLE) {
+                if (settings.type == TrackItems.TURNTABLE || settings.type == TrackItems.valueOf("TRANSFER_TABLE")) {
                     lengthInput.setText("" + Math.min(Integer.parseInt(lengthInput.getText()),
                                                       BuilderTurnTable.maxLength(settings.gauge))); // revalidate
                 }

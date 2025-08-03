@@ -10,9 +10,17 @@ public interface IRailSettingsAccessor {
     //Bumpiness
     void setBumpiness(float factor);
 
+    void setTransferTableEntryNum(int num);
+
+    void setTransferTableEntryDistance(int distance);
+
     float getNearEndTilt();
 
     float getFarEndTilt();
 
     float getBumpiness();
+
+    int getTransferTableEntryNum();
+
+    int getTransferTableEntryDistance();
 }

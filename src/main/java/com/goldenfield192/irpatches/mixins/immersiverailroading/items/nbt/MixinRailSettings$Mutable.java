@@ -42,12 +42,18 @@ public class MixinRailSettings$Mutable implements IRailSettingsMutableAccessor {
     public boolean isPreview;
     @Shadow(remap = false)
     public boolean isGradeCrossing;
+
     @Unique
     public float IRPatch$ctrl1Roll;
     @Unique
     public float IRPatch$ctrl2Roll;
     @Unique
     public float IRPatch$bumpiness;
+
+    @Unique
+    public int IRPatch$transferTableEntryNum;
+    @Unique
+    public int IRPatch$transferTableEntryDist;
 
     @Override
     public void setNearEnd(float degree) {
@@ -65,6 +71,16 @@ public class MixinRailSettings$Mutable implements IRailSettingsMutableAccessor {
     }
 
     @Override
+    public void setTransferTableEntryNum(int num) {
+        this.IRPatch$transferTableEntryNum = num;
+    }
+
+    @Override
+    public void setTransferTableEntryDistance(int distance) {
+        this.IRPatch$transferTableEntryDist = distance;
+    }
+
+    @Override
     public float getNearEndTilt() {
         return IRPatch$ctrl2Roll;
     }
@@ -79,11 +95,23 @@ public class MixinRailSettings$Mutable implements IRailSettingsMutableAccessor {
         return IRPatch$bumpiness;
     }
 
+    @Override
+    public int getTransferTableEntryNum() {
+        return IRPatch$transferTableEntryNum;
+    }
+
+    @Override
+    public int getTransferTableEntryDistance() {
+        return IRPatch$transferTableEntryDist;
+    }
+
     @Inject(method = "<init>(Lcam72cam/immersiverailroading/items/nbt/RailSettings;)V", at = @At("TAIL"), remap = false)
     public void inject0(RailSettings settings, CallbackInfo ci) {
         this.setFarEnd(((IRailSettingsAccessor) settings).getFarEndTilt());
         this.setNearEnd(((IRailSettingsAccessor) settings).getNearEndTilt());
         this.setBumpiness(((IRailSettingsAccessor) settings).getBumpiness());
+        this.setTransferTableEntryNum(((IRailSettingsAccessor) settings).getTransferTableEntryNum());
+        this.setTransferTableEntryDistance(((IRailSettingsAccessor) settings).getTransferTableEntryDistance());
     }
 
     @Inject(method = "<init>(Lcam72cam/mod/serialization/TagCompound;)V", at = @At("TAIL"), remap = false)
@@ -91,6 +119,8 @@ public class MixinRailSettings$Mutable implements IRailSettingsMutableAccessor {
         this.setFarEnd(0);
         this.setNearEnd(0);
         this.setBumpiness(0);
+        this.setTransferTableEntryNum(1);
+        this.setTransferTableEntryDistance(0);
     }
 
     @Inject(method = "immutable", at = @At("HEAD"), remap = false, cancellable = true)
@@ -113,6 +143,8 @@ public class MixinRailSettings$Mutable implements IRailSettingsMutableAccessor {
         settings.setNearEnd(this.IRPatch$ctrl2Roll);
         settings.setFarEnd(this.IRPatch$ctrl1Roll);
         settings.setBumpiness(this.IRPatch$bumpiness);
+        settings.setTransferTableEntryNum(this.IRPatch$transferTableEntryNum);
+        settings.setTransferTableEntryDistance(this.IRPatch$transferTableEntryDist);
         cir.setReturnValue((RailSettings) settings);
     }
 }
