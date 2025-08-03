@@ -13,7 +13,6 @@ import cam72cam.mod.gui.screen.*;
 import com.goldenfield192.irpatches.accessor.IRailSettingsAccessor;
 import com.goldenfield192.irpatches.accessor.IRailSettingsMutableAccessor;
 import com.goldenfield192.irpatches.IRPConfig;
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -111,7 +110,7 @@ public class MixinTrackGui {
         transferTableEntryNum.onSlider();
         ytop += height;
 
-        this.transferTableEntrySpacing = new Slider(screen, 25+xtop, ytop, "", 1, 7, accessor.getTransferTableEntryDistance(), false) {
+        this.transferTableEntrySpacing = new Slider(screen, 25+xtop, ytop, "", 1, 15, accessor.getTransferTableEntryDistance(), false) {
             @Override
             public void onSlider() {
                 accessor.setTransferTableEntryDistance((int) this.getValue());
