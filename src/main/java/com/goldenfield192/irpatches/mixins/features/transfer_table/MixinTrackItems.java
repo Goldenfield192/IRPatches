@@ -34,12 +34,4 @@ public abstract class MixinTrackItems {
         $VALUES = values.toArray(new TrackItems[0]);
         return value;
     }
-
-    @Inject(method = "hasDirection", at = @At("HEAD"), remap = false, cancellable = true)
-    public void inject(CallbackInfoReturnable<Boolean> cir){
-        if((TrackItems) (Object)this == TrackItems.valueOf("TRANSFER_TABLE")){
-            cir.setReturnValue(true);
-            cir.cancel();
-        }
-    }
 }

@@ -3,6 +3,7 @@ package com.goldenfield192.irpatches.mixins.immersiverailroading.gui;
 import cam72cam.immersiverailroading.gui.TrackGui;
 import cam72cam.immersiverailroading.gui.components.ListSelector;
 import cam72cam.immersiverailroading.items.nbt.RailSettings;
+import cam72cam.immersiverailroading.library.Gauge;
 import cam72cam.immersiverailroading.library.GuiText;
 import cam72cam.immersiverailroading.library.TrackItems;
 import cam72cam.immersiverailroading.track.BuilderTurnTable;
@@ -12,16 +13,13 @@ import cam72cam.mod.gui.screen.*;
 import com.goldenfield192.irpatches.accessor.IRailSettingsAccessor;
 import com.goldenfield192.irpatches.accessor.IRailSettingsMutableAccessor;
 import com.goldenfield192.irpatches.IRPConfig;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
@@ -171,6 +169,38 @@ public class MixinTrackGui {
 
     @ModifyConstant(method = "lambda$init$0", constant = @Constant(intValue = 1000), remap = false)
     public int modConst(int constant) {
+        if(this.settings.type == TrackItems.valueOf("TRANSFER_TABLE")){
+            return BuilderTurnTable.maxLength(this.settings.gauge);
+        }
         return IRPConfig.MaxTrackLength;
+    }
+
+    @Mixin(targets = "cam72cam.immersiverailroading.gui.TrackGui$1")
+    private static class GaugeSelector{
+        @Dynamic
+        @Final
+        @Shadow(remap = false)
+        private TrackGui this$0 ;
+
+        @Inject(method = "onClick(Lcam72cam/immersiverailroading/library/Gauge;)V", at = @At("RETURN"), remap = false)
+        public void inject(Gauge gauge, CallbackInfo ci){
+            try {
+                Field settingF = TrackGui.class.getDeclaredField("settings");
+                settingF.setAccessible(true);
+                RailSettings.Mutable settings = (RailSettings.Mutable) settingF.get(this$0);
+
+                Field lengthInputF = TrackGui.class.getDeclaredField("lengthInput");
+                lengthInputF.setAccessible(true);
+                TextField lengthInput = (TextField) lengthInputF.get(this$0);
+
+                if (settings.type == TrackItems.valueOf("TRANSFER_TABLE")) {
+                    lengthInput.setText("" + Math.min(Integer.parseInt(lengthInput.getText()), BuilderTurnTable.maxLength(settings.gauge)));
+                }
+
+                lengthInputF.set(this$0, lengthInput);
+            }catch (NoSuchFieldException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
