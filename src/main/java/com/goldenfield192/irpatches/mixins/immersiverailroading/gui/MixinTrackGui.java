@@ -111,7 +111,7 @@ public class MixinTrackGui {
         transferTableEntryNum.onSlider();
         ytop += height;
 
-        this.transferTableEntrySpacing = new Slider(screen, 25+xtop, ytop, "", 1, 15, accessor.getTransferTableEntryDistance(), false) {
+        this.transferTableEntrySpacing = new Slider(screen, 25+xtop, ytop, "", 1, 7, accessor.getTransferTableEntryDistance(), false) {
             @Override
             public void onSlider() {
                 accessor.setTransferTableEntryDistance((int) this.getValue());

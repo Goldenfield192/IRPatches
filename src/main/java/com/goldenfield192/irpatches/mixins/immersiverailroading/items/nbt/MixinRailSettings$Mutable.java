@@ -120,7 +120,7 @@ public class MixinRailSettings$Mutable implements IRailSettingsMutableAccessor {
         this.setNearEnd(0);
         this.setBumpiness(0);
         this.setTransferTableEntryNum(1);
-        this.setTransferTableEntryDistance(0);
+        this.setTransferTableEntryDistance(1);
     }
 
     @Inject(method = "immutable", at = @At("HEAD"), remap = false, cancellable = true)

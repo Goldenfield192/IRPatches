@@ -74,14 +74,14 @@ public class MixinRailSettingMapper {
             if (transferDist != null) {
                 accessor.setTransferTableEntryDistance(transferDist);
             } else {
-                accessor.setTransferTableEntryDistance(0);
+                accessor.setTransferTableEntryDistance(1);
             }
         } else {
             accessor.setFarEnd(0);
             accessor.setNearEnd(0);
             accessor.setBumpiness(0);
             accessor.setTransferTableEntryNum(1);
-            accessor.setTransferTableEntryDistance(0);
+            accessor.setTransferTableEntryDistance(1);
         }
         cir.setReturnValue(m);
     }
