@@ -19,7 +19,6 @@ public class MixinMovementTrack {
     @Inject(method = "nextPositionDirect", at = @At(value = "INVOKE_ASSIGN", target = "Lcam72cam/immersiverailroading/library/Gauge;scale()D"), remap = false, cancellable = true)
     private static void inject(World world, Vec3d currentPosition, TileRail rail, Vec3d delta, CallbackInfoReturnable<Vec3d> cir){
         double railHeight = rail.info.getTrackHeight();
-        double distance = delta.length();
         double heightOffset = railHeight * rail.info.settings.gauge.scale();
 
         if (rail.info.settings.type == TrackItems.valueOf("TRANSFER_TABLE")) {
@@ -30,8 +29,27 @@ public class MixinMovementTrack {
             int width = accessor.getTransferTableEntryDistance() * (accessor.getTransferTableEntryNum() - 1) + halfGauge + 2;
             Vec3i mainOffset = new Vec3i(-width / 2, 1, rail.info.settings.length/2);
             Vec3d start = new Vec3d(rail.getPos().subtract(mainOffset.rotate(Rotation.from(rail.info.placementInfo.facing()))));
-            start = start.add(new Vec3d(-tablePos + 0.5, 2 + heightOffset, rail.info.settings.length / 2).rotateYaw(-rail.info.placementInfo.facing().getAngle() + 180));
-
+            double xValue;
+            switch (rail.info.placementInfo.facing()){
+                case SOUTH:
+                    xValue = -tablePos - rail.info.placementInfo.placementPosition.x % 1 - 1;
+                    break;
+                case NORTH:
+                    xValue = -tablePos + rail.info.placementInfo.placementPosition.x % 1;
+                    break;
+                case EAST:
+                    xValue = -tablePos + rail.info.placementInfo.placementPosition.z % 1;
+                    break;
+                case WEST:
+                    xValue = -tablePos - rail.info.placementInfo.placementPosition.z % 1 - 1;
+                    break;
+                default:
+                    //WTH
+                    cir.setReturnValue(null);
+                    return;
+            }
+            start = start.add(new Vec3d(xValue,  2 + heightOffset, rail.info.settings.length / 2).rotateYaw(
+                            -rail.info.placementInfo.facing().getAngle() + 180));
             currentPosition = currentPosition.add(delta);
 
             double fromCenter = currentPosition.distanceTo(start);

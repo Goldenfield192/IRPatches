@@ -34,6 +34,7 @@ public class MixinSimulationState {
         ITrack trackRear = MovementTrack.findTrack(config.world, positionRear, yawRear, config.gauge.value());
         if (trackFront == null || trackRear == null) {
             ci.cancel();
+            return;
         }
 
         boolean isTransferTable = false;
@@ -42,18 +43,28 @@ public class MixinSimulationState {
             TileRailBase rearBase  = trackRear instanceof TileRailBase ? (TileRailBase) trackRear : null;
             isTransferTable = frontBase != null &&
                     (
-                            //frontBase.getTicksExisted() < 100 ||
                             frontBase.getParentTile() != null &&
                                     frontBase.getParentTile().info.settings.type == TrackItems.valueOf("TRANSFER_TABLE")
                     );
             isTransferTable = isTransferTable || rearBase != null &&
                     (
-                            //rearBase.getTicksExisted() < 100 ||
                             rearBase.getParentTile() != null &&
                                     rearBase.getParentTile().info.settings.type == TrackItems.valueOf("TRANSFER_TABLE")
                     );
+            boolean isTurnTable = frontBase != null &&
+                    (
+                            //frontBase.getTicksExisted() < 100 ||
+                            frontBase.getParentTile() != null &&
+                                    frontBase.getParentTile().info.settings.type == TrackItems.TURNTABLE
+                    );
+            isTurnTable = isTurnTable || rearBase != null &&
+                    (
+                            //rearBase.getTicksExisted() < 100 ||
+                            rearBase.getParentTile() != null &&
+                                    rearBase.getParentTile().info.settings.type == TrackItems.TURNTABLE
+                    );
 
-            if (!isTransferTable) {
+            if (isTurnTable || !isTransferTable) {
                 return;
             }
         }
@@ -99,5 +110,6 @@ public class MixinSimulationState {
             yawFront = yaw;
             yawRear = yaw;
         }
+        ci.cancel();
     }
 }
