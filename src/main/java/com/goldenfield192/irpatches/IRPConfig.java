@@ -2,6 +2,9 @@ package com.goldenfield192.irpatches;
 
 import cam72cam.mod.config.ConfigFile;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @ConfigFile.Comment("Configuration File")
 @ConfigFile.Name("general")
 @ConfigFile.File("irp_general.cfg")
@@ -33,4 +36,14 @@ public class IRPConfig {
 
     @ConfigFile.Comment("Enable IRP's redstone turntable")
     public static boolean IRPTurnTable = true;
+
+    @ConfigFile.Comment("Blocks not to break")
+    public static Map<String, Boolean> whiteList;
+
+    public static void init() {
+        if(whiteList == null || whiteList.isEmpty()){
+            whiteList = new HashMap<>();
+            whiteList.put("littletiles:blocklittletiles", true);
+        }
+    }
 }

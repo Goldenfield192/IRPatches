@@ -38,6 +38,7 @@ public class MixinImmersiveRailroading {
                 Packet.register(ActuatorGui.AugmentFilterChangePacket::new, PacketDirection.ClientToServer);
                 break;
             case INITIALIZE:
+                IRPConfig.init();
                 ConfigFile.sync(IRPConfig.class);
                 break;
         }

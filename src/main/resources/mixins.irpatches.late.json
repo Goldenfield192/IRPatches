@@ -6,6 +6,8 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "features.custom_breaking.MixinEntityMoveableRollingStock",
+    "features.custom_breaking.MixinSimulationState",
     "features.random_rail.MixinRailBuilderRender",
     "features.random_rail.MixinTrackDefinition",
     "features.random_rail.MixinTrackModel",

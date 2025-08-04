@@ -1,6 +1,7 @@
 ## 1.3.7
 * Make turntable redstone controlled
 * Add transfer table
+* Add whitelist for blocks to prevent train break(UNSTABLE)
 
 ## 1.3.6
 * Add random track
