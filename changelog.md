@@ -1,4 +1,4 @@
-## 1.3.7(IN DEV)
+## 1.3.7
 * Make turntable redstone controlled
 * Add transfer table
 

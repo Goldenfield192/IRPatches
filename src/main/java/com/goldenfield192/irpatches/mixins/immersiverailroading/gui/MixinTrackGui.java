@@ -10,6 +10,7 @@ import cam72cam.immersiverailroading.track.BuilderTurnTable;
 import cam72cam.mod.entity.Player;
 import cam72cam.mod.gui.helpers.GUIHelpers;
 import cam72cam.mod.gui.screen.*;
+import com.goldenfield192.irpatches.IRPText;
 import com.goldenfield192.irpatches.accessor.IRailSettingsAccessor;
 import com.goldenfield192.irpatches.accessor.IRailSettingsMutableAccessor;
 import com.goldenfield192.irpatches.IRPConfig;
@@ -77,7 +78,7 @@ public class MixinTrackGui {
             @Override
             public void onSlider() {
                 accessor.setFarEnd((float) this.getValue());
-                ctrl1RollSlider.setText("Far end rolling: " + String.format("%.2f", accessor.getFarEndTilt()) + "°");
+                ctrl1RollSlider.setText(IRPText.FAR_END_ROLL.toString(String.format("%.2f", accessor.getFarEndTilt())));
             }
         };
         ytop += height;
@@ -86,7 +87,7 @@ public class MixinTrackGui {
             @Override
             public void onSlider() {
                 accessor.setNearEnd((float) this.getValue());
-                ctrl2RollSlider.setText("Near end rolling: " + String.format("%.2f", accessor.getNearEndTilt()) + "°");
+                ctrl2RollSlider.setText(IRPText.NEAR_END_ROLL.toString(String.format("%.2f", accessor.getNearEndTilt())));
             }
         };
         ytop += height;
@@ -95,7 +96,7 @@ public class MixinTrackGui {
             @Override
             public void onSlider() {
                 accessor.setBumpiness((float) this.getValue());
-                bumpinessSlider.setText("Bump amplitude: " + String.format("%.2f", accessor.getBumpiness()) + "°");
+                bumpinessSlider.setText(IRPText.BUMPINESS.toString(String.format("%.2f", accessor.getBumpiness())));
             }
         };
         ytop += 3 * height;
@@ -104,7 +105,7 @@ public class MixinTrackGui {
             @Override
             public void onSlider() {
                 accessor.setTransferTableEntryNum((int) this.getValue());
-                transferTableEntryNum.setText("Transfer table entry: " + (int) transferTableEntryNum.getValue());
+                transferTableEntryNum.setText(IRPText.TRANSFER_TABLE_ENTRY_NUM.toString((int)transferTableEntryNum.getValue()));
             }
         };
         transferTableEntryNum.onSlider();
@@ -114,7 +115,7 @@ public class MixinTrackGui {
             @Override
             public void onSlider() {
                 accessor.setTransferTableEntryDistance((int) this.getValue());
-                transferTableEntrySpacing.setText("Distance between 2 entry: " + (int) transferTableEntrySpacing.getValue());
+                transferTableEntrySpacing.setText(IRPText.TRANSFER_TABLE_ENTRY_DIST.toString((int)transferTableEntrySpacing.getValue()));
             }
         };
         transferTableEntrySpacing.onSlider();
