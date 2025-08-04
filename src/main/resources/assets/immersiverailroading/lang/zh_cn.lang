@@ -4,5 +4,5 @@ track.immersiverailroading:class.transfer_table=水平移车台
 gui.immersiverailroading:selector.far_roll=轨道远端超高角度：%s°
 gui.immersiverailroading:selector.near_roll=轨道近端超高角度：%s°
 gui.immersiverailroading:selector.bumpiness=轨道随机颠簸振幅：%s°
-gui.immersiverailroading:selector.transfer_table_entry_num=水平移车台轨道数：%s米
+gui.immersiverailroading:selector.transfer_table_entry_num=水平移车台轨道数：%s
 gui.immersiverailroading:selector.transfer_table_entry_dist=相邻两条轨道间距：%s米

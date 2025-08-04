@@ -22,7 +22,7 @@ public abstract class MixinTrackItems {
 
     private static final TrackItems TRANSFER_TABLE = newEnumInstance("TRANSFER_TABLE");
 
-    @Invoker("<init>")
+    @Invoker(value = "<init>", remap = false)
     public static TrackItems op$constructor(String name, int ordinal) {
         throw new AssertionError();
     }

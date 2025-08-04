@@ -16,7 +16,7 @@ import java.lang.reflect.Field;
 public class MixinItemLargeWrench {
     @Redirect(method = "onClickBlock", at = @At(value = "INVOKE", target = "Lcam72cam/immersiverailroading/tile/TileRail;setTablePosition(F)V"), remap = false)
     public void inject0(TileRail instance, float angle, @Local(argsOnly = true) Player player){
-        if(IRPConfig.LegacyTurnTable){
+        if(!IRPConfig.IRPTurnTable){
             return;
         }
 

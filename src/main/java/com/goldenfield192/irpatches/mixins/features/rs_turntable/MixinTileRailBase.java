@@ -20,7 +20,7 @@ public abstract class MixinTileRailBase {
 
     @Inject(method = "update", at = @At(value = "HEAD") ,remap = false)
     public void inject(CallbackInfo ci){
-        if(IRPConfig.LegacyTurnTable){
+        if(!IRPConfig.IRPTurnTable){
             return;
         }
 

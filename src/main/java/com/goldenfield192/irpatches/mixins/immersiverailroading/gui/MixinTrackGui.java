@@ -120,6 +120,11 @@ public class MixinTrackGui {
         };
         transferTableEntrySpacing.onSlider();
 
+        if(settings.type != TrackItems.valueOf("TRANSFER_TABLE")){
+            transferTableEntryNum.setVisible(false);
+            transferTableEntrySpacing.setVisible(false);
+        }
+
         this.typeSelector = new ListSelector<TrackItems>(screen, width, 100, height, settings.type,
                                                          Arrays.stream(TrackItems.values())
                                                                .filter(i -> i != TrackItems.CROSSING)

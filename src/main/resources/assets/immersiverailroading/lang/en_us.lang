@@ -4,5 +4,5 @@ track.immersiverailroading:class.transfer_table=Transfer Table
 gui.immersiverailroading:selector.far_roll=Far end rolling: %s°
 gui.immersiverailroading:selector.near_roll=Near end rolling: %s°
 gui.immersiverailroading:selector.bumpiness=Bump amplitude: %s°
-gui.immersiverailroading:selector.transfer_table_entry_num=Transfer table entry: %sm
+gui.immersiverailroading:selector.transfer_table_entry_num=Transfer table entry: %s
 gui.immersiverailroading:selector.transfer_table_entry_dist=Distance between 2 entry: %sm
