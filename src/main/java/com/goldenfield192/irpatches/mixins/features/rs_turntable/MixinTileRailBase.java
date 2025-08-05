@@ -25,6 +25,9 @@ public abstract class MixinTileRailBase {
         }
 
         TileRailBase self = (TileRailBase) (Object) this;
+        if(self.getWorld() == null || self.getParentTile() == null){
+            return;
+        }
         if(self.getWorld().isServer && self instanceof TileRail && self.getParentTile().info.settings.type == TrackItems.TURNTABLE){
             if(self.getWorld().getRedstone(self.getPos()) != 0){
                 this.hasRedstone = true;
