@@ -37,6 +37,10 @@ public class IRPConfig {
     @ConfigFile.Comment("Enable IRP's redstone turntable")
     public static boolean IRPTurnTable = true;
 
+    @ConfigFile.Comment("Transfer table's speed multiplier(By default 2m/s)")
+    @ConfigFile.Range(min = 0, max = 2)
+    public static float TransferTableSpeedMultiplier = 1;
+
     @ConfigFile.Comment("Blocks not to break")
     public static Map<String, Boolean> whiteList;
 

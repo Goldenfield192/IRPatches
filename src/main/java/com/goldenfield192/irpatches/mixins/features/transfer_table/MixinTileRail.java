@@ -1,17 +1,14 @@
 package com.goldenfield192.irpatches.mixins.features.transfer_table;
 
-import cam72cam.immersiverailroading.Config;
 import cam72cam.immersiverailroading.entity.EntityCoupleableRollingStock;
 import cam72cam.immersiverailroading.entity.physics.Simulation;
 import cam72cam.immersiverailroading.library.TrackItems;
 import cam72cam.immersiverailroading.tile.TileRail;
 import cam72cam.immersiverailroading.tile.TileRailBase;
-import cam72cam.immersiverailroading.util.MathUtil;
 import cam72cam.immersiverailroading.util.RailInfo;
-import cam72cam.mod.ModCore;
-import cam72cam.mod.math.Rotation;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.math.Vec3i;
+import com.goldenfield192.irpatches.IRPConfig;
 import com.goldenfield192.irpatches.accessor.IRailSettingsAccessor;
 import com.goldenfield192.irpatches.accessor.ITileRailAccessor;
 import org.spongepowered.asm.mixin.Mixin;
@@ -39,7 +36,7 @@ public class MixinTileRail extends TileRailBase implements ITileRailAccessor {
         if (getWorld().isServer && info != null && info.settings.type == TrackItems.valueOf("TRANSFER_TABLE")) {
             IRailSettingsAccessor accessor = (IRailSettingsAccessor) info.settings;
             float desiredPosition = tableIndex * accessor.getTransferTableEntryDistance();
-            double speed = 0.1;
+            double speed = 0.1 * IRPConfig.TransferTableSpeedMultiplier;
             if (desiredPosition != info.tablePos) {
                 if (Math.abs(desiredPosition - info.tablePos) < speed * 2) {
                     info = info.with(b -> b.tablePos = desiredPosition);
