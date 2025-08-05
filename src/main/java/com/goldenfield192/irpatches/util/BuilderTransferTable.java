@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BuilderTransferTable extends BuilderBase {
-    private Vec3i mainOffset;
 
     public BuilderTransferTable(RailInfo info, World world, Vec3i pos) {
         super(info.withSettings(b -> b.length = Math.min(info.settings.length, BuilderTurnTable.maxLength(info.settings.gauge))), world, pos);
@@ -24,7 +23,7 @@ public class BuilderTransferTable extends BuilderBase {
         int halfGauge = (int) Math.floor((info.settings.gauge.value() * 1.1 + 0.5) / 2);
         int width = accessor.getTransferTableEntryDistance() * (accessor.getTransferTableEntryNum() - 1) + halfGauge + 2;
 
-        mainOffset = new Vec3i(-width / 2, 1, info.settings.length/2);
+        Vec3i mainOffset = new Vec3i(-width / 2, 1, info.settings.length / 2);
         mainOffset = mainOffset.rotate(Rotation.from(info.placementInfo.facing()));
 
         this.setParentPos(mainOffset.down());
@@ -32,20 +31,27 @@ public class BuilderTransferTable extends BuilderBase {
         tracks.add(main);
         for(int i = vertMin; i < vertMax; i++){
             for(int j = -halfGauge - 1 - width / 2; j < width - width / 2; j++){
-                TrackGag gag = new TrackGag(this, mainOffset.add(
-                        new Vec3i(-j, 0, i).rotate(Rotation.from(info.placementInfo.facing()))));
                 TrackGag gag1 = new TrackGag(this, mainOffset.add(
                         new Vec3i(-j, -1, i).rotate(Rotation.from(info.placementInfo.facing()))));
-                gag.solidNotRequired = true;
-                gag.setHeight(0.000001f);
                 if(i == vertMin || i == vertMax - 1 || j == -halfGauge -1 -width / 2 || j == width - 1 -width / 2) {
                     gag1.setBedHeight(1);
                     gag1.setFlexible();
+                }
+                tracks.add(gag1);
+            }
+        }
+
+        for(int i = vertMin; i < vertMax; i++){
+            for(int j = -halfGauge - 1 - width / 2; j < width - width / 2; j++){
+                TrackGag gag = new TrackGag(this, mainOffset.add(
+                        new Vec3i(-j, 0, i).rotate(Rotation.from(info.placementInfo.facing()))));
+                gag.solidNotRequired = true;
+                gag.setHeight(0.000001f);
+                if(i == vertMin || i == vertMax - 1 || j == -halfGauge -1 -width / 2 || j == width - 1 -width / 2) {
                     gag.setHeight(0);
                     gag.setFlexible();
                 }
                 tracks.add(gag);
-                tracks.add(gag1);
             }
         }
 
@@ -68,7 +74,7 @@ public class BuilderTransferTable extends BuilderBase {
             }
         }
 
-        Vec3d vec = new Vec3d(-info.tablePos, 1, info.settings.length / 2).rotateYaw(-info.placementInfo.facing().getAngle() + 180);
+        Vec3d vec = new Vec3d(-info.tablePos, 1, info.settings.length / 2d - 0.5).rotateYaw(-info.placementInfo.facing().getAngle() + 180);
         list.add(new VecYawPitch(vec.x, vec.y, vec.z, info.placementInfo.facing().getAngle(), 0, info.settings.length, "RAIL_RIGHT", "RAIL_LEFT"));
         return list;
     }
