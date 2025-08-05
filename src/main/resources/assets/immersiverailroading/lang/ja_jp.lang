@@ -1,0 +1,8 @@
+#Some irp stuff
+track.immersiverailroading:class.transfer_table=トラバーサー
+
+gui.immersiverailroading:selector.far_roll=線路奥側角度：%s°
+gui.immersiverailroading:selector.near_roll=線路手前側角度：%s°
+gui.immersiverailroading:selector.bumpiness=線路のランダムがたつき振り幅：%s°
+gui.immersiverailroading:selector.transfer_table_entry_num=トラバーサー線路数：%s
+gui.immersiverailroading:selector.transfer_table_entry_dist=隣接する線路との間隔：%sメートル
