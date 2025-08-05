@@ -53,9 +53,7 @@ public class ExtraStockDefinition {
 
         DataBlock lights = data.getBlock("lights");
         if (lights != null) {
-            lights.getBlockMap().forEach((key, block) -> {
-                def.extraLightDef.put(key, new LightDefinition(block));
-            });
+            lights.getBlockMap().forEach((key, block) -> def.extraLightDef.put(key, new LightDefinition(block)));
         }
 
         extraDef.put(defID, def);

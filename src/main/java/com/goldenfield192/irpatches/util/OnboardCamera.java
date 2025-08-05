@@ -5,8 +5,6 @@ import cam72cam.mod.MinecraftClient;
 import cam72cam.mod.entity.Entity;
 import com.goldenfield192.irpatches.IRPConfig;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class OnboardCamera {
     public static boolean enabled = false;

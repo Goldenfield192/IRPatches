@@ -4,5 +4,5 @@ The Coupler Augment is displayed as orange block under rail and is used to chang
 
 # Usage
 The Coupler Augment has 2 modes that can be toggled by holding a piston and right-clicking.
-* Coupling: Sets all couplers on the locomotive/stock to engaged.
-* Decoupling: Sets all couplers on the locomotive/stock to disengaged.
+* Coupling: Sets all couplers on the locomotive/stock to engaged mode.
+* Decoupling: Sets all couplers on the locomotive/stock to disengaged mode.

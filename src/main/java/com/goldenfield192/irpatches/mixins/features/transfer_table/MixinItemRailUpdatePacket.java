@@ -3,7 +3,6 @@ package com.goldenfield192.irpatches.mixins.features.transfer_table;
 import cam72cam.immersiverailroading.items.nbt.RailSettings;
 import cam72cam.immersiverailroading.library.TrackItems;
 import cam72cam.immersiverailroading.net.ItemRailUpdatePacket;
-import com.goldenfield192.irpatches.IRPConfig;
 import com.goldenfield192.irpatches.accessor.IRailSettingsMutableAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

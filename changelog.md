@@ -25,7 +25,7 @@
 * Revert feature "Track exchanger now change all the segments on long tracks" added in 1.3.1
 
 ## 1.3.2
-* Revert Door Actuator changes, now it work like ordinary augment when control group is not specified
+* Revert Door Actuator changes, now it works like ordinary augment when control group is not specified
 * Fix a conflict with poizzy's build
 
 ## 1.3.1

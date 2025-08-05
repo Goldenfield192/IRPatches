@@ -1,7 +1,6 @@
 package com.goldenfield192.irpatches.util;
 
 import cam72cam.immersiverailroading.track.*;
-import cam72cam.immersiverailroading.util.PlacementInfo;
 import cam72cam.immersiverailroading.util.RailInfo;
 import cam72cam.mod.math.Rotation;
 import cam72cam.mod.math.Vec3d;
@@ -14,8 +13,6 @@ import java.util.List;
 
 public class BuilderTransferTable extends BuilderBase {
     private Vec3i mainOffset;
-    private Rotation rot;
-    private Vec3i first;
 
     public BuilderTransferTable(RailInfo info, World world, Vec3i pos) {
         super(info.withSettings(b -> b.length = Math.min(info.settings.length, BuilderTurnTable.maxLength(info.settings.gauge))), world, pos);
@@ -52,8 +49,8 @@ public class BuilderTransferTable extends BuilderBase {
             }
         }
 
-        this.first = new Vec3i(info.placementInfo.placementPosition);
-        this.rot = Rotation.from(info.placementInfo.facing().getOpposite());
+//        this.first = new Vec3i(info.placementInfo.placementPosition);
+//        this.rot = Rotation.from(info.placementInfo.facing().getOpposite());
     }
 
     @Override

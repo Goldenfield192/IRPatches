@@ -2,20 +2,11 @@ package com.goldenfield192.irpatches.mixins.immersiverailroading.render.item;
 
 import cam72cam.immersiverailroading.render.item.TrackBlueprintItemModel;
 import cam72cam.immersiverailroading.util.BlockUtil;
-import cam72cam.mod.entity.Player;
-import cam72cam.mod.item.ItemStack;
-import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.math.Vec3i;
-import cam72cam.mod.render.GlobalRender;
-import cam72cam.mod.render.opengl.RenderState;
 import cam72cam.mod.world.World;
-import com.llamalad7.mixinextras.sugar.Local;
-import com.llamalad7.mixinextras.sugar.Share;
-import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import net.minecraft.block.BlockLeaves;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.*;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
  * Prevent leaves being replaced by track blueprint.

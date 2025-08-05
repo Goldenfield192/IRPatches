@@ -2,7 +2,7 @@
 The Steam Hammer is used to process some parts before they are placed onto a Frame. It is the smallest machine in Immersive Railroading, requiring a mere 5 blocks wide, 1 in depth, and 6 high.
 
 # Construction
-The Steam Hammer is 1 blocks long, 6 blocks high and 5 blocks wide.
+The Steam Hammer is 1 block long, 6 blocks high and 5 blocks wide.
 It is built from:
 * Heavy Engineering Block × 3
 * Block of Steel × 1
