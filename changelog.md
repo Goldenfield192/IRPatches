@@ -1,3 +1,8 @@
+## 1.3.8
+* Fix a NPE
+* Add config for Transfer Table's speed
+* Add ja_jp translation(Provided by [@FS_FADE](https://www.youtube.com/channel/UCkJfkM4gSrii0weTthoSAIw))
+
 ## 1.3.7
 * Make turntable redstone controlled
 * Add transfer table
