@@ -74,7 +74,7 @@ public class BuilderTransferTable extends BuilderBase {
         }
 
         Vec3d vec = new Vec3d(-info.tablePos, 1, info.settings.length / 2d - 0.5).rotateYaw(-info.placementInfo.facing().getAngle() + 180);
-        list.add(new VecYawPitch(vec.x, vec.y, vec.z, info.placementInfo.facing().getAngle(), 0, info.settings.length - 1, "RAIL_RIGHT", "RAIL_LEFT"));
+        list.add(new VecYawPitch(vec.x, vec.y, vec.z, info.placementInfo.facing().getAngle(), 0, info.settings.length, "RAIL_RIGHT", "RAIL_LEFT"));
         return list;
     }
 
