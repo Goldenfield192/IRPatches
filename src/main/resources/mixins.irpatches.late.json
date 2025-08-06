@@ -29,7 +29,6 @@
     "immersiverailroading.entity.MixinLocomotive",
     "immersiverailroading.entity.MixinLocomotiveDiesel",
     "immersiverailroading.entity.physics.MixinSimulationState",
-    "immersiverailroading.gui.MixinPaintBrushPicker",
     "immersiverailroading.gui.MixinTrackGui",
     "immersiverailroading.gui.MixinTrackGui$GaugeSelector",
     "immersiverailroading.items.MixinItemLargeWrench",

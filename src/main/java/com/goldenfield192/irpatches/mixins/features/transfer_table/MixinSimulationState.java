@@ -39,6 +39,7 @@ public class MixinSimulationState {
 
         boolean isTransferTable = false;
         if (Math.abs(distance) < 0.0001) {
+            //Only handle transfer table
             TileRailBase frontBase = trackFront instanceof TileRailBase ? (TileRailBase) trackFront : null;
             TileRailBase rearBase  = trackRear instanceof TileRailBase ? (TileRailBase) trackRear : null;
             isTransferTable = frontBase != null &&
@@ -51,20 +52,8 @@ public class MixinSimulationState {
                             rearBase.getParentTile() != null &&
                                     rearBase.getParentTile().info.settings.type == TrackItems.valueOf("TRANSFER_TABLE")
                     );
-            boolean isTurnTable = frontBase != null &&
-                    (
-                            //frontBase.getTicksExisted() < 100 ||
-                            frontBase.getParentTile() != null &&
-                                    frontBase.getParentTile().info.settings.type == TrackItems.TURNTABLE
-                    );
-            isTurnTable = isTurnTable || rearBase != null &&
-                    (
-                            //rearBase.getTicksExisted() < 100 ||
-                            rearBase.getParentTile() != null &&
-                                    rearBase.getParentTile().info.settings.type == TrackItems.TURNTABLE
-                    );
-
-            if (isTurnTable || !isTransferTable) {
+            if (!isTransferTable) {
+                //Fallback
                 return;
             }
         }
@@ -110,6 +99,5 @@ public class MixinSimulationState {
             yawFront = yaw;
             yawRear = yaw;
         }
-        ci.cancel();
     }
 }
