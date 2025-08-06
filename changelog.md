@@ -1,3 +1,8 @@
+## 1.3.9
+* Fix track roll not working
+* Change transfer table's length
+* Fix rail bed fill issue with transfer table
+
 ## 1.3.8
 * Fix a NPE
 * Add config for Transfer Table's speed
